@@ -8,13 +8,14 @@
 ---
 #### Installation
 > Clone the repo
-
-
- `git clone https://github.com/ayush1810/Agrow.git/`
+> Install dependencies
+> npm run watch 
+> npm start
 ---
 #### Checklist
 - [x] Initial Setup
 - [x] Add Mongo database
 - [x] Add React & Babel
 - [x] Read & Create functions
-- [ ] Add SignUp/Login 
+- [ ] Add SignUp/Login pages
+- [ ] Add Bootstrap UI
