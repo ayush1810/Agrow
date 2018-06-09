@@ -8,7 +8,6 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-/*jshint esversion:6*/
 var contentNode = document.getElementById('contents');
 
 var ItemFilter = function (_React$Component) {
@@ -110,25 +109,29 @@ var ItemAdd = function (_React$Component2) {
     function ItemAdd() {
         _classCallCheck(this, ItemAdd);
 
-        return _possibleConstructorReturn(this, (ItemAdd.__proto__ || Object.getPrototypeOf(ItemAdd)).call(this));
-        // this.handleSubmit = this.handleSubmit.bind(this);
-    }
-    // handleSubmit(e){
-    //     e.preventDefault();
-    //     var form = document.forms.itemAdd;
-    //     this.props.createItem({
-    //         name : form.name.value,
-    //         quantity : form.quantity.value,
-    //         rate : form.rate.value,
-    //     });
-    //     //Clear the form
-    //     form.name.value = '';
-    //     form.quantity.value = '';
-    //     form.rate.value = '';
-    // }
+        var _this2 = _possibleConstructorReturn(this, (ItemAdd.__proto__ || Object.getPrototypeOf(ItemAdd)).call(this));
 
+        _this2.handleSubmit = _this2.handleSubmit.bind(_this2);
+        return _this2;
+    }
 
     _createClass(ItemAdd, [{
+        key: "handleSubmit",
+        value: function handleSubmit(e) {
+            e.preventDefault();
+            console.log("Inside handleSubmit");
+            var form = document.forms.itemAdd;
+            this.props.createItem({
+                name: form.name.value,
+                quantity: form.quantity.value,
+                rate: form.rate.value
+            });
+            //Clear the form
+            form.name.value = '';
+            form.quantity.value = '';
+            form.rate.value = '';
+        }
+    }, {
         key: "render",
         value: function render() {
             return React.createElement(
@@ -136,7 +139,7 @@ var ItemAdd = function (_React$Component2) {
                 null,
                 React.createElement(
                     "form",
-                    { name: "itemAdd" },
+                    { name: "itemAdd", onSubmit: this.handleSubmit },
                     React.createElement("input", { type: "text", name: "name", placeholder: "Name" }),
                     React.createElement("input", { type: "text", name: "quantity", placeholder: "Quantity" }),
                     React.createElement("input", { type: "text", name: "rate", placeholder: "Rate" }),
@@ -162,14 +165,13 @@ var ItemList = function (_React$Component3) {
         var _this3 = _possibleConstructorReturn(this, (ItemList.__proto__ || Object.getPrototypeOf(ItemList)).call(this));
 
         _this3.state = { items: [] };
-        // this.createItem = this.createItem.bind(this);
+        _this3.createItem = _this3.createItem.bind(_this3);
         return _this3;
     }
 
     _createClass(ItemList, [{
         key: "componentDidMount",
         value: function componentDidMount() {
-            console.log("onme");
             this.loadData();
         }
     }, {
@@ -177,35 +179,34 @@ var ItemList = function (_React$Component3) {
         value: function loadData() {
             var _this4 = this;
 
-            console.log('tired');
-            // const newItem1 = {_id: 420,name: 'Ayush',quantity:100,rate:40,};
-            // const newItem2 = {_id: 5330,name: 'Aysh',quantity:10,rate:50,};
-            // const newItem = this.state.items.concat(newItem1).concat(newItem2);
-            // this.setState({items: newItem});
+            console.log('Loading Data');
             fetch('/api/items').then(function (response) {
                 return response.json();
             }).then(function (data) {
-                //console.log("Total count:", data._metadata.total);
-                console.log("All good here");
                 _this4.setState({ items: data.records });
             }).catch(function (err) {
                 console.log(err);
             });
         }
+    }, {
+        key: "createItem",
+        value: function createItem(newItem) {
+            var _this5 = this;
 
-        // createItem(newItem){
-        //     fetch('/api/items',{
-        //         method: 'POST',
-        //         headers: {'Content-Type': 'application/json'},
-        //         body : JSON.stringify(newItem),
-        //     }).then(response => response.json()).then(updatedItem => {
-        //            const newItems  = this.state.items.concat(updatedItem);
-        //            this.setState({items:newItems});
-        //     }).catch(err =>{
-        //         alert("Error in sending data to server" + err.message);
-        //     })
-        // }
-
+            fetch('/addItem', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(newItem)
+            }).then(function (response) {
+                return response.json();
+            }).then(function (updatedItem) {
+                console.log("Inside fetch then");
+                var newItems = _this5.state.items.concat(updatedItem);
+                _this5.setState({ items: newItems });
+            }).catch(function (err) {
+                alert("Error in sending data to server" + err.message);
+            });
+        }
     }, {
         key: "render",
         value: function render() {
@@ -221,7 +222,7 @@ var ItemList = function (_React$Component3) {
                 React.createElement("hr", null),
                 React.createElement(ItemTable, { items: this.state.items }),
                 React.createElement("hr", null),
-                React.createElement(ItemAdd, null)
+                React.createElement(ItemAdd, { createItem: this.createItem })
             );
         }
     }]);

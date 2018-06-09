@@ -7,7 +7,9 @@
 * Patience bruh! 
 ---
 #### Installation
-> Clone the repo...
+> Clone the repo
+
+
  `git clone https://github.com/ayush1810/Agrow.git/`
 ---
 #### Checklist
