@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -20,12 +20,12 @@ var ItemFilter = function (_React$Component) {
     }
 
     _createClass(ItemFilter, [{
-        key: "render",
+        key: 'render',
         value: function render() {
             return React.createElement(
-                "div",
+                'div',
                 null,
-                "hmm"
+                'hmm'
             );
         }
     }]);
@@ -35,25 +35,25 @@ var ItemFilter = function (_React$Component) {
 
 var ItemRow = function ItemRow(props) {
     return React.createElement(
-        "tr",
+        'tr',
         null,
         React.createElement(
-            "td",
+            'td',
             null,
             props.item._id
         ),
         React.createElement(
-            "td",
+            'td',
             null,
             props.item.name
         ),
         React.createElement(
-            "td",
+            'td',
             null,
             props.item.quantity
         ),
         React.createElement(
-            "td",
+            'td',
             null,
             props.item.rate
         )
@@ -65,38 +65,38 @@ function ItemTable(props) {
         return React.createElement(ItemRow, { key: item._id, item: item });
     });
     return React.createElement(
-        "table",
-        { className: "bordered-table" },
+        'table',
+        { className: 'bordered-table' },
         React.createElement(
-            "thead",
+            'thead',
             null,
             React.createElement(
-                "tr",
+                'tr',
                 null,
                 React.createElement(
-                    "th",
+                    'th',
                     null,
-                    "ID"
+                    'ID'
                 ),
                 React.createElement(
-                    "th",
+                    'th',
                     null,
-                    "Name"
+                    'Name'
                 ),
                 React.createElement(
-                    "th",
+                    'th',
                     null,
-                    "Quantity"
+                    'Quantity'
                 ),
                 React.createElement(
-                    "th",
+                    'th',
                     null,
-                    "Rate"
+                    'Rate'
                 )
             )
         ),
         React.createElement(
-            "tbody",
+            'tbody',
             null,
             itemRows
         )
@@ -116,10 +116,9 @@ var ItemAdd = function (_React$Component2) {
     }
 
     _createClass(ItemAdd, [{
-        key: "handleSubmit",
+        key: 'handleSubmit',
         value: function handleSubmit(e) {
             e.preventDefault();
-            console.log("Inside handleSubmit");
             var form = document.forms.itemAdd;
             this.props.createItem({
                 name: form.name.value,
@@ -132,21 +131,21 @@ var ItemAdd = function (_React$Component2) {
             form.rate.value = '';
         }
     }, {
-        key: "render",
+        key: 'render',
         value: function render() {
             return React.createElement(
-                "div",
+                'div',
                 null,
                 React.createElement(
-                    "form",
-                    { name: "itemAdd", onSubmit: this.handleSubmit },
-                    React.createElement("input", { type: "text", name: "name", placeholder: "Name" }),
-                    React.createElement("input", { type: "text", name: "quantity", placeholder: "Quantity" }),
-                    React.createElement("input", { type: "text", name: "rate", placeholder: "Rate" }),
+                    'form',
+                    { name: 'itemAdd', onSubmit: this.handleSubmit },
+                    React.createElement('input', { type: 'text', name: 'name', placeholder: 'Name' }),
+                    React.createElement('input', { type: 'text', name: 'quantity', placeholder: 'Quantity' }),
+                    React.createElement('input', { type: 'text', name: 'rate', placeholder: 'Rate' }),
                     React.createElement(
-                        "button",
+                        'button',
                         null,
-                        "Add Item"
+                        'Add Item'
                     )
                 )
             );
@@ -170,16 +169,15 @@ var ItemList = function (_React$Component3) {
     }
 
     _createClass(ItemList, [{
-        key: "componentDidMount",
+        key: 'componentDidMount',
         value: function componentDidMount() {
             this.loadData();
         }
     }, {
-        key: "loadData",
+        key: 'loadData',
         value: function loadData() {
             var _this4 = this;
 
-            console.log('Loading Data');
             fetch('/api/items').then(function (response) {
                 return response.json();
             }).then(function (data) {
@@ -189,10 +187,11 @@ var ItemList = function (_React$Component3) {
             });
         }
     }, {
-        key: "createItem",
+        key: 'createItem',
         value: function createItem(newItem) {
             var _this5 = this;
 
+            this.loadData();
             fetch('/addItem', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -200,28 +199,27 @@ var ItemList = function (_React$Component3) {
             }).then(function (response) {
                 return response.json();
             }).then(function (updatedItem) {
-                console.log("Inside fetch then");
                 var newItems = _this5.state.items.concat(updatedItem);
                 _this5.setState({ items: newItems });
             }).catch(function (err) {
-                alert("Error in sending data to server" + err.message);
+                alert(err.message);
             });
         }
     }, {
-        key: "render",
+        key: 'render',
         value: function render() {
             return React.createElement(
-                "div",
+                'div',
                 null,
                 React.createElement(
-                    "h4",
+                    'h4',
                     null,
-                    "Welcome to ItemList"
+                    'Welcome to ItemList'
                 ),
                 React.createElement(ItemFilter, null),
-                React.createElement("hr", null),
+                React.createElement('hr', null),
                 React.createElement(ItemTable, { items: this.state.items }),
-                React.createElement("hr", null),
+                React.createElement('hr', null),
                 React.createElement(ItemAdd, { createItem: this.createItem })
             );
         }

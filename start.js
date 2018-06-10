@@ -3,7 +3,6 @@ const mongoose = require('mongoose'),
 const app = require('./app');
 require('dotenv').config({path: 'variable.env'});
 
-
 let db;
 mongoose.connect(process.env.DATABASE).then(connection => {
   mongoose.Promise = global.Promise;

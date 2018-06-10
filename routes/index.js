@@ -3,36 +3,17 @@ const check = require('express-validator/check').check;
 const validationResult = require('express-validator/check').validationResult;
 const mongoose = require('mongoose');
 const router = express.Router();
-
-const addItem = require('../controllers/ItemController');
-const Item = mongoose.model('Item');
+const Item = require('../models/Item');
 
 router.get('/',(req, res)=>{
     res.render('index');
 });
 
-router.post('/addItem',[
-    check('name')
-    .isLength({min:1})
-    .withMessage('Enter a commodity'),
-    check('quantity')
-    .isLength({min:2}),
-    check('rate')
-    .isLength({min:1})
-],
-(req, res)=>{
-    const errors = validationResult(req);
-    if (errors.isEmpty()){
-        console.log("No error wow");
+router.post('/addItem',(req, res)=>{
         const NewItem = new Item(req.body);
         NewItem.save()
-        .then(()=>{res.send("The item has been added");})
+        .then(()=>{res.json(NewItem);})
         .catch(()=>{res.send("Sorry, something went wrong");});
-    }
-    else{
-    console.log("OOPSSS");
-    res.render('index');
-    }
 } );
 
 router.get('/api/items',(req, res)=>{

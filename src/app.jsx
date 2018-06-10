@@ -45,7 +45,6 @@ class ItemAdd extends React.Component{
     }
     handleSubmit(e){
         e.preventDefault();
-        console.log("Inside handleSubmit");
         var form = document.forms.itemAdd;
         this.props.createItem({
             name : form.name.value,
@@ -82,7 +81,6 @@ class ItemList extends React.Component{
     }
 
     loadData(){
-        console.log('Loading Data');
         fetch('/api/items').then(response => response.json()).then(data => {
             this.setState({ items : data.records }); 
         }).catch(err =>{
@@ -91,16 +89,16 @@ class ItemList extends React.Component{
     }
 
     createItem(newItem){
+        this.loadData();
         fetch('/addItem',{
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body : JSON.stringify(newItem),
         }).then(response => response.json()).then(updatedItem => {
-                console.log("Inside fetch then");
                const newItems  = this.state.items.concat(updatedItem);
                this.setState({items:newItems});
         }).catch(err =>{
-            alert("Error in sending data to server" + err.message);
+            alert(err.message);
         });
     }
 
