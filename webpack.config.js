@@ -3,27 +3,27 @@ const webpack = require('webpack');
 
 module.exports = {
   mode : 'development',
-  entry:  './src/app.jsx',
+  entry: {
+    app:  './src/app.jsx',
+  },
   output: {
     path: path.resolve(__dirname, 'public'),
-    filename: 'bundle.js'
+    filename: '[name].bundle.js'
   },
-  // optimization: {
-  //   splitChunks: {
-  //     cacheGroups: {
-  //       vendor: {
-  //         chunks: 'all',
-  //         name: 'vendor',
-  //         test: 'vendor',
-  //         enforce: true
-  //       },
-  //     }
-  //   },
-  //   runtimeChunk: true
-  // },
-  // plugins: [
+  optimization: {
+    splitChunks: {
+        cacheGroups: {
+            commons: { 
+              test: /[\\/]node_modules[\\/]/,
+              name: "vendor",
+              chunks: "all" 
+            }
+        }
+    }
+},
+  plugins: [
   
-  // ],
+  ],
   module: {
     rules: [
     {

@@ -8,8 +8,12 @@
 *.so
 
 # Dependency directories #
+*.env
 node_modules/
 jspm_packages/
+public/app.bundle.js
+public/bundle.js
+public/vendor.bundle.js
 
 # Packages #
 ############
@@ -29,7 +33,6 @@ jspm_packages/
 *.log
 *.sql
 *.sqlite
-*.env
 
 # OS generated files #
 ######################

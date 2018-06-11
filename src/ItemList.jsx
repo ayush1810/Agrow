@@ -1,4 +1,4 @@
-// import React from 'react';
+import React from 'react';
 import ItemAdd from './ItemAdd.jsx';
 import ItemFilter from './ItemFilter.jsx';
 
