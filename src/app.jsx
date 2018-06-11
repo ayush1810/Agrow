@@ -1,3 +1,4 @@
+import AddUser from './signUp.jsx';
 const contentNode = document.getElementById('contents');
 
 class ItemFilter extends React.Component {
