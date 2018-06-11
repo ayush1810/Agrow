@@ -1,45 +1,47 @@
-### Agrow 
----
-##### An _experimental_ bidding project :rocket:
+Agrow
+==================
+
+An experimental bidding project built with MERN stack. More details coming soon.  
 
 
-### Features
----
-* Wait for it 
-* Wait some more
-* Patience bruh! 
+Installation
+------------
 
+#### Clone the repo
 
-#### Installation
----
-> Clone the repo  
-    ```
-    git clone https://github.com/ayush1810/agrow.git
-    ```
+``` sh
+$ git clone https://github.com/ayush1810/agrow.git
+```
 
-> Setup Mongo uri in a variable.env, then install dependencies
-    ```
-    npm install 
-    ```
-> Compile
-    ```
-    npm run compile 
-    ```
-> Run     
-    ```
-    npm start
-    ```
+#### Install dependencies
 
+``` sh
+$ npm install
+```
 
-#### Finished 
----  
+#### Compile
+
+``` sh
+$ npm run compile
+```
+
+#### Run 
+
+```sh
+$ npm start
+```
+
+    Don't forget to setup Mongo uri & port variables. 
+
+#### Finished
+
 - [x] Initial Setup
 - [x] Add Mongo database
 - [x] Add React 
 - [x] Read & Create functions
 
+#### To Do
 
-#### ToDo
----  
 - [ ] Add SignUp/Login pages
 - [ ] Add Bootstrap UI
+
