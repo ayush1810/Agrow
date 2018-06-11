@@ -50,7 +50,6 @@ export default class ItemList extends React.Component{
     }
 
     createItem(newItem){
-        this.loadData();
         fetch('/addItem',{
             method: 'POST',
             headers: {'Content-Type': 'application/json'},

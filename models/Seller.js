@@ -8,11 +8,6 @@ const SellerSchema = new mongoose.Schema({
         trim: true,
         required: `Enter a valid Seller name`
     },
-    email:{
-        type: String,
-        trim: true,
-        required: 'Please enter an email address'
-    },
     location: String,
     rating : {
         type: Number

@@ -13,7 +13,6 @@ export default class ItemAdd extends React.Component{
             quantity : form.quantity.value,
             rate : form.rate.value,
         });
-        //Clear the form
         form.name.value = '';
         form.quantity.value = '';
         form.rate.value = '';
