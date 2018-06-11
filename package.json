@@ -6,8 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon -w start.js start.js",
-    "compile": "babel src --presets react,es2015 --out-dir public",
-    "watch": "babel src --presets react,es2015 --out-dir public --watch"
+    "compile": "webpack",
+    "watch": "webpack --watch"
   },
   "author": "Ayush Agrawal",
   "license": "MIT",
@@ -20,9 +20,7 @@
     "mongo": "^0.1.0",
     "mongodb": "latest",
     "mongoose": "^5.1.4",
-    "monk": "latest",
-    "morgan": "latest",
-    "pug": "latest"
+    "monk": "latest"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
