@@ -1,36 +1,45 @@
 import React from 'react';
-import { Navbar, Nav, NavItem, NavDropdown, MenuItem, Glyphicon } from 'react-bootstrap';
+import { Collapse,
+    Navbar,
+    NavbarToggler,
+    NavbarBrand,
+    Nav,
+    NavItem,
+    NavLink,
+    UncontrolledDropdown,
+    DropdownToggle,
+    DropdownMenu,
+    DropdownItem } from 'reactstrap'; 
 
 import SignupModel from './UserAdd.jsx';
 import LoginModel from './UserLogin.jsx';
 
 export default class Webhead extends React.Component{
+    constructor(props)
+    {
+        super(props);
+        this.doToggle = this.doToggle.bind(this);
+        this.state = { isActive: false};
+    }
+
+    doToggle(){
+        this.setState({isActive: !this.state.isActive});
+    }
     render(){
         return(
-            <Navbar fluid inverse collapseOnSelect>
-                <Navbar.Header>
-                    <Navbar.Brand>
-                        <a href="#/">AGROW</a>
-                    </Navbar.Brand>
-                    <Navbar.Toggle />
-                </Navbar.Header>
-                <Navbar.Collapse>
-                    <Nav>
-                        <NavItem eventKey={1} href="#dashboard">
-                            Users
-                        </NavItem>
-                        <NavItem eventKey={2} href="#">
-                            Link2
-                        </NavItem>
-                        <NavDropdown eventKey={3} title="Dropdown" id="basic-nav-dropdown">
-                            <MenuItem eventKey={3.1}>Action</MenuItem>
-                            <MenuItem eventKey={3.2}>Another action</MenuItem>
-                            <MenuItem eventKey={3.3}>Something else here</MenuItem>
-                            <MenuItem divider />
-                            <MenuItem eventKey={3.3}>Separated link</MenuItem>
-                        </NavDropdown>
-                    </Nav>
-                    <Nav pullRight>
+            <Navbar color="dark" expand="md">
+                <NavbarBrand href="#/">AGROW</NavbarBrand>
+                <Nav className="ml-auto" navbar>
+                    <NavItem>
+                        <NavLink href="#dashboard"> Dashboard</NavLink>
+                    </NavItem>
+                    <NavItem>
+                        <NavLink href="http://github.com/ayush1810/agrow">Github</NavLink>
+                    </NavItem>
+                </Nav>
+                <NavbarToggler onClick={this.doToggle}/>
+                <Collapse isOpen={this.state.isActive} navbar>
+                    <Nav className="ml-auto" navbar>
                         <NavItem>
                             <LoginModel/>
                         </NavItem>
@@ -38,7 +47,7 @@ export default class Webhead extends React.Component{
                             <SignupModel/>
                         </NavItem>
                     </Nav>
-                </Navbar.Collapse>
+                </Collapse>
             </Navbar>
         );
     }

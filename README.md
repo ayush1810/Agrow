@@ -39,9 +39,14 @@ $ npm start
 - [x] Add Mongo database
 - [x] Add React 
 - [x] Read & Create functions
+- [x] Add SignUp/Login pages
+- [x] Add Bootstrap UI
 
 #### To Do
 
-- [ ] Add SignUp/Login pages
-- [ ] Add Bootstrap UI
+- [ ] Implement authentication and sessions
+- [ ] Add Users Dashboard
+- [ ] Add Item Filters 
+- [ ] Implement Mongo Aggregate
+
 

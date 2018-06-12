@@ -1,68 +1,67 @@
 import React from 'react';
-import { Popover,Tooltip,Modal, OverlayTrigger, FormGroup, FormControl, ControlLabel, InputGroup,
-    ButtonToolbar, Button } from 'react-bootstrap';
-
-function FieldGroup({ id, label, help, ...props }) {
-    return (
-        <FormGroup controlId={id}>
-        <ControlLabel>{label}</ControlLabel>
-        <FormControl {...props} />
-        {help && <HelpBlock>{help}</HelpBlock>}
-        </FormGroup>
-    );
-}   
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
 export default class LoginModel extends React.Component {
-    constructor(props, context) {
-      super(props, context);
+  constructor(props) {
+    super(props);
+    this.state = {
+        modal: false,
+        email:'' ,
+        password: '',
+    };
+
+    this.toggle = this.toggle.bind(this);
+    this.handleChangePw = this.handleChangePw.bind(this);
+    this.handleChangeEmail = this.handleChangeEmail.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  toggle() {
+    this.setState({
+      modal: !this.state.modal
+    });
+  }
+
+  handleChangePw(event) {
+    this.setState({password: event.target.value});
+  }
+  handleChangeEmail(event) {
+    this.setState({email: event.target.value});
+  }
   
-      this.handleShow = this.handleShow.bind(this);
-      this.handleClose = this.handleClose.bind(this);
-  
-      this.state = {
-        show: false
-      };
+  handleSubmit(event) {
+    event.preventDefault();
+    alert("You are now logged in!");
     }
   
-    handleClose() {
-      this.setState({ show: false });
-    }
-  
-    handleShow() {
-      this.setState({ show: true });
-    }
-  
-    render() {
-      return (
-        <div>
-          <Button bsStyle="primary" bsSize="small" onClick={this.handleShow}>
-            LOGIN
-          </Button>
-  
-          <Modal show={this.state.show} onHide={this.handleClose}>
-            <Modal.Header closeButton>
-              <Modal.Title>Login</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-                <h4>Welcome back. </h4>
-                <hr />
-                <form>
-                    <FieldGroup
-                        id="formControlsEmail"
-                        type="email"
-                        label="Email address"
-                        placeholder="Enter a valid email address"
-                    />
-                    <FieldGroup id="formControlsPassword" label="Password" type="password" />
-                    <Button bsStyle="success" type="submit">LOGIN</Button>
-                </form>    
-              </Modal.Body>
-          <Modal.Footer>
-            <Button onClick={this.handleClose}>Close</Button>
-          </Modal.Footer>
-        </Modal>
-      </div>
+  render() {
+        return (
+            <div>
+                <Button color="light" onClick={this.toggle}>Login</Button>
+                <Modal isOpen={this.state.modal}>
+                    <form onSubmit={this.handleSubmit}>
+                    <ModalHeader>LOGIN</ModalHeader>
+                    <ModalBody>
+                        <div className="row">
+                            <div className="form-group col-md-4">
+                                <label>Email</label>
+                                <input type="email" value={this.state.email} onChange={this.handleChangeEmail} className="form-control" />
+                            </div>
+                        </div>
+                        <div className="row">
+                            <div className="form-group col-md-4">
+                                <label>Password</label>
+                                <input type="password" value={this.state.password} onChange={this.handleChangePw} className="form-control" />
+                            </div>
+                        </div>
+                    </ModalBody>
+                    <ModalFooter>
+                        <input type="submit" value="Login" color="primary" className="btn btn-primary" />
+                        <Button color="danger" onClick={this.toggle}>Close</Button>
+                    </ModalFooter>
+                    </form>
+                </Modal>
+            </div>
     );
   }
 }
-

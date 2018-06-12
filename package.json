@@ -15,7 +15,7 @@
   "license": "MIT",
   "dependencies": {
     "bcrypt": "^2.0.1",
-    "bootstrap": "^3.3.7",
+    "bootstrap": "^4.1.1",
     "cookie-parser": "latest",
     "debug": "latest",
     "dotenv": "^6.0.0",
@@ -24,7 +24,8 @@
     "mongo": "^0.1.0",
     "mongodb": "latest",
     "mongoose": "^5.1.4",
-    "monk": "latest"
+    "monk": "latest",
+    "reactstrap": "^6.1.0"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
@@ -34,10 +35,8 @@
     "babel-preset-stage-3": "^6.24.1",
     "nodemon": "^1.17.5",
     "react": "^16.4.0",
-    "react-bootstrap": "^0.32.1",
     "react-dom": "^16.4.0",
     "react-router": "^4.3.1",
-    "react-router-bootstrap": "^0.24.4",
     "react-router-dom": "^4.3.1",
     "webpack": "^4.12.0",
     "webpack-cli": "^3.0.3"
