@@ -1,4 +1,3 @@
-/*jshint esversion: 6 */
 const mongoose = require('mongoose');
 
 const SellerSchema = new mongoose.Schema({
@@ -9,6 +8,7 @@ const SellerSchema = new mongoose.Schema({
     },
     email: {
         type: String,
+        required: 'Enter an email address'
     },
     location: String,   
 });

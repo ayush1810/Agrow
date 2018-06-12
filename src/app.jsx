@@ -6,10 +6,12 @@ import {
     Switch
 } from 'react-router-dom'; 
 import ItemList from './ItemList.jsx';
-import UsersInfo from './signUp.jsx';
+import UsersInfo from './UserDashboard.jsx';
 
 const contentNode = document.getElementById('contents');
-const noMatch = () =><p>Page Not Found</p>;
+const noMatch = () =>(
+  <p>Page Not Found</p>
+);
 
 const RoutedApp = () => (
   <Router>
