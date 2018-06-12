@@ -1,28 +1,27 @@
 import React from 'react';
-import { Popover,Tooltip,Modal, OverlayTrigger, FormGroup, FormControl, ControlLabel, InputGroup,
+import { Popover,Tooltip,Modal, OverlayTrigger, FormGroup, FormControl, HelpBlock, ControlLabel, InputGroup,
     ButtonToolbar, Button } from 'react-bootstrap';
-
-function FieldGroup({ id, label, help, ...props }) {
-    return (
-        <FormGroup controlId={id}>
-        <ControlLabel>{label}</ControlLabel>
-        <FormControl {...props} />
-        {help && <HelpBlock>{help}</HelpBlock>}
-        </FormGroup>
-    );
-}
 
 export default class SignupModel extends React.Component {
     constructor(props, context) {
         super(props, context);
-  
+        
         this.handleShow = this.handleShow.bind(this);
         this.handleClose = this.handleClose.bind(this);
         this.dismissValidation = this.dismissValidation.bind(this);
         this.showValidation = this.showValidation.bind(this);
+
+        this.handleSubmit = this.handleSubmit.bind(this);
+        this.createSeller = this.createSeller.bind(this);
         this.state = {
         show: false,
         showingValidation: false,
+        user: {
+            name: '',
+            email: '',
+            password: '',
+            location:''
+        },
         };
     }
   
@@ -43,18 +42,22 @@ export default class SignupModel extends React.Component {
 
     handleSubmit(e){
         e.preventDefault(); 
+        console.log("Step 1");
         let form = document.forms.addUserForm; 
         this.createSeller({
-            name: form.name.value,
-            location: form.location.value,
-            email: form.email.value,
+            name: form.inputName.value,
+            location: form.inputCity.value,
+            email: form.inputEmail.value,
         });
-        form.name.value = '';
-        form.location.value = '';
-        form.email.value = '';
+        this.state.user.name = '';
+        this.state.user.email = '';
+        this.state.user.password = '';
+        this.state.user.location = '';
+        console.log("Step 1 finish");
     }
 
     createSeller(newSeller){
+        console.log("Step 2");
         fetch('/adduser',{
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
@@ -63,6 +66,7 @@ export default class SignupModel extends React.Component {
         .catch(err =>{
             console.log(err.message);
         });
+        console.log("Step 2 finish");
     }
 
     render() {
@@ -76,7 +80,7 @@ export default class SignupModel extends React.Component {
       return (
         <div>
           <Button bsStyle="primary" bsSize="small" onClick={this.handleShow}>
-            Signup
+            SIGNUP
           </Button>
   
           <Modal show={this.state.show} onHide={this.handleClose}>
@@ -104,25 +108,48 @@ export default class SignupModel extends React.Component {
                 </p>
                 <hr />
                 <form name="addUserForm" onSubmit={this.handleSubmit}>
-                    <FieldGroup
-                        id="formControlsText"
-                        name='name'
-                        type="text"
-                        label="Name"
-                        placeholder="Enter your full name"
+                    <FormGroup controlId="formName">
+                        <ControlLabel>Name</ControlLabel>
+                        <FormControl
+                            type="text"
+                            inputRef={ref => { this.inputName = ref; }}
+                            placeholder="Enter your full name"
                         />
-                    <FieldGroup
-                        id="formControlsEmail"
-                        type="email"
-                        name='name'
-                        label="Email address"
-                        placeholder="Enter a valid email address"
-                    />
-                    <FieldGroup id="formControlsPassword" label="Password" type="password" />
-                    <FormGroup controlId="formControlsSelect">
+                        <HelpBlock>Validation is based on string length.</HelpBlock>
+                    </FormGroup>
+                    <FormGroup controlId="formEmail">
+                        <ControlLabel>Email</ControlLabel>
+                        <FormControl
+                            type="text"
+                            // value={this.state.user.email}
+                            placeholder="Enter a valid email address"
+                            inputRef={ref => { this.inputEmail = ref; }}
+                        />
+                        <HelpBlock>Email validation</HelpBlock>
+                    </FormGroup>
+                    <FormGroup controlId="formPassword">
+                        <ControlLabel>Password</ControlLabel>
+                        <FormControl
+                            type="password"
+                            // value={this.state.user.password}
+                            placeholder="Enter a password of minimum 8 characters"
+                        />
+                        <HelpBlock>P/w verification</HelpBlock>
+                    </FormGroup>
+                    <FormGroup controlId="formLocation">
+                        <ControlLabel>City / District</ControlLabel>
+                        <FormControl
+                            type="text"
+                            // value={this.state.user.location}
+                            placeholder="Enter your city"
+                            inputRef={ref => { this.inputCity = ref; }}
+                        /> 
+                        <HelpBlock>Hmmm</HelpBlock>
+                    </FormGroup>
+                    {/* <FormGroup controlId="formControlsSelect">
                         <ControlLabel>State / U.T. </ControlLabel>
                         <FormControl componentClass="select" placeholder="Select State">
-                             <option value="select">------------Select State------------</option>
+                            <option value="select">------------Select State------------</option>
                             <option value="Andaman and Nicobar Islands">Andaman and Nicobar Islands</option>
                             <option value="Andhra Pradesh">Andhra Pradesh</option>
                             <option value="Arunachal Pradesh">Arunachal Pradesh</option>
@@ -160,12 +187,6 @@ export default class SignupModel extends React.Component {
                             <option value="West Bengal">West Bengal</option>
                         </FormControl>
                     </FormGroup>
-                    <FieldGroup
-                        id="formControlsText"
-                        type="text"
-                        label="City / District"
-                        placeholder="Enter a City or District"
-                    />
                     <FormGroup controlId="formControlsSelectMultiple">
                         <ControlLabel>Languages (Hold CTRL to choose multiple)</ControlLabel>
                         <FormControl componentClass="select" multiple>
@@ -183,7 +204,7 @@ export default class SignupModel extends React.Component {
                             <option value="Odia">Odia</option>
                             <option value="Assamese">Assamese</option>
                         </FormControl>
-                    </FormGroup>
+                    </FormGroup> */}
                     <Button bsStyle="success" type="submit">SIGN UP</Button>
                 </form>
               </Modal.Body>

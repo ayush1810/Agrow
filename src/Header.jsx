@@ -16,7 +16,7 @@ export default class Webhead extends React.Component{
                 </Navbar.Header>
                 <Navbar.Collapse>
                     <Nav>
-                        <NavItem eventKey={1} href="#">
+                        <NavItem eventKey={1} href="#dashboard">
                             Users
                         </NavItem>
                         <NavItem eventKey={2} href="#">

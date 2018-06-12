@@ -17,7 +17,7 @@ const RoutedApp = () => (
   <Router>
     <Switch>
         <Route exact path='/' component={ItemList} />
-        <Route exact path='/adduser' component={UsersInfo} />
+        <Route exact path='/dashboard' component={UsersInfo} />
         <Route exact path='*' component={noMatch} />
     </Switch>    
   </Router>  
