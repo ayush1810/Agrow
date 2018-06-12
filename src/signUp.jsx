@@ -1,9 +1,12 @@
 import React from 'react';
 
+import Webhead from './Header.jsx';
+
 const UserRow = (props) => (
     <tr>
         <td >{props.item._id}</td>
         <td >{props.item.name}</td>
+        <td >{props.item.email}</td>
         <td >{props.item.location}</td>
         <td >{props.item.rating}</td>
     </tr>   
@@ -17,6 +20,7 @@ function UserTable (props){
                 <tr>
                     <th>ID</th>
                     <th>Name</th>
+                    <th>Email</th>
                     <th>Location</th>
                     <th>Rating</th>
                 </tr>
@@ -42,10 +46,12 @@ class AddUser extends React.Component{
         this.createSeller({
             name: form.name.value,
             location: form.location.value,
-            rating : 4.5,
+            email: form.email.value,
+            rating : 0,
         });
         form.name.value = '';
         form.location.value = '';
+        form.email.value = '';
     }
 
     createSeller(newSeller){
@@ -62,13 +68,17 @@ class AddUser extends React.Component{
     render(){
         return(
             <div>
-                <h2>SignUp as a new Seller.</h2>
-                <form name="addUserForm" onSubmit={this.handleSubmit}>
-                    <input type="text" name="name" placeholder="Name"/>
-                    <input type="text" name="location" placeholder="Location"/>
-                    <button type="submit">SignUp</button>
-                </form>
-            </div>
+                <Webhead/>
+                <div className="container-fluid">
+                    <h2>SignUp as a new Seller.</h2>
+                    <form name="addUserForm" onSubmit={this.handleSubmit}>
+                        <input type="text" name="name" placeholder="Name"/>
+                        <input type="text" name="email" placeholder="Email"/>
+                        <input type="text" name="location" placeholder="Location"/>
+                        <button type="submit">SignUp</button>
+                    </form>
+                </div>
+            </div>    
         );
     }
 }

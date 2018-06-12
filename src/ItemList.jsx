@@ -1,4 +1,6 @@
 import React from 'react';
+
+import Webhead from './Header.jsx';
 import ItemAdd from './ItemAdd.jsx';
 import ItemFilter from './ItemFilter.jsx';
 
@@ -65,13 +67,15 @@ export default class ItemList extends React.Component{
     render(){
         return(
             <div>
-                <h4>Welcome to ItemList</h4>
-                <ItemFilter/> 
-                <hr/>
-                <ItemTable items={this.state.items}/>
-                <hr/>
-                <ItemAdd createItem={this.createItem} />
-            </div>
+                <Webhead/>
+                <div className="container-fluid">
+                    <ItemFilter/> 
+                    <hr/>
+                    <ItemTable items={this.state.items}/>
+                    <hr/>
+                    <ItemAdd createItem={this.createItem} />
+                </div>
+            </div>    
         );
     }
 }

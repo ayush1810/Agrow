@@ -9,6 +9,10 @@ const ItemSchema = new mongoose.Schema({
         required: `Enter a valid item name`
     },
     quantity: Number,
-    rate: Number 
+    rate: Number,
+    seller: {
+        type: String,
+        trim: true,
+    },
 });
 module.exports = mongoose.model('Item',ItemSchema);

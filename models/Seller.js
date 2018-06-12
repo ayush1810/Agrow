@@ -1,6 +1,5 @@
 /*jshint esversion: 6 */
 const mongoose = require('mongoose');
-mongoose.Promise = global.Promise;
 
 const SellerSchema = new mongoose.Schema({
     name:{
@@ -8,9 +7,9 @@ const SellerSchema = new mongoose.Schema({
         trim: true,
         required: `Enter a valid Seller name`
     },
-    location: String,
-    rating : {
-        type: Number
-    } 
+    email: {
+        type: String,
+    },
+    location: String,   
 });
 module.exports = mongoose.model('Seller',SellerSchema);
