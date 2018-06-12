@@ -70,7 +70,7 @@ class AddUser extends React.Component{
             <div>
                 <Webhead/>
                 <div className="container-fluid">
-                    <h2>SignUp as a new Seller.</h2>
+                    <h2>Join Us Now: </h2>
                     <form name="addUserForm" onSubmit={this.handleSubmit}>
                         <input type="text" name="name" placeholder="Name"/>
                         <input type="text" name="email" placeholder="Email"/>
