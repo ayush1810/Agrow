@@ -1,4 +1,5 @@
 import React from 'react';
+import { Button, Form, FormGroup, Label, Input} from 'reactstrap';
 
 export default class ItemAdd extends React.Component{
     constructor(){
@@ -19,14 +20,21 @@ export default class ItemAdd extends React.Component{
     }
     render(){
         return(
-            <div>
-                <form name='itemAdd' onSubmit={this.handleSubmit}> 
-                    <input type="text" name="name" placeholder="Name"/>
-                    <input type="text" name="quantity" placeholder="Quantity"/>
-                    <input type="text" name="rate" placeholder="Rate"/>
-                    <button>Add Item</button>
-                </form>
-            </div>
+            <Form inline name="itemAdd" onSubmit={this.handleSubmit}>
+                <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
+                    <Label hidden for="AddItemFormName" className="mr-sm-2">Name</Label>
+                    <Input type="text" name="name" id="AddItemFormName" placeholder="Item Name" />
+                </FormGroup>
+                <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
+                    <Label hidden for="AddItemFormQuantity" className="mr-sm-2">Quantity</Label>
+                    <Input type="text" name="quantity" id="AddItemFormQuantity" placeholder="Quantity (Kg)" />
+                </FormGroup>
+                <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
+                    <Label hidden for="AddItemFormRate" className="mr-sm-2">Rate</Label>
+                    <Input type="text" name="rate" id="AddItemFormRate" placeholder="Rate per Kg" />
+                </FormGroup>
+                <Button>Add Item</Button>
+            </Form>
         );
     }
 }

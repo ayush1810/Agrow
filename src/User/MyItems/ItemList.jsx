@@ -77,21 +77,20 @@ export default class ItemList extends React.Component{
     render(){
         return(
             <div>
-                <Container>
+                <Container className="p-4" style={{ backgroundColor: '#333', borderColor: '#333' }}>
+                    <Row>        
+                        <ItemFilter/> 
+                        <hr/>
+                     </Row>
+                     <Row>
+                        <ItemTable items={this.state.items}/>
+                        <hr/>
+                    </Row>
                     <Row>
-                        <Col xs="12" sm="6" md="4">
-                            <ItemFilter/> 
-                            <hr/>
-                            <ItemTable items={this.state.items}/>
-                            <hr/>
-                            <Button color="primary" size="sm" onClick={this.toggleAddItem}>Add Item</Button>
-                            <Fade in={this.state.fadeIn} tag="h5" className="mt-3">
-                                <ItemAdd createItem={this.createItem} />
-                            </Fade>
-                        </Col>
-                        <Col xs="12" sm="6" md="4">
-                            Account
-                        </Col>
+                        <Button color="primary" size="sm" onClick={this.toggleAddItem}>Add Item</Button>
+                        <Fade in={this.state.fadeIn} tag="h5" className="mt-3">
+                            <ItemAdd createItem={this.createItem} />
+                        </Fade>
                     </Row>    
                 </Container>
             </div>    
