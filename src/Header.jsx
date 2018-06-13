@@ -11,8 +11,8 @@ import { Collapse,
     DropdownMenu,
     DropdownItem } from 'reactstrap'; 
 
-import SignupModel from './UserAdd.jsx';
-import LoginModel from './UserLogin.jsx';
+import SignupModel from './User/UserAdd.jsx';
+import LoginModel from './User/UserLogin.jsx';
 
 export default class Webhead extends React.Component{
     constructor(props)

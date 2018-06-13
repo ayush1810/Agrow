@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+mongoose.set('debug',true);
 const bcrypt = require('bcrypt');
 
 const SellerSchema = new mongoose.Schema({
@@ -15,8 +16,31 @@ const SellerSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    location: String,   
+    state: {
+        type : String,
+    },
+    city: String,   
 });
+
+SellerSchema.statics.authenticate = function (email, password, callback) {
+    Seller.findOne({ email: email })
+      .exec(function (error, user) {
+        if (error) {
+          return callback(error);
+        } else if (!user) {
+          var err = new Error('User not found.');
+          err.status = 401;
+          return callback(err);
+        }
+        bcrypt.compare(password, user.password, function (err, result) {
+          if (result === true) {
+            return callback(null, user);
+          } else {
+            return callback();
+          }
+        });
+      });
+};
 
 SellerSchema.pre('save', function (next) {
     var user = this;
@@ -29,4 +53,5 @@ SellerSchema.pre('save', function (next) {
     });
 });
 
-module.exports = mongoose.model('Seller',SellerSchema);
+var Seller = mongoose.model('Seller',SellerSchema);
+module.exports = Seller;

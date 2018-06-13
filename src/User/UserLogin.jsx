@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
-
+import { Redirect } from 'react-router-dom';
 export default class LoginModel extends React.Component {
   constructor(props) {
     super(props);
@@ -14,6 +14,7 @@ export default class LoginModel extends React.Component {
     this.handleChangePw = this.handleChangePw.bind(this);
     this.handleChangeEmail = this.handleChangeEmail.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.loginUser = this.loginUser.bind(this);
   }
 
   toggle() {
@@ -30,10 +31,26 @@ export default class LoginModel extends React.Component {
   }
   
   handleSubmit(event) {
+    console.log("handlesubmit");
     event.preventDefault();
-    alert("You are now logged in!");
+    this.loginUser({
+        email : this.state.email,
+        password : this.state.password 
+    });
+    console.log("noww");
     }
   
+  loginUser(usercreds){
+    fetch('/login',{
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body : JSON.stringify(usercreds),
+    }).then(() =>{
+        console.log("You are now logged in!");
+    }).catch(err =>{
+        console.log(err.message);
+    });
+  }  
   render() {
         return (
             <div>

@@ -1,12 +1,12 @@
 import React from 'react';
+import {Container, Row,Col, Table,Button, Fade} from 'reactstrap';
 
-import Webhead from './Header.jsx';
 import ItemAdd from './ItemAdd.jsx';
 import ItemFilter from './ItemFilter.jsx';
 
 const ItemRow = (props) => (
     <tr>
-        <td >{props.item._id}</td>
+        <td scope="row">{props.item._id}</td>
         <td >{props.item.name}</td>
         <td >{props.item.quantity}</td>
         <td >{props.item.rate}</td>
@@ -16,10 +16,10 @@ const ItemRow = (props) => (
 function ItemTable (props){
     const itemRows = props.items.map(item => <ItemRow key={item._id} item={item}/>) ; 
     return(
-        <table className="bordered-table">
+        <Table dark>
             <thead>
                 <tr>
-                    <th>ID</th>
+                    <th>#</th>
                     <th>Name</th>
                     <th>Quantity</th>
                     <th>Rate</th>
@@ -28,15 +28,25 @@ function ItemTable (props){
             <tbody>
                 {itemRows}
             </tbody>
-        </table>
+        </Table>
         );
     }
 
 export default class ItemList extends React.Component{
     constructor(){
         super();
-        this.state = {items : []};
+        this.state = {
+            fadeIn : false,
+            items : []
+        };
         this.createItem = this.createItem.bind(this);
+        this.toggleAddItem = this.toggleAddItem.bind(this);
+    }
+
+    toggleAddItem() {
+        this.setState({
+            fadeIn: !this.state.fadeIn
+        });
     }
 
     componentDidMount(){
@@ -67,14 +77,23 @@ export default class ItemList extends React.Component{
     render(){
         return(
             <div>
-                <Webhead/>
-                <div className="container-fluid">
-                    <ItemFilter/> 
-                    <hr/>
-                    <ItemTable items={this.state.items}/>
-                    <hr/>
-                    <ItemAdd createItem={this.createItem} />
-                </div>
+                <Container>
+                    <Row>
+                        <Col xs="12" sm="6" md="4">
+                            <ItemFilter/> 
+                            <hr/>
+                            <ItemTable items={this.state.items}/>
+                            <hr/>
+                            <Button color="primary" size="sm" onClick={this.toggleAddItem}>Add Item</Button>
+                            <Fade in={this.state.fadeIn} tag="h5" className="mt-3">
+                                <ItemAdd createItem={this.createItem} />
+                            </Fade>
+                        </Col>
+                        <Col xs="12" sm="6" md="4">
+                            Account
+                        </Col>
+                    </Row>    
+                </Container>
             </div>    
         );
     }
