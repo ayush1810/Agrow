@@ -20,6 +20,10 @@ const SellerSchema = new mongoose.Schema({
         type : String,
     },
     city: String,   
+    items: [{
+      type: mongoose.Schema.Types.ObjectId,
+      ref : 'Item'
+    }]
 });
 
 SellerSchema.statics.authenticate = function (email, password, callback) {

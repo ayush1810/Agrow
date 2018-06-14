@@ -1,6 +1,8 @@
 import React from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
-import { Redirect } from 'react-router-dom';
+import createHistory from "history/createHashHistory";
+const history = createHistory();
+
 export default class LoginModel extends React.Component {
   constructor(props) {
     super(props);
@@ -31,13 +33,11 @@ export default class LoginModel extends React.Component {
   }
   
   handleSubmit(event) {
-    console.log("handlesubmit");
     event.preventDefault();
     this.loginUser({
         email : this.state.email,
         password : this.state.password 
     });
-    console.log("noww");
     }
   
   loginUser(usercreds){
@@ -45,12 +45,14 @@ export default class LoginModel extends React.Component {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body : JSON.stringify(usercreds),
-    }).then(() =>{
-        console.log("You are now logged in!");
+    }).then(response => response.json()).then(updatedUser => {
+        this.toggle();
+        history.push('/dashboard');
     }).catch(err =>{
         console.log(err.message);
     });
-  }  
+}
+
   render() {
         return (
             <div>

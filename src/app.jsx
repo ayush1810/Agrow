@@ -7,6 +7,7 @@ import {
     Redirect,
     Switch
 } from 'react-router-dom'; 
+import {Container, Row, Col} from 'reactstrap';
 
 import UsersInfo from './User/UserDashboard.jsx';
 import Webhead from './Header.jsx';
@@ -31,11 +32,17 @@ const fakeAuth = {
 class Main extends React.Component{
   render(){
     return(
-      <div className="containerFluid">
+      <Container fluid>
         <Webhead/>
-        Welcome to the homepage. 
-        Login or Signup to trade!
-      </div>
+        <Container>
+          <Row>
+            <Col className="display-3 px-auto text-center">AGROW</Col>
+          </Row>
+          <Row>
+            <Col className="display-5 px-auto font-italic text-center">An experimental bidding project</Col>
+          </Row>
+        </Container>
+      </Container>
     );
   }
 }

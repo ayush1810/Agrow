@@ -61,7 +61,7 @@ export default class SignupModel extends React.Component {
             headers: {'Content-Type': 'application/json'},
             body : JSON.stringify(newSeller),
         }).then(response => response.json()).then(updatedSeller => {
-            alert("Signup successful. Dashboard loading soon")
+            alert("Signup successful. Dashboard loading soon");
         }).catch(err =>{
             console.log(err.message);
         });

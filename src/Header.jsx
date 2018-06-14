@@ -27,7 +27,7 @@ export default class Webhead extends React.Component{
     }
     render(){
         return(
-            <Navbar color="dark" expand="md">
+            <Navbar className="bg-transparent" expand="md">
                 <NavbarBrand href="#/">AGROW</NavbarBrand>
                 <Nav className="ml-auto" navbar>
                     <NavItem>
@@ -43,7 +43,7 @@ export default class Webhead extends React.Component{
                         <NavItem>
                             <LoginModel/>
                         </NavItem>
-                        <NavItem>
+                        <NavItem className="ml-2">
                             <SignupModel/>
                         </NavItem>
                     </Nav>

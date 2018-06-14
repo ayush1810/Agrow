@@ -1,8 +1,6 @@
 const express = require('express'),
       passport = require('passport'),
       LocalStrategy = require('passport-local').Strategy;
-// const check = require('express-validator/check').check;
-// const validationResult = require('express-validator/check').validationResult;
 const mongoose = require('mongoose');
 const router = express.Router();
 mongoose.set('debug', true);
@@ -10,29 +8,6 @@ mongoose.set('debug', true);
 var sess ;
 const Item = require('../models/Item');
 const Seller = require('../models/Seller');
-
-// passport.use(new LocalStrategy(
-//     function(uemail, password, done) {
-//         Seller.findOne({
-//           email: uemail
-//         }, function(err, user) {
-//           if (err) {
-//             return done(err);
-//           }
-  
-//           if (!user) {
-//             return done(null, false);
-//           }
-//           bcrypt.compare(password, user.password, function (err, result) {
-//             if (result === true) {
-//               return done(null, user);
-//             } else {
-//               return done(null,false);
-//             }
-//           });
-//         });
-//     }
-// ));
 
 router.get('/',(req, res)=>{
     res.render('index');
@@ -83,8 +58,6 @@ router.post('/adduser',(req, res)=>{
 } );
 
 router.get('/profile', function (req, res, next) {
-    sess = req.session;
-    console.log(sess.userId);
     Seller.findById(sess.userId)
       .exec(function (error, user) {
         if (error) {
@@ -101,12 +74,6 @@ router.get('/profile', function (req, res, next) {
       });
 });
 
-// router.post('/login',
-//   passport.authenticate('local', { failureRedirect: '/' }),
-//   function(req, res) {
-//     res.redirect('/profile?id='+req.user._id);
-//   });
-//POST when login
 router.post('/login', function(req, res, next) {
     if (req.body.email && req.body.password) {  
     Seller.authenticate(req.body.email, req.body.password, function (error, user) {
@@ -116,10 +83,7 @@ router.post('/login', function(req, res, next) {
         err.status = 401;
         return next(err);
         }  else {
-        sess = req.session; 
-        sess.userId = user._id;
-        console.log('Received Id '+ sess.userId);
-        res.redirect('/');
+        res.json('user');
         }
     });
     } else {
