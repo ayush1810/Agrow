@@ -28,13 +28,13 @@ export default class Webhead extends React.Component{
     render(){
         return(
             <Navbar className="bg-transparent" expand="md">
-                <NavbarBrand href="#/">AGROW</NavbarBrand>
+                {/* <NavbarBrand href="#/">AGROW</NavbarBrand> */}
                 <Nav className="ml-auto" navbar>
                     <NavItem>
-                        <NavLink href="#dashboard"> Dashboard</NavLink>
+                        <NavLink className="text-white" href="#dashboard"> Dashboard</NavLink>
                     </NavItem>
                     <NavItem>
-                        <NavLink href="http://github.com/ayush1810/agrow">Github</NavLink>
+                        <NavLink className="text-white" href="http://github.com/ayush1810/agrow">Github</NavLink>
                     </NavItem>
                 </Nav>
                 <NavbarToggler onClick={this.doToggle}/>

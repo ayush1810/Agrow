@@ -36,10 +36,10 @@ class Main extends React.Component{
         <Webhead/>
         <Container>
           <Row>
-            <Col className="display-3 px-auto text-center">AGROW</Col>
+            <Col className="display-3 my-0 py-0 px-auto text-center" style={{color:'#25a55f'}}>AGROW</Col>
           </Row>
           <Row>
-            <Col className="display-5 px-auto font-italic text-center">An experimental bidding project</Col>
+            <Col className="display-5 m-0 p-0 font-italic text-center" style={{color:'#fff7c2'}}>An experimental bidding project</Col>
           </Row>
         </Container>
       </Container>

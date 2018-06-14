@@ -57,22 +57,22 @@ router.post('/adduser',(req, res)=>{
     });
 } );
 
-router.get('/profile', function (req, res, next) {
-    Seller.findById(sess.userId)
-      .exec(function (error, user) {
-        if (error) {
-          return next(error);
-        } else {
-          if (user === null) {
-            var err = new Error('Not authorized! Go back!');
-            err.status = 400;
-            return next(err);
-          } else {
-            return res.send('<h1>Name: </h1>' + user.name + '<h2>Mail: </h2>' + user.email + '<br><a type="button" href="/logout">Logout</a>');
-          }
-        }
-      });
-});
+// router.get('/profile', function (req, res, next) {
+//     Seller.findById(sess.userId)
+//       .exec(function (error, user) {
+//         if (error) {
+//           return next(error);
+//         } else {
+//           if (user === null) {
+//             var err = new Error('Not authorized! Go back!');
+//             err.status = 400;
+//             return next(err);
+//           } else {
+//             return res.send('<h1>Name: </h1>' + user.name + '<h2>Mail: </h2>' + user.email + '<br><a type="button" href="/logout">Logout</a>');
+//           }
+//         }
+//       });
+// });
 
 router.post('/login', function(req, res, next) {
     if (req.body.email && req.body.password) {  
@@ -83,7 +83,7 @@ router.post('/login', function(req, res, next) {
         err.status = 401;
         return next(err);
         }  else {
-        res.json('user');
+        res.json(user);
         }
     });
     } else {

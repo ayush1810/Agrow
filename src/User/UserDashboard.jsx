@@ -1,15 +1,26 @@
 import React from 'react';
-import Webhead from '../Header.jsx';
+import createHistory from "history/createHashHistory";
 import {Jumbotron,Card, CardText, CardTitle, Container, Row, Col, Button} from 'reactstrap';
+
+import Webhead from '../Header.jsx';
 import ItemTable from './MyItems/ItemList.jsx';
 
+const history = createHistory();
 export default class UsersInfo extends React.Component{
     constructor(props, context){
         super(props,context);
+   
+        this.handleLogout = this.handleLogout.bind(this);
         this.state = {
             username: 'User'
         };
     }
+
+    handleLogout(e){
+        e.preventDefault();
+        history.push('/home');
+    }
+
     render(){
         return(
             <div>
@@ -35,7 +46,7 @@ export default class UsersInfo extends React.Component{
                             <Card body inverse style={{ backgroundColor: '#333', borderColor: '#333' }}>
                                 <CardTitle>Your Profile</CardTitle>
                                 <CardText>Details coming soon.</CardText>
-                                <Button>Logout</Button>
+                                <Button onClick={this.handleLogout}>Logout</Button>
                             </Card>
                         </Col>
                    </Row>
