@@ -2,7 +2,6 @@ import React from 'react';
 import createHistory from "history/createHashHistory";
 import {Jumbotron,Card, CardText, CardTitle, Container, Row, Col, Button} from 'reactstrap';
 
-import Webhead from '../Header.jsx';
 import ItemTable from './MyItems/ItemList.jsx';
 
 const history = createHistory();
@@ -18,13 +17,13 @@ export default class UsersInfo extends React.Component{
 
     handleLogout(e){
         e.preventDefault();
+        this.props.signout();
         history.push('/home');
     }
 
     render(){
         return(
             <div>
-                <Webhead/> 
                 <Container fluid>
                     <Row>
                         <Container fluid>   

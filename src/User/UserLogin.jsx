@@ -47,6 +47,7 @@ export default class LoginModel extends React.Component {
         body : JSON.stringify(usercreds),
     }).then(response => response.json()).then(updatedUser => {
         this.toggle();
+        this.props.authenticate();
         history.push('/dashboard');
     }).catch(err =>{
         console.log(err.message);
