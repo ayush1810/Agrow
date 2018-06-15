@@ -14,7 +14,10 @@ export default class UsersInfo extends React.Component{
             username: 'User'
         };
     }
-
+    componentDidMount(){
+        const { match} = this.props;
+        alert("Welcome home, "+ match.params.username);
+    }
     handleLogout(e){
         e.preventDefault();
         this.props.signout();
