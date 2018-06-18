@@ -14,8 +14,7 @@ import {
   Button
 } from 'reactstrap';
 
-import createHistory from "history/createHashHistory";
-const history = createHistory();  
+import history from './history.js';
 
 import SignupModel from './User/UserAdd.jsx';
 import LoginModel from './User/UserLogin.jsx';
@@ -54,7 +53,7 @@ class NavHead extends React.Component {
         <Collapse isOpen={this.state.isActive} navbar>
             <Nav className="ml-auto" navbar>
                 <NavItem>
-                    <LoginModel authenticate={this.props.authenticate}/>
+                    <LoginModel loginUser={this.props.doLogin}/>
                 </NavItem>
                 <NavItem className="ml-2">
                     <SignupModel/>
@@ -103,10 +102,29 @@ class Main extends React.Component{
     super(props);
     this.state = {
       isAuthenticated: false,
+      user : null
     }
     this.authenticate = this.authenticate.bind(this);
     this.signout = this.signout.bind(this);
+    this.loginUser = this.loginUser.bind(this);
   }
+    
+  loginUser(usercreds){
+    fetch('/login',{
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body : JSON.stringify(usercreds),
+    }).then(response => response.json()).then(updatedUser => {
+        this.authenticate();
+        this.setState({user: updatedUser });
+        history.push({
+         pathname:'/dashboard',
+        });
+    }).catch(err =>{
+        console.log(err.message);
+    });
+  }
+
   authenticate(){
     this.setState({isAuthenticated:true});
   }
@@ -118,10 +136,10 @@ render(){
     return(
       <Router>
         <div>
-          <NavHead loggedIn={this.state.isAuthenticated} signOut={this.signout} authenticate={this.authenticate}   />
+          <NavHead loggedIn={this.state.isAuthenticated} signOut={this.signout} doLogin={this.loginUser}  />
       <Route exact path='/home' component={HomePage} />
       <Route path='/dashboard' render={(props)=>
-        this.state.isAuthenticated ? (<UsersInfo {...props} signout={this.signout} />) : (
+        this.state.isAuthenticated ? (<UsersInfo {...props} signout={this.signout} user={this.state.user} />) : (
         <Redirect 
           to={{
             pathname: '/',

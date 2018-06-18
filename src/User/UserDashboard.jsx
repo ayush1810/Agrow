@@ -3,29 +3,15 @@ import {Jumbotron,Card, CardText, CardTitle, Container, Row, Col, Button} from '
 
 import ItemTable from './MyItems/ItemList.jsx';
 
-import createHistory from "history/createHashHistory";
-const history = createHistory();
-
 export default class UsersInfo extends React.Component{
     constructor(props, context){
-        super(props,context);
-   
-        this.handleLogout = this.handleLogout.bind(this);
-        this.state = {
-            username: 'User'
-        };
+        super(props,context);   
     }
     componentDidMount(){
-        const { match, history} = this.props;
+        // const { match, history} = this.props;
 //        this.setState({username: this.props.state.user.name});
-        alert("Welcome home, "+ match.params.username);
+        alert("Welcome home, "+ this.props.user.name);
     }
-    handleLogout(e){
-        e.preventDefault();
-        this.props.signout();
-        history.push('/home');
-    }
-
     render(){
         return(
             <div>
@@ -50,7 +36,7 @@ export default class UsersInfo extends React.Component{
                             <Card body inverse style={{ backgroundColor: '#333', borderColor: '#333' }}>
                                 <CardTitle>Your Profile</CardTitle>
                                 <CardText>Details coming soon.</CardText>
-                                <Button onClick={this.handleLogout}>Logout</Button>
+                                <Button>More</Button>
                             </Card>
                         </Col>
                    </Row>

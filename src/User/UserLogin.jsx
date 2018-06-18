@@ -1,7 +1,5 @@
 import React from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
-import createHistory from "history/createHashHistory";
-const history = createHistory();
 
 export default class LoginModel extends React.Component {
   constructor(props) {
@@ -16,7 +14,6 @@ export default class LoginModel extends React.Component {
     this.handleChangePw = this.handleChangePw.bind(this);
     this.handleChangeEmail = this.handleChangeEmail.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.loginUser = this.loginUser.bind(this);
   }
 
   toggle() {
@@ -34,28 +31,11 @@ export default class LoginModel extends React.Component {
   
   handleSubmit(event) {
     event.preventDefault();
-    this.loginUser({
+    this.props.loginUser({
         email : this.state.email,
         password : this.state.password 
     });
     }
-  
-  loginUser(usercreds){
-    fetch('/login',{
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body : JSON.stringify(usercreds),
-    }).then(response => response.json()).then(updatedUser => {
-        this.toggle();
-        this.props.authenticate();
-        history.push({
-         pathname:'/dashboard',
-         state: {user : updatedUser }
-        });
-    }).catch(err =>{
-        console.log(err.message);
-    });
-}
 
   render() {
         return (
