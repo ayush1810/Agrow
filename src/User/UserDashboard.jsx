@@ -1,10 +1,11 @@
 import React from 'react';
-import createHistory from "history/createHashHistory";
 import {Jumbotron,Card, CardText, CardTitle, Container, Row, Col, Button} from 'reactstrap';
 
 import ItemTable from './MyItems/ItemList.jsx';
 
+import createHistory from "history/createHashHistory";
 const history = createHistory();
+
 export default class UsersInfo extends React.Component{
     constructor(props, context){
         super(props,context);
@@ -15,7 +16,8 @@ export default class UsersInfo extends React.Component{
         };
     }
     componentDidMount(){
-        const { match} = this.props;
+        const { match, history} = this.props;
+//        this.setState({username: this.props.state.user.name});
         alert("Welcome home, "+ match.params.username);
     }
     handleLogout(e){

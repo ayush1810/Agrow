@@ -48,7 +48,10 @@ export default class LoginModel extends React.Component {
     }).then(response => response.json()).then(updatedUser => {
         this.toggle();
         this.props.authenticate();
-        history.push('/dashboard');
+        history.push({
+         pathname:'/dashboard',
+         state: {user : updatedUser }
+        });
     }).catch(err =>{
         console.log(err.message);
     });

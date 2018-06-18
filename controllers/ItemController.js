@@ -1,5 +1,3 @@
-/*jshint esversion:6*/
-
 // exports.homePage = (req,res) => {
 //     console.log(req.name);
 //     res.render('base');

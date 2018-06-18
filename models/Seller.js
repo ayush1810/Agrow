@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 mongoose.set('debug',true);
 const bcrypt = require('bcrypt');
+const Item = require('./Item.js');
 
 const SellerSchema = new mongoose.Schema({
     name:{
