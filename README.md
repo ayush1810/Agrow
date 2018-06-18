@@ -35,18 +35,17 @@ $ npm start
 
 #### Finished
 
-- [x] Initial Setup
-- [x] Add Mongo database
-- [x] Add React 
-- [x] Read & Create functions
-- [x] Add SignUp/Login pages
-- [x] Add Bootstrap UI
+- [x] Users login/signup
+- [x] MongoDB integration
+- [x] Password Hashing
+- [x] Webpack config 
+- [x] Bootstrap 4 UI/UX
+- [x] CRUD functionality on items
 
 #### To Do
 
-- [ ] Implement authentication and sessions
-- [ ] Add Users Dashboard
-- [ ] Add Item Filters 
-- [ ] Implement Mongo Aggregate
+- [ ] Finish database config
+- [ ] Show items list on Homepage
+- [ ] Bidding function
 
 

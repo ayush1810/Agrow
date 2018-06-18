@@ -6,6 +6,7 @@ export default class SignupModel extends React.Component {
     super(props);
     this.state = {
         modal: false,
+        role: '',
         name: '',
         email:'' ,
         password: '',
@@ -17,6 +18,7 @@ export default class SignupModel extends React.Component {
     this.handleChangeName = this.handleChangeName.bind(this);
     this.handleChangePw = this.handleChangePw.bind(this);
     this.handleChangeStUt = this.handleChangeStUt.bind(this);
+    this.handleChangeRole = this.handleChangeRole.bind(this);
     this.handleChangeEmail = this.handleChangeEmail.bind(this);
     this.handleChangeLocation = this.handleChangeLocation.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -43,16 +45,30 @@ export default class SignupModel extends React.Component {
   handleChangeLocation(event) {
     this.setState({city: event.target.value});
   }
+  handleChangeRole(event){
+    this.setState({role: event.target.value});
+  }
 
   handleSubmit(event) {
     event.preventDefault();
-    this.createSeller({
-        name: this.state.name,
-        state: this.state.ustate,
-        city: this.state.city,
-        email: this.state.email,
-        password: this.state.password,
-    });
+    if(this.state.role === 'seller'){
+        this.createSeller({
+            name: this.state.name,
+            state: this.state.ustate,
+            city: this.state.city,
+            email: this.state.email,
+            password: this.state.password,
+        });    
+    }
+    else{
+        this.createCustomer({
+            name: this.state.name,
+            state: this.state.ustate,
+            city: this.state.city,
+            email: this.state.email,
+            password: this.state.password,
+        });    
+    }
     }
 
     createSeller(newSeller){
@@ -61,6 +77,20 @@ export default class SignupModel extends React.Component {
             headers: {'Content-Type': 'application/json'},
             body : JSON.stringify(newSeller),
         }).then(response => response.json()).then(updatedSeller => {
+            this.toggle();
+            alert("Signup successful. Dashboard loading soon");
+        }).catch(err =>{
+            console.log(err.message);
+        });
+    }
+
+    createCustomer(newCustomer){
+        fetch('/addcustomer',{
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body : JSON.stringify(newCustomer),
+        }).then(response => response.json()).then(updatedCustomer => {
+            this.toggle();
             alert("Signup successful. Dashboard loading soon");
         }).catch(err =>{
             console.log(err.message);
@@ -75,6 +105,17 @@ export default class SignupModel extends React.Component {
                     <form onSubmit={this.handleSubmit}>
                     <ModalHeader>SignUp</ModalHeader>
                     <ModalBody>
+                        <div className="row">
+                            <div className="form-group col-md-6">
+                                <FormGroup>
+                                    <Label for="formrole">Signup As</Label>
+                                    <Input type="select" name="selectrole" id="formrole" value={this.state.role} onChange={this.handleChangeRole}>
+                                        <option value="customer">Customer</option>
+                                        <option value="seller">Seller</option>
+                                    </Input>
+                                </FormGroup>
+                            </div>
+                        </div>
                         <div className="row">
                             <div className="form-group col-md-6">
                                 <label>Name</label>

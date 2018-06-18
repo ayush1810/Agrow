@@ -7,9 +7,9 @@ import ItemFilter from './ItemFilter.jsx';
 const ItemRow = (props) => (
     <tr>
         <td scope="row">{props.item._id}</td>
-        <td >{props.item.name}</td>
-        <td >{props.item.quantity}</td>
-        <td >{props.item.rate}</td>
+        <td>{props.item.name}</td>
+        <td>{props.item.quantity}</td>
+        <td>{props.item.rate}</td>
     </tr>   
 )
 

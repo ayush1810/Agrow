@@ -5,7 +5,7 @@ const mongoose = require('mongoose');
 const router = express.Router();
 mongoose.set('debug', true);
 
-var sess ;
+const Customer = require('../models/Customer.js');
 const Item = require('../models/Item');
 const Seller = require('../models/Seller');
 
@@ -42,7 +42,6 @@ router.post('/addItem',(req, res)=>{
     const NewItem = new Item(req.body);
     const iid = NewItem._id;
     const sid = req.body.seller; 
-    console.log("Item id:"+ iid);
     NewItem.save()
     .then(()=>{
         Seller.findOne({_id:sid}, (err, record)=>{
@@ -70,7 +69,7 @@ router.post('/adduser',(req, res)=>{
     Seller.create(NewSeller, (err, usr)=> {
         if (err){
             res.send("Sorry that didn't work");
-            console.log("Erroro " + err.message);
+            console.log("Error" + err.message);
         }
         else{
             res.json(NewSeller);
@@ -78,22 +77,18 @@ router.post('/adduser',(req, res)=>{
     });
 } );
 
-// router.get('/profile', function (req, res, next) {
-//     Seller.findById(sess.userId)
-//       .exec(function (error, user) {
-//         if (error) {
-//           return next(error);
-//         } else {
-//           if (user === null) {
-//             var err = new Error('Not authorized! Go back!');
-//             err.status = 400;
-//             return next(err);
-//           } else {
-//             return res.send('<h1>Name: </h1>' + user.name + '<h2>Mail: </h2>' + user.email + '<br><a type="button" href="/logout">Logout</a>');
-//           }
-//         }
-//       });
-// });
+router.post('/addcustomer',(req, res)=>{
+    const NewCustomer = new Customer(req.body); 
+    Customer.create(NewCustomer, (err, usr)=> {
+        if (err){
+            res.send("Sorry that didn't work");
+            console.log("Error " + err.message);
+        }
+        else{
+            res.json(NewCustomer);
+        }
+    });
+} );
 
 router.post('/login', function(req, res, next) {
     if (req.body.email && req.body.password) {  

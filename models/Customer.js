@@ -3,36 +3,36 @@ mongoose.set('debug',true);
 const bcrypt = require('bcrypt');
 const Item = require('./Item.js');
 
-const SellerSchema = new mongoose.Schema({
+const CustomerSchema = new mongoose.Schema({
     role:{
-      type: String,
-      default: 'seller'
+        type: String,
+        default: 'customer'    
     },
     name:{
-      type: String,
-      trim: true,
-      required: `Enter a valid Seller name`
+        type: String,
+        trim: true,
+        required: `Please enter a name`
     },
     email: {
-      type: String,
-      required: 'Enter an email address',
+        type: String,
+        required: 'Enter an email address',
     },
     password: {
-      type: String,
-      required: true
+        type: String,
+        required: true
     },
     state: {
-      type : String,
+        type : String,
     },
-    city: String,   
-    items: [{
+    city: String,
+    bids: [{
       type: mongoose.Schema.Types.ObjectId,
       ref : 'Item'
     }]
 });
 
-SellerSchema.statics.authenticate = function (email, password, callback) {
-    Seller.findOne({ email: email })
+CustomerSchema.statics.authenticate = function (email, password, callback) {
+    Customer.findOne({ email: email })
       .exec(function (error, user) {
         if (error) {
           return callback(error);
@@ -51,7 +51,7 @@ SellerSchema.statics.authenticate = function (email, password, callback) {
       });
 };
 
-SellerSchema.pre('save', function (next) {
+CustomerSchema.pre('save', function (next) {
     var user = this;
     bcrypt.hash(user.password, 10, function (err, hash) {
       if (err) {
@@ -62,5 +62,5 @@ SellerSchema.pre('save', function (next) {
     });
 });
 
-var Seller = mongoose.model('Seller',SellerSchema);
-module.exports = Seller;
+var Customer = mongoose.model('Customer',CustomerSchema);
+module.exports = Customer;
