@@ -37,6 +37,7 @@ export default class ItemList extends React.Component{
         super();
         this.state = {
             fadeIn : false,
+            sellerID:null,
             items : []
         };
         this.createItem = this.createItem.bind(this);
@@ -50,16 +51,28 @@ export default class ItemList extends React.Component{
     }
 
     componentDidMount(){
-        this.loadData();
+        this.setState({
+            sellerID : this.props.userid
+        });
+        this.loadData(this.props.userid);
     }
 
-    loadData(){
-        fetch('/api/items').then(response => response.json()).then(data => {
-            this.setState({ items : data.records }); 
+    loadData(uid){
+        fetch('/api/items',{
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body : JSON.stringify({userid:uid}),
+        }).then(response => response.json()).then(data => {
+            this.setState({items: data.records });
         }).catch(err =>{
-            console.log(err);
+            console.log(err.message);
         });
-    }
+      }
+        // fetch('/api/items').then(response => response.json()).then(data => {
+        //     this.setState({ items : data.records }); 
+        // }).catch(err =>{
+        //     console.log(err);
+        // });
 
     createItem(newItem){
         fetch('/addItem',{
@@ -89,7 +102,7 @@ export default class ItemList extends React.Component{
                     <Row>
                         <Button color="primary" size="sm" onClick={this.toggleAddItem}>Add Item</Button>
                         <Fade in={this.state.fadeIn} tag="h5" className="mt-3">
-                            <ItemAdd createItem={this.createItem} />
+                            <ItemAdd createItem={this.createItem} sellerId={this.state.sellerID}/>
                         </Fade>
                     </Row>    
                 </Container>

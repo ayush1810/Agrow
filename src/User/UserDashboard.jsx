@@ -30,7 +30,7 @@ export default class UsersInfo extends React.Component{
                     </Row>
                     <Row> 
                         <Col md="6">
-                            <ItemTable/>
+                            <ItemTable userid={this.props.user._id}/>
                         </Col>
                         <Col md ={{size:3, order:2, offset:2}}>
                             <Card body inverse style={{ backgroundColor: '#333', borderColor: '#333' }}>

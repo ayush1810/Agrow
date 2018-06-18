@@ -13,6 +13,7 @@ export default class ItemAdd extends React.Component{
             name : form.name.value,
             quantity : form.quantity.value,
             rate : form.rate.value,
+            seller: this.props.sellerId ,
         });
         form.name.value = '';
         form.quantity.value = '';

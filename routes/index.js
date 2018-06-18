@@ -13,8 +13,9 @@ router.get('/',(req, res)=>{
     res.render('index');
 });
 
-router.get('/api/items',(req, res)=>{
-    Item.find({}, function(err, items) {
+router.post('/api/items',(req, res)=>{
+    const uid = req.body.userid;
+    Item.find({seller: uid}, function(err, items) {
              if(!err){
                  res.json({records: items});
              }
@@ -39,8 +40,28 @@ router.get('/api/sellers',(req, res) => {
 
 router.post('/addItem',(req, res)=>{
     const NewItem = new Item(req.body);
+    const iid = NewItem._id;
+    const sid = req.body.seller; 
+    console.log("Item id:"+ iid);
     NewItem.save()
-    .then(()=>{res.json(NewItem);})
+    .then(()=>{
+        Seller.findOne({_id:sid}, (err, record)=>{
+            if(record){
+                record.items.push(iid);
+                record.save(err=>{
+                    if(err){
+                    console.log("Unable to attach the item to the seller");
+                    }
+                    else
+                    res.json(NewItem);
+                });
+            }
+            else{
+                console.log("Sorry, couldn't find the seller!");
+                res.send("Ooops!");
+            }
+        });
+    })
     .catch(()=>{res.send("Unable to add item");});
 } );
 
