@@ -4,14 +4,19 @@ import {MdDelete} from 'react-icons/lib/md';
 import ItemAdd from './ItemAdd.jsx';
 import ItemFilter from './ItemFilter.jsx';
 
-const ItemRow = (props) => (
-    <tr>
-        <td scope="row">{props.item.name}</td>
-        <td>{props.item.quantity}</td>
-        <td>{props.item.rate}</td>
-        <td><Button onClick={props.deleteItem}><MdDelete/></Button></td>  
-    </tr>   
-)
+const ItemRow = (props) => {
+    function onClickDelete(){
+        props.deleteItem(props.item._id);
+    }
+    return(
+        <tr>
+            <td scope="row">{props.item.name}</td>
+            <td>{props.item.quantity}</td>
+            <td>{props.item.rate}</td>
+            <td><Button onClick={onClickDelete}><MdDelete/></Button></td>  
+        </tr>   
+    );
+}
 
 function ItemTable (props){
     const itemRows = props.items.map(item => <ItemRow key={item._id} item={item} deleteItem={props.deleteItem}/>) ; 
@@ -68,9 +73,9 @@ export default class ItemList extends React.Component{
         }).catch(err =>{
             console.log(err.message);
         });
-      }
+    }
 
-      createItem(newItem){
+    createItem(newItem){
         fetch('/addItem',{
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
@@ -82,9 +87,13 @@ export default class ItemList extends React.Component{
             alert(err.message);
         });
     }
-    deleteItem(){
-        alert("Yeah, works");
+    deleteItem(itemid){
+        fetch(`/deleteItem/${itemid}`,{method: 'DELETE'})
+        .then(response => {
+            this.loadData(this.props.userid);
+        });
     }
+
     render(){
         return(
             <div>

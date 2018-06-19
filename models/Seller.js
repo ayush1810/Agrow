@@ -35,21 +35,16 @@ SellerSchema.statics.authenticate = function (email, password, callback) {
     Seller.findOne({ email: email })
       .exec(function (error, user) {
         if (error) {
-          console.log("Line 39"+error);
           return callback(error);
         } else if (!user) {
-          console.log("Line 42 "+error);
           var err = new Error('User not found.');
           err.status = 401;
           return callback(err);
         }
         bcrypt.compare(password, user.password).then(function (result){
-          console.log("e "+password+" r "+user.password);
           if (result == true) {
-            console.log("Passwords match");
             return callback(null, user);
           } else {
-            console.log("Passwords do NOT match");
             return callback();
           }
         });

@@ -64,6 +64,49 @@ router.post('/addItem',(req, res)=>{
     .catch(()=>{res.send("Unable to add item");});
 } );
 
+router.delete('/deleteItem/:id',(req, res)=>{
+    let itemId;
+    try {
+        itemId = req.params.id;
+    } catch (error) {
+        res.status(422).json({ message: `Invalid item ID; format: ${error}` });
+        return;
+    }
+
+    Item.findById(itemId, function (err,record){
+        if (err) {
+            console.log("Unable to find item "+err);
+        }
+        else if (!record) {
+            console.log("Unable to fetch item ");
+        }
+        else{
+            const sid = record.seller;
+            console.log("Seller: "+sid);
+            Item.deleteOne({_id: record._id}).then(()=>{
+                console.log("Item deleted, off to seller");
+                Seller.findOne({_id: sid},(err, record) =>{
+                    if(record){
+                        record.items.pull(itemId);
+                        record.save(err=>{
+                            if(err){
+                            console.log("Unable to remove item from seller");
+                            }
+                            else
+                            console.log("Item popped!");
+                            res.json({status: 'OK'});
+                        });
+                    }
+                    else{
+                        console.log("Sorry, couldn't find the seller!");
+                        res.send("Ooops!");
+                    }
+                });
+            });
+        }
+    });
+});
+
 router.post('/adduser',(req, res)=>{
     const NewSeller = new Seller(req.body); 
     Seller.create(NewSeller, (err, usr)=> {
