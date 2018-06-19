@@ -1,8 +1,6 @@
 import React from 'react';
 import {Container, Row,Col, Table,Button, Fade} from 'reactstrap';
-import FontAwesomeIcon from '@fortawesome/react-fontawesome';
-import faTrash from '@fortawesome/fontawesome-free-solid/faTrash';
-
+import {MdDelete} from 'react-icons/lib/md'; 
 import ItemAdd from './ItemAdd.jsx';
 import ItemFilter from './ItemFilter.jsx';
 
@@ -12,7 +10,7 @@ const ItemRow = (props) => (
         <td>{props.item.name}</td>
         <td>{props.item.quantity}</td>
         <td>{props.item.rate}</td>
-        <td><FontAwesomeIcon icon={faTrash} /> </td>  
+        <td><MdDelete/> </td>  
     </tr>   
 )
 
@@ -72,13 +70,8 @@ export default class ItemList extends React.Component{
             console.log(err.message);
         });
       }
-        // fetch('/api/items').then(response => response.json()).then(data => {
-        //     this.setState({ items : data.records }); 
-        // }).catch(err =>{
-        //     console.log(err);
-        // });
 
-    createItem(newItem){
+      createItem(newItem){
         fetch('/addItem',{
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
