@@ -79,7 +79,7 @@ class NavHead extends React.Component {
         <Collapse isOpen={this.state.isActive} navbar>
             <Nav className="ml-auto" navbar>
                 <NavItem>
-                  <Link to="#home" className="btn btn-light nav-link" onClick={this.props.signOut}>
+                  <Link to="/home" className="btn btn-light nav-link" onClick={this.props.signOut}>
 							        Logout
                   </Link>
                 </NavItem>

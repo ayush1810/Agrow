@@ -17,7 +17,10 @@ export default class UsersInfo extends React.Component{
                         <Container fluid>   
                     <Jumbotron fluid className="bg-dark text-white py-1 px-2">
                         <Container fluid>   
-                            <p className="lead">Welcome to the Dashboard, {this.props.user.name.split(' ')[0]}. You can Watch, Add & Edit items.</p>
+                            <p className="lead">
+                                Welcome to the Dashboard, {this.props.user.name.split(' ')[0]}.
+                                You can Watch, Add & Edit items.
+                            </p>
                             <hr className="my-2" />
                             <p>You can also manage your finances here.</p>
                         </Container>

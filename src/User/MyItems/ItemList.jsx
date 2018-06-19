@@ -64,10 +64,8 @@ export default class ItemList extends React.Component{
     }
 
     loadData(uid){
-        fetch('/api/items',{
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body : JSON.stringify({userid:uid}),
+        fetch(`/api/seller/${uid}`,{
+            method: 'GET',
         }).then(response => response.json()).then(data => {
             this.setState({items: data.records });
         }).catch(err =>{

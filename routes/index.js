@@ -13,8 +13,20 @@ router.get('/',(req, res)=>{
     res.render('index');
 });
 
-router.post('/api/items',(req, res)=>{
-    const uid = req.body.userid;
+router.get('/api/items',(req, res) => {
+    Item.find({},(err, items)=>{
+        if(!err){
+            res.json({items : items});
+        }
+        else{
+            res.send("Error loading sellers");
+            console.error(err.message);
+        }
+    });
+});
+
+router.get('/api/seller/:id',(req, res)=>{
+    const uid = req.params.id; 
     Item.find({seller: uid}, function(err, items) {
              if(!err){
                  res.json({records: items});
