@@ -1,5 +1,7 @@
 import React from 'react';
 import {Container, Row,Col, Table,Button, Fade} from 'reactstrap';
+import FontAwesomeIcon from '@fortawesome/react-fontawesome';
+import faTrash from '@fortawesome/fontawesome-free-solid/faTrash';
 
 import ItemAdd from './ItemAdd.jsx';
 import ItemFilter from './ItemFilter.jsx';
@@ -10,6 +12,7 @@ const ItemRow = (props) => (
         <td>{props.item.name}</td>
         <td>{props.item.quantity}</td>
         <td>{props.item.rate}</td>
+        <td><FontAwesomeIcon icon={faTrash} /> </td>  
     </tr>   
 )
 
@@ -23,6 +26,7 @@ function ItemTable (props){
                     <th>Name</th>
                     <th>Quantity</th>
                     <th>Rate</th>
+                    <th> </th>
                 </tr>
             </thead>
             <tbody>

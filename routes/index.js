@@ -92,9 +92,9 @@ router.post('/addcustomer',(req, res)=>{
 
 router.post('/login', function(req, res, next) {
     if (req.body.email && req.body.password) {  
-    Seller.authenticate(req.body.email, req.body.password, function (error, user) {
+    Seller.authenticate(req.body.email, req.body.password,function (error, user) {
         if (error || !user) {
-            console.log(error);
+            console.log("this "+error);
         var err = new Error('Wrong email or password.');
         err.status = 401;
         return next(err);

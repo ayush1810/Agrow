@@ -1,5 +1,5 @@
 import React from 'react';
-import {Jumbotron,Card, CardText, CardTitle, Container, Row, Col, Button} from 'reactstrap';
+import {Jumbotron,Card, CardText,CardBody, CardTitle, Container, Row, Col, Button} from 'reactstrap';
 
 import ItemTable from './MyItems/ItemList.jsx';
 
@@ -8,20 +8,16 @@ export default class UsersInfo extends React.Component{
         super(props,context);   
     }
     componentDidMount(){
-        // const { match, history} = this.props;
-//        this.setState({username: this.props.state.user.name});
-        alert("Welcome home, "+ this.props.user.name);
     }
     render(){
         return(
             <div>
-                <Container fluid>
+                <Container className="bg-dark">
                     <Row>
                         <Container fluid>   
-                    <Jumbotron fluid className="py-1 px-2">
+                    <Jumbotron fluid className="bg-dark text-white py-1 px-2">
                         <Container fluid>   
-                            <h4 className="display-4">Hello, User!</h4>
-                            <p className="lead">Welcome to the Dashboard. You can Watch, Add & Edit items.</p>
+                            <p className="lead">Welcome to the Dashboard, {this.props.user.name.split(' ')[0]}. You can Watch, Add & Edit items.</p>
                             <hr className="my-2" />
                             <p>You can also manage your finances here.</p>
                         </Container>
@@ -34,9 +30,16 @@ export default class UsersInfo extends React.Component{
                         </Col>
                         <Col md ={{size:3, order:2, offset:2}}>
                             <Card body inverse style={{ backgroundColor: '#333', borderColor: '#333' }}>
-                                <CardTitle>Your Profile</CardTitle>
-                                <CardText>Details coming soon.</CardText>
-                                <Button>More</Button>
+                                <CardTitle className="text-center">Your Profile</CardTitle>
+                                <CardBody className="p-0">
+                                        Email:{`  `}
+                                        <span className="font-weight-bold"> {this.props.user.email}</span> 
+                                        <br/>
+                                        Location:{` `}
+                                        <span className="font-weight-bold"> {this.props.user.city}</span> 
+                                        <br/>
+                                    <Button>More</Button>
+                                </CardBody>    
                             </Card>
                         </Col>
                    </Row>
