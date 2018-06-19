@@ -6,21 +6,19 @@ import ItemFilter from './ItemFilter.jsx';
 
 const ItemRow = (props) => (
     <tr>
-        <td scope="row">{props.item._id}</td>
-        <td>{props.item.name}</td>
+        <td scope="row">{props.item.name}</td>
         <td>{props.item.quantity}</td>
         <td>{props.item.rate}</td>
-        <td><MdDelete/> </td>  
+        <td><Button onClick={props.deleteItem}><MdDelete/></Button></td>  
     </tr>   
 )
 
 function ItemTable (props){
-    const itemRows = props.items.map(item => <ItemRow key={item._id} item={item}/>) ; 
+    const itemRows = props.items.map(item => <ItemRow key={item._id} item={item} deleteItem={props.deleteItem}/>) ; 
     return(
-        <Table dark>
+        <Table dark responsive>
             <thead>
                 <tr>
-                    <th>#</th>
                     <th>Name</th>
                     <th>Quantity</th>
                     <th>Rate</th>
@@ -43,6 +41,7 @@ export default class ItemList extends React.Component{
             items : []
         };
         this.createItem = this.createItem.bind(this);
+        this.deleteItem = this.deleteItem.bind(this); 
         this.toggleAddItem = this.toggleAddItem.bind(this);
     }
 
@@ -83,7 +82,9 @@ export default class ItemList extends React.Component{
             alert(err.message);
         });
     }
-
+    deleteItem(){
+        alert("Yeah, works");
+    }
     render(){
         return(
             <div>
@@ -93,7 +94,7 @@ export default class ItemList extends React.Component{
                         <hr/>
                      </Row>
                      <Row>
-                        <ItemTable items={this.state.items}/>
+                        <ItemTable items={this.state.items} deleteItem={this.deleteItem}/>
                         <hr/>
                     </Row>
                     <Row>
