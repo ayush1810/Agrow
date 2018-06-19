@@ -8,7 +8,7 @@ const ItemRow = (props) => {
             <td scope="row">{props.item.name}</td>
             <td>{props.item.quantity}</td>
             <td>{props.item.rate}</td>
-            <td>{props.item.seller}</td>  
+            <td>{props.item.seller.name}</td>  
         </tr>   
     );
 }
@@ -16,7 +16,7 @@ const ItemRow = (props) => {
 function ItemTable (props){
     const itemRows = props.items.map(item => <ItemRow key={item._id} item={item}/>) ; 
     return(
-        <Table responsive>
+        <Table className="ml-3 text-dark bg-transparent" responsive>
             <thead>
                 <tr>
                     <th>Name</th>
@@ -54,9 +54,9 @@ export default class ProductList extends React.Component{
     render(){
         return(
             <div>
-                <Container className="p-4" style={{ backgroundColor: '#333', borderColor: '#333' }}>
+                <Container className="p-0 m-0 bg-white">
                     <Row>        
-                        <h4> Items on Sale </h4> 
+                        <h4 className="text-center"> Items on Sale </h4> 
                         <hr/>
                      </Row>
                      <Row>

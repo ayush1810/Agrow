@@ -14,7 +14,7 @@ router.get('/',(req, res)=>{
 });
 
 router.get('/api/items',(req, res) => {
-    Item.find({},(err, items)=>{
+    Item.find({}).populate('seller').exec(function (err, items){
         if(!err){
             res.json({items : items});
         }
