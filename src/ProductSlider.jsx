@@ -54,8 +54,8 @@ export default class ProductList extends React.Component{
     render(){
         return(
             <div>
-                <Container className="p-0 m-0 bg-white">
-                    <Row>        
+                <Container className="px-auto bg-white">
+                    <Row className="my-0 py-0 px-auto text-center">        
                         <h4 className="text-center"> Items on Sale </h4> 
                         <hr/>
                      </Row>
