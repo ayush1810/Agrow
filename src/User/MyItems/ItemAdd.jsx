@@ -13,11 +13,13 @@ export default class ItemAdd extends React.Component{
             name : form.name.value,
             quantity : form.quantity.value,
             rate : form.rate.value,
+            dateEnd: form.date.value,
             seller: this.props.sellerId ,
         });
         form.name.value = '';
         form.quantity.value = '';
         form.rate.value = '';
+        form.date.value = '';
     }
     render(){
         return(
@@ -31,8 +33,12 @@ export default class ItemAdd extends React.Component{
                     <Input type="text" name="quantity" id="AddItemFormQuantity" placeholder="Quantity (Kg)" />
                 </FormGroup>
                 <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
-                    <Label hidden for="AddItemFormRate" className="mr-sm-2">Rate</Label>
+                    <Label hidden for="AddItemFormRate" className="mr-sm-2">Starting Bid</Label>
                     <Input type="text" name="rate" id="AddItemFormRate" placeholder="Rate per Kg" />
+                </FormGroup>
+                <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
+                    <Label hidden for="AddItemFormDeadline" className="mr-sm-2">End Bid On:</Label>
+                    <Input type="date" name="date" id="AddItemFormDeadline" placeholder="DD/MM/YY" />
                 </FormGroup>
                 <Button>Add Item</Button>
             </Form>

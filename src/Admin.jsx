@@ -1,7 +1,19 @@
 import React from 'react'; 
 import {Container, Row, Col, Button, ButtonGroup, Fade} from 'reactstrap';
 
-const showTable = (props) => {
+const EntityRow = (props) => {
+      return(
+          <tr>
+              <td scope="row">{props.item.name}</td>
+              <td>{props.item.quantity}</td>
+              <td>{props.item.rate}</td>
+              <td>{props.item.seller}</td>  
+          </tr>   
+      );
+}
+
+const EntityTable = (props) => {
+  const itemRows = props.items.map(item => <EntityRow key={item._id} item={item}/>);
     return(
         <Table className="ml-3 text-dark bg-transparent" responsive>
             <thead>
@@ -72,14 +84,11 @@ export default class AdminDB extends React.Component{
         </Row> 
         <Row>
           <Fade in={this.state.fadeCategory} tag="h5" className="mt-3">
-            Have to show categories with form here! 
-          </Fade>
-          <Fade in={this.state.fadeProducts} tag="h5" className="mt-3">
-            Have to show products with category plus a form here! 
-          </Fade>
-          <Fade in={this.state.fadeSellers} tag="h5" className="mt-3">
-            Have to show CRUD commands for sellers.  
-          </Fade>
+            <EntityTable />
+          </Fade> 
+        </Row>
+        <Row> 
+          Add Item component
         </Row>
       </Container>
     );
