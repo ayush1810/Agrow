@@ -1,7 +1,7 @@
 import React from 'react';
 import {Jumbotron,Card, CardText,CardBody, CardTitle, Container, Row, Col, Button} from 'reactstrap';
 
-import ItemTable from './MyItems/ItemList.jsx';
+import ItemList from './MyItems/ItemList.jsx';
 
 export default class UsersInfo extends React.Component{
     constructor(props, context){
@@ -28,22 +28,8 @@ export default class UsersInfo extends React.Component{
                     </Container>
                     </Row>
                     <Row> 
-                        <Col md="6">
-                            <ItemTable userid={this.props.user._id}/>
-                        </Col>
-                        <Col md ={{size:3, order:2, offset:2}}>
-                            <Card body inverse style={{ backgroundColor: '#333', borderColor: '#333' }}>
-                                <CardTitle className="text-center">Your Profile</CardTitle>
-                                <CardBody className="p-0">
-                                        Email:{`  `}
-                                        <span className="font-weight-bold"> {this.props.user.email}</span> 
-                                        <br/>
-                                        Location:{` `}
-                                        <span className="font-weight-bold"> {this.props.user.city}</span> 
-                                        <br/>
-                                    <Button>More</Button>
-                                </CardBody>    
-                            </Card>
+                        <Col xs="12">
+                            <ItemList userid={this.props.user._id}/>
                         </Col>
                    </Row>
                 </Container>

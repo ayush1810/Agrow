@@ -4,18 +4,28 @@ Container, Row,Col,Button, Fade,
 Card, CardImg, CardText, CardBody,
 CardTitle, CardSubtitle
 } from 'reactstrap';
-import {MdDelete} from 'react-icons/lib/md'; 
+
+const ProductFilter = (props) => {
+    return(
+        <div>
+            <Button size="md">Fruits</Button>{' '}
+            <Button size="md">Veggies</Button>{' '}
+            <Button size="md">Others</Button>{' '}
+        </div>
+    )
+}
 
 const ItemCard = (props) => {
     return(
                 <div>
       <Card>
-        <CardImg top width="100%" src="https://images.pexels.com/photos/890507/pexels-photo-890507.jpeg?auto=compress&cs=tinysrgb&h=650&w=940" alt="Card image cap" />
+        <CardImg top width="100%" src="https://images.pexels.com/photos/42164/pexels-photo-42164.jpeg?auto=compress&cs=tinysrgb&h=650&w=940" alt="Card image cap" />
         <CardBody>
           <CardTitle>{props.item.name}</CardTitle>
           <CardSubtitle> <span className="font-italic">By{`  `}</span> {props.item.seller.name}</CardSubtitle>
           <CardText>
-              Quantity: {props.item.quantity}{`\n`}
+              Quantity: {props.item.quantity}
+              <br/>
               Rate: {props.item.rate}
           </CardText>
           <Button>Add Bid</Button>
@@ -60,9 +70,8 @@ export default class ProductList extends React.Component{
         return(
             <div>
                 <Container fluid className="p-4 m-0 bg-white">
-                    <Row className="my-0 py-0 px-auto text-center">        
-                        <h4> Items on Sale </h4> 
-                        <hr/>
+                    <Row className="mb-4 py-0 pl-5">        
+                       <ProductFilter/>
                      </Row>
                      <Row>
                         <ItemTable items={this.state.items}/>
