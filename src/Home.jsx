@@ -1,5 +1,8 @@
 import React from 'react';
-import { Row, Col, Container} from 'reactstrap'; 
+import { 
+Row, Col, Button,
+Container,Jumbotron, 
+} from 'reactstrap'; 
 import ProductList from './Products.jsx';
 
 export default class HomePage extends React.Component{
@@ -10,19 +13,19 @@ export default class HomePage extends React.Component{
 
     render(){
         return(
-            <Container fluid>
-              <Row>
-                <Col className="display-3 my-0 py-0 px-auto text-center" style={{color:'#25a55f'}}>AGROW</Col>
-              </Row>
-              <Row>
-                <Col className="display-5 m-0 p-0 font-italic text-center" style={{color:'#fff7c2'}}>An experimental bidding project</Col>
-              </Row>
-              <Row>
-                <Col xs="12" className="mt-2">
-                  <ProductList/>
-                </Col>
-              </Row>
-            </Container>
-        );
+          <Container fluid className="px-auto">
+          <Jumbotron className='bg-transparent text-center'>
+          <Container>
+            <h1 className="font-weight-bold">Agrow</h1>
+            <p className="lead text-white">An experimental bidding project</p>
+            <p>
+              <Button color="info">Login</Button>
+              <Button color="warning" className="mx-2">Signup</Button>
+            </p>
+          </Container>
+        </Jumbotron>
+        <ProductList/>
+      </Container>
+       );
     }
 }

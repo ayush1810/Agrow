@@ -4,34 +4,36 @@ Container, Row,Col,Button, Fade,
 Card, CardImg, CardText, CardBody,
 CardTitle, CardSubtitle
 } from 'reactstrap';
-
+import {
+    MdAttachMoney
+} from 'react-icons/lib/md'; 
 const ProductFilter = (props) => {
     return(
-        <div>
+        <Col md={{size:3, offset:3}}>
             <Button size="md">Fruits</Button>{' '}
             <Button size="md">Veggies</Button>{' '}
             <Button size="md">Others</Button>{' '}
-        </div>
+        </Col>
     )
 }
 
 const ItemCard = (props) => {
     return(
-                <div>
-      <Card>
-        <CardImg top width="100%" src="https://images.pexels.com/photos/42164/pexels-photo-42164.jpeg?auto=compress&cs=tinysrgb&h=650&w=940" alt="Card image cap" />
-        <CardBody>
-          <CardTitle>{props.item.name}</CardTitle>
-          <CardSubtitle> <span className="font-italic">By{`  `}</span> {props.item.seller.name}</CardSubtitle>
-          <CardText>
-              Quantity: {props.item.quantity}
-              <br/>
-              Rate: {props.item.rate}
-          </CardText>
-          <Button>Add Bid</Button>
-        </CardBody>
-      </Card>
-    </div>
+        <Col lg='3' md='6' xs='12' className="mx-0 my-2">
+            <Card>
+                <CardImg top width="100%" src="https://images.pexels.com/photos/42164/pexels-photo-42164.jpeg?auto=compress&cs=tinysrgb&h=650&w=940" alt="Card image cap" />
+                <CardBody>
+                    <CardTitle>{props.item.name}</CardTitle>
+                    <CardSubtitle> <span className="font-italic">By{`  `}</span> {props.item.seller.name}</CardSubtitle>
+                    <CardText>
+                        Quantity: {props.item.quantity}
+                        <br/>
+                        Rate: {props.item.rate}
+                    </CardText>
+                    <Button><MdAttachMoney/>Add Bid</Button>
+                </CardBody>
+            </Card>
+    </Col>
     );
 }
 
@@ -39,9 +41,7 @@ const ItemTable = (props)=>{
     return (
     props.items.map((item) =>{
         return(
-            <Col key={item._id} md='3' sm="4"> 
-            <ItemCard item={item}/>
-            </Col> 
+            <ItemCard key={item._id} item={item}/>
         );
     }) 
     );
@@ -69,18 +69,12 @@ export default class ProductList extends React.Component{
     render(){
         return(
             <div>
-                <Container fluid className="p-4 m-0 bg-white">
-                    <Row className="mb-4 py-0 pl-5">        
-                       <ProductFilter/>
-                     </Row>
-                     <Row>
-                        <ItemTable items={this.state.items}/>
-                        <hr/>
-                    </Row>
-                    <Row>
-                        
-                    </Row>
-                </Container>
+                <Row>
+                    <ProductFilter/>
+                </Row> 
+                <Row>
+                    <ItemTable items={this.state.items}/>
+                </Row> 
             </div>    
         );
     }
