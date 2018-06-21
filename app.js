@@ -1,4 +1,3 @@
-/*jshint esversion:6*/
 const path = require('path'),
       express = require('express'),
       session = require('express-session'),
@@ -19,7 +18,7 @@ mongoose.connect(process.env.DATABASE).then(connection => {
       }).catch(error => {
       console.log('Mongoose ERROR:', error);
     });
-
+app.set('view engine','html');
 app.use(session({
       secret: 'work hard',
       resave: true,

@@ -1,7 +1,7 @@
 const express = require('express'),
-      passport = require('passport'),
-      LocalStrategy = require('passport-local').Strategy;
-const mongoose = require('mongoose');
+    //   passport = require('passport'),
+    //   LocalStrategy = require('passport-local').Strategy;
+     mongoose = require('mongoose');
 const router = express.Router();
 mongoose.set('debug', true);
 
@@ -10,7 +10,7 @@ const Item = require('../models/Item');
 const Seller = require('../models/Seller');
 
 router.get('/',(req, res)=>{
-    res.render('index');
+    res.render('index.html');
 });
 
 router.get('/api/items',(req, res) => {

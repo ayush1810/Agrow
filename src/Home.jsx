@@ -1,6 +1,6 @@
 import React from 'react';
 import { Row, Col, Container} from 'reactstrap'; 
-import ProductList from './ProductSlider.jsx';
+import ProductList from './Products.jsx';
 
 export default class HomePage extends React.Component{
     constructor(props)
@@ -18,7 +18,7 @@ export default class HomePage extends React.Component{
                 <Col className="display-5 m-0 p-0 font-italic text-center" style={{color:'#fff7c2'}}>An experimental bidding project</Col>
               </Row>
               <Row>
-                <Col md ={{size:6, order:3, offset:2}}>
+                <Col xs="12" className="mt-2">
                   <ProductList/>
                 </Col>
               </Row>

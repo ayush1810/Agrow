@@ -18,6 +18,7 @@ import history from './history.js';
 
 import SignupModel from './User/UserAdd.jsx';
 import LoginModel from './User/UserLogin.jsx';
+import AdminDB from './Admin.jsx';
 import UsersInfo from './User/UserDashboard.jsx';
 import HomePage from './Home.jsx';
 
@@ -139,18 +140,12 @@ render(){
           <NavHead loggedIn={this.state.isAuthenticated} signOut={this.signout} doLogin={this.loginUser}  />
       <Route exact path='/home' component={HomePage} />
       <Route path='/dashboard' render={(props)=>
-        this.state.isAuthenticated ? (<UsersInfo {...props} signout={this.signout} user={this.state.user} />) : (
-        <Redirect 
-          to={{
-            pathname: '/',
-            state : {from : props.location}
-          }}
-        />
-      ) 
+        this.state.isAuthenticated ? (<UsersInfo {...props} signout={this.signout} user={this.state.user} />)
+         : ( <Redirect to={{ pathname: '/home', state : {from : props.location}}}/>) 
       }/>
       <Route path='/user/:username' component={UsersInfo} />
-      <Route exact path='/lol/:name' component={noMatch} />
-     
+      <Route path='/admin' component={AdminDB}/>
+      <Route path='/lol' component={noMatch} />
     </div>    
    </Router>   
     );
