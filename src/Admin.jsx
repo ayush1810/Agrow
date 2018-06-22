@@ -20,7 +20,7 @@ const CategoryRow = (props) => {
 const CategoryTable = (props) => {
   const itemRows = props.items.map(item => <CategoryRow key={item._id} item={item} deleteCategory={props.deleteCategory}/>);
     return(
-        <Table className="ml-3 text-dark bg-transparent" responsive>
+        <Table className="m-0 p-0 text-white bg-info" responsive>
             <thead>
                 <tr>
                     <th>Name</th>
@@ -51,7 +51,7 @@ const AddCategory = (props) => {
           <Label hidden for="CategoryName" className="mr-sm-2">Name</Label>
           <Input type="text" name="name" id="CategoryName" placeholder="Category Name" />
       </FormGroup>
-      <Button>Add Category</Button>
+      <Button color="danger">Add Category</Button>
     </Form>
   );
 }
@@ -73,7 +73,7 @@ const ProductRow = (props) => {
 const ProductTable = (props) => {
   const productRows = props.items.map(item => <ProductRow key={item._id} item={item} deleteProduct={props.deleteProduct}/>);
     return(
-        <Table className="m-0 p-0 text-white bg-secondary" responsive>
+        <Table className="m-0 p-0 text-white bg-danger" responsive>
             <thead>
                 <tr>
                     <th>Name</th>
@@ -105,7 +105,7 @@ const AddProduct = (props) => {
           <Label hidden for="ProductName" className="m-0">Name</Label>
           <Input type="text" name="name" id="ProductName" placeholder="Product Name" />
       </FormGroup>
-      <Button>Add Product</Button>
+      <Button color="primary">Add Product</Button>
     </Form>
   );
 }
@@ -177,8 +177,7 @@ export default class AdminDB extends React.Component{
       headers: {'Content-Type': 'application/json'},
       body : JSON.stringify(procreds),
   }).then(response => response.json()).then(newProduct => {
-         const newProds  = this.state.products.concat(newProduct);
-         this.setState({products:newProds});
+         this.loadProducts();
   }).catch(err =>{
       alert(err.message);
   });
@@ -195,8 +194,12 @@ export default class AdminDB extends React.Component{
     return(
       <Container>
         <Row> 
-          <AddCategory AddCategory={this.addCategory} />
-          <AddProduct AddProduct={this.addProduct}/>
+          <Col xs='12' md='6' className="px-3" >
+            <AddCategory AddCategory={this.addCategory} />
+          </Col> 
+          <Col xs='12' md='6' >
+            <AddProduct AddProduct={this.addProduct}/>
+          </Col> 
         </Row> 
         <Row>
           <Col xs='12' md='6' >
