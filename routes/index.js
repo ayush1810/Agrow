@@ -143,11 +143,31 @@ router.get('/api/seller/:id',(req, res)=>{
 router.get('/api/sellers',(req, res) => {
     Seller.find({},(err, items)=>{
         if(!err){
-            res.json({sellers : items});
+            res.json({records : items});
         }
         else{
             res.send("Error loading sellers");
             console.error(err.message);
+        }
+    });
+});
+
+router.post('/api/seller/:id', (req, res)=>{
+    let sellerId;
+    let balance = req.body.wallet;
+    try {
+        sellerId = req.params.id;
+    } catch (error) {
+        res.status(422).json({ message: `Invalid Seller ID; format: ${error}` });
+        return;
+    }
+
+    Seller.findByIdAndUpdate(sellerId,{wallet: balance }, function (err,record){
+        if (err) {
+            console.log("Unable to find item "+err);
+        }
+        else{
+            res.json({status : 'Ok'});
         }
     });
 });

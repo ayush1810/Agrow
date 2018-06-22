@@ -72,7 +72,8 @@ export default class AdminDB extends React.Component{
     this.state = {
       activeTab: '1',
       categories: [],
-      products: []
+      products: [],
+      sellers: []
     };
 
     this.onToggle = this.onToggle.bind(this);
@@ -84,6 +85,7 @@ export default class AdminDB extends React.Component{
     this.deleteProduct = this.deleteProduct.bind(this);
     this.loadSellers = this.loadSellers.bind(this);
     this.loadCustomers = this.loadCustomers.bind(this);
+    this.modifySellerWallet = this.modifySellerWallet.bind(this); 
   }
 
   componentDidMount(){
@@ -91,11 +93,32 @@ export default class AdminDB extends React.Component{
   }
 
   loadSellers(){
-
+    fetch('/api/sellers',{
+      method: 'GET',
+    }).then(response => response.json()).then(data => {
+      this.setState({sellers: data.records });
+    }).catch(err =>{
+      console.log(err.message);
+    });
   }
 
   loadCustomers(){
 
+  }
+
+  modifySellerWallet(sId,newSeller)
+  {
+    console.log("Seller"+ sId + "Object" + newSeller);
+    fetch(`/api/seller/${sId}`,{
+      method:'POST',
+      headers: {'Content-Type': 'application/json'},
+      body : JSON.stringify(newSeller),
+    }).then(response => response.json()).then(data => {
+      this.loadSellers();
+    })
+    .catch(err => {
+      console.log(err.message);
+    });
   }
 
   loadCategories(){
@@ -225,14 +248,14 @@ export default class AdminDB extends React.Component{
           <TabPane tabId="3">
           <Row>
           <Col xs='12' md='6' >
-            Sellers here!
+            <SellerTable sellers={this.state.sellers} UpdateWallet={this.modifySellerWallet}/>
           </Col> 
           </Row>
           </TabPane>
           <TabPane tabId="4">
           <Row>
           <Col xs='12' md='6'>
-          Customers Hereee.
+            Customer table here
           </Col> 
           </Row>
           </TabPane>

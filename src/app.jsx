@@ -16,10 +16,10 @@ import {
 
 import history from './history.js';
 
-import SignupModel from './User/UserAdd.jsx';
-import LoginModel from './User/UserLogin.jsx';
+import SignupModel from './components/User/UserAdd.jsx';
+import LoginModel from './components/User/UserLogin.jsx';
 import AdminDB from './components/Admin/Admin.jsx';
-import UsersInfo from './User/UserDashboard.jsx';
+import UsersInfo from './components/User/UserDashboard.jsx';
 import HomePage from './Home.jsx';
 
 const contentNode = document.getElementById('contents');
