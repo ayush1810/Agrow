@@ -28,7 +28,11 @@ const SellerSchema = new mongoose.Schema({
     items: [{
       type: mongoose.Schema.Types.ObjectId,
       ref : 'Item'
-    }]
+    }],
+    wallet: {
+      type: Number,
+      default: 0.00 
+    }
 });
 
 SellerSchema.statics.authenticate = function (email, password, callback) {

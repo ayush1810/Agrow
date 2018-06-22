@@ -1,8 +1,14 @@
 import React from 'react'; 
 import {
-Container, Row, Col, Button,
-Form, Table, FormGroup, Label, Input
+Container, Row, Col, 
+Button,
+Form, Table, FormGroup,
+Label, Input,
+TabContent, TabPane, Nav, NavItem, NavLink, 
+Card, CardTitle, CardText,
 } from 'reactstrap';
+import classnames from 'classnames'; 
+
 import {MdDelete} from 'react-icons/lib/md'; 
 
 const CategoryRow = (props) => {
@@ -114,10 +120,12 @@ export default class AdminDB extends React.Component{
   constructor(props){
     super(props); 
     this.state = {
+      activeTab: '1',
       categories: [],
       products: []
     };
 
+    this.onToggle = this.onToggle.bind(this);
     this.loadCategories = this.loadCategories.bind(this);
     this.addCategory = this.addCategory.bind(this); 
     this.deleteCategory = this.deleteCategory.bind(this);
@@ -127,8 +135,6 @@ export default class AdminDB extends React.Component{
   }
 
   componentDidMount(){
-    this.loadCategories();
-    this.loadProducts();
   }
 
   loadCategories(){
@@ -190,25 +196,56 @@ export default class AdminDB extends React.Component{
     });
   }
 
+  onToggle(t){
+    if(this.state.activeTab !== t){
+      this.setState({
+        activeTab: t
+      });
+    }
+  }
+
   render(){
     return(
       <Container>
-        <Row> 
-          <Col xs='12' md='6' className="px-3" >
-            <AddCategory AddCategory={this.addCategory} />
-          </Col> 
-          <Col xs='12' md='6' >
-            <AddProduct AddProduct={this.addProduct}/>
-          </Col> 
-        </Row> 
         <Row>
-          <Col xs='12' md='6' >
-            <CategoryTable items={this.state.categories} deleteCategory={this.deleteCategory} />
-          </Col> 
+        <Nav tabs>
+          <NavItem>
+            <NavLink
+              className={classnames({ active: this.state.activeTab === '1' })}
+              onClick={() => { this.loadCategories(); this.onToggle('1'); }}
+            >
+              Category
+            </NavLink>
+          </NavItem>
+          <NavItem>
+            <NavLink
+              className={classnames({ active: this.state.activeTab === '2' })}
+              onClick={() => { this.loadProducts() ;this.onToggle('2'); }}
+            >
+              Products
+            </NavLink>
+          </NavItem>
+        </Nav>
+        </Row>
+        <TabContent activeTab={this.state.activeTab}>
+          <TabPane tabId="1">
+            <Row>
+              <Col xs='12' md='6' >
+                <CategoryTable items={this.state.categories} deleteCategory={this.deleteCategory} />
+                <AddCategory AddCategory={this.addCategory} />
+              </Col> 
+            </Row>
+          </TabPane>
+          <TabPane tabId="2">
+          <Row>
           <Col xs='12' md='6' >
             <ProductTable items={this.state.products} deleteProduct={this.deleteProduct} />
+            <AddProduct AddProduct={this.addProduct}/>
           </Col> 
-        </Row>
+          </Row>
+          </TabPane>
+        </TabContent>
+
       </Container>
     );
   }

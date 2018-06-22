@@ -28,7 +28,11 @@ const CustomerSchema = new mongoose.Schema({
     bids: [{
       type: mongoose.Schema.Types.ObjectId,
       ref : 'Item'
-    }]
+    }],
+    wallet: {
+      type: Number,
+      default: 0.00 
+    }
 });
 
 CustomerSchema.statics.authenticate = function (email, password, callback) {
