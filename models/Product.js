@@ -10,11 +10,22 @@ const ProductSchema = new mongoose.Schema({
     },
     description: {
         type: String, 
-        default: 'Fresh Organic products'
     },
     category: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Category'
     }
 });
+
+ProductSchema.pre('save', function (next) {
+    var product = this;
+    if (!product.description){
+        product.description = `Fresh ${product.name} from organic farms of South India.`; 
+    }
+    if(!product.category){
+        product.category = new mongoose.Types.ObjectId('5b2c94fb93368a1fc75c9b87');
+    }
+    next();
+});
+
 module.exports = mongoose.model('Product',ProductSchema);

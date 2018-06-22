@@ -5,7 +5,7 @@ Form, Table, FormGroup, Label, Input
 } from 'reactstrap';
 import {MdDelete} from 'react-icons/lib/md'; 
 
-const EntityRow = (props) => {
+const CategoryRow = (props) => {
   function onClickDelete(){
     props.deleteCategory(props.item._id);
   }
@@ -17,8 +17,8 @@ const EntityRow = (props) => {
     );
 }
 
-const EntityTable = (props) => {
-  const itemRows = props.items.map(item => <EntityRow key={item._id} item={item} deleteCategory={props.deleteCategory}/>);
+const CategoryTable = (props) => {
+  const itemRows = props.items.map(item => <CategoryRow key={item._id} item={item} deleteCategory={props.deleteCategory}/>);
     return(
         <Table className="ml-3 text-dark bg-transparent" responsive>
             <thead>
@@ -56,20 +56,79 @@ const AddCategory = (props) => {
   );
 }
 
+const ProductRow = (props) => {
+  function onClickDelete(){
+    props.deleteProduct(props.item._id);
+  }
+    return(
+      <tr>
+          <td scope="row">{props.item.name}</td>
+          <td>{props.item.description}</td>
+          <td>{props.item.category.name}</td> 
+          <td><Button onClick={onClickDelete}><MdDelete/></Button></td>
+      </tr>   
+    );
+}
+
+const ProductTable = (props) => {
+  const productRows = props.items.map(item => <ProductRow key={item._id} item={item} deleteProduct={props.deleteProduct}/>);
+    return(
+        <Table className="m-0 p-0 text-white bg-secondary" responsive>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Category</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {productRows}
+            </tbody>
+        </Table>
+        );
+}
+
+const AddProduct = (props) => {
+
+  function handleAddProduct(e){
+    e.preventDefault(); 
+    var form = document.forms.productAdd;
+    props.AddProduct({
+        name : form.name.value,
+    });
+    form.name.value = '';
+  }
+  return(
+    <Form inline name="productAdd" onSubmit={handleAddProduct}>
+      <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
+          <Label hidden for="ProductName" className="m-0">Name</Label>
+          <Input type="text" name="name" id="ProductName" placeholder="Product Name" />
+      </FormGroup>
+      <Button>Add Product</Button>
+    </Form>
+  );
+}
+
 export default class AdminDB extends React.Component{
   constructor(props){
     super(props); 
     this.state = {
-      categories: []
+      categories: [],
+      products: []
     };
 
     this.loadCategories = this.loadCategories.bind(this);
     this.addCategory = this.addCategory.bind(this); 
     this.deleteCategory = this.deleteCategory.bind(this);
+    this.loadProducts = this.loadProducts.bind(this);
+    this.addProduct = this.addProduct.bind(this); 
+    this.deleteProduct = this.deleteProduct.bind(this);
   }
 
   componentDidMount(){
     this.loadCategories();
+    this.loadProducts();
   }
 
   loadCategories(){
@@ -102,14 +161,50 @@ export default class AdminDB extends React.Component{
     });
   }
 
+  loadProducts(){
+    fetch('/api/products',{
+        method: 'GET',
+    }).then(response => response.json()).then(data => {
+        this.setState({products: data.records });
+    }).catch(err =>{
+        console.log(err.message);
+    });
+  }
+
+  addProduct(procreds){
+    fetch('/addProduct',{
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body : JSON.stringify(procreds),
+  }).then(response => response.json()).then(newProduct => {
+         const newProds  = this.state.products.concat(newProduct);
+         this.setState({products:newProds});
+  }).catch(err =>{
+      alert(err.message);
+  });
+  }
+
+  deleteProduct(pid){
+    fetch(`/deleteProduct/${pid}`,{method: 'DELETE'})
+    .then(response => response.json).then(()=>{
+        this.loadProducts();
+    });
+  }
+
   render(){
     return(
       <Container>
         <Row> 
           <AddCategory AddCategory={this.addCategory} />
+          <AddProduct AddProduct={this.addProduct}/>
         </Row> 
         <Row>
-            <EntityTable items={this.state.categories} deleteCategory={this.deleteCategory} />
+          <Col xs='12' md='6' >
+            <CategoryTable items={this.state.categories} deleteCategory={this.deleteCategory} />
+          </Col> 
+          <Col xs='12' md='6' >
+            <ProductTable items={this.state.products} deleteProduct={this.deleteProduct} />
+          </Col> 
         </Row>
       </Container>
     );
