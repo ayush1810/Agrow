@@ -61,7 +61,7 @@ const AddProduct = (props) => {
           {CategoryOptions}
         </Input>
       </FormGroup>
-      <Button color="primary">Add Product</Button>
+      <Button className="mx-1" color="primary">Add Product</Button>
     </Form>
   );
 }
@@ -108,7 +108,6 @@ export default class AdminDB extends React.Component{
 
   modifySellerWallet(sId,newSeller)
   {
-    console.log("Seller"+ sId + "Object" + newSeller);
     fetch(`/api/seller/${sId}`,{
       method:'POST',
       headers: {'Content-Type': 'application/json'},

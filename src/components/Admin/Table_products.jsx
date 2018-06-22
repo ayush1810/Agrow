@@ -12,7 +12,7 @@ const ProductRow = (props) => {
       return(
         <tr>
           <td>
-            <img src={props.item.image} alt="Pic" className="img-fluid img-thumbnail" />
+            <img src={props.item.image} alt="Pic" className="img-thumbnail" />
           </td>
             <td scope="row">{props.item.name}</td>
             <td>{props.item.description}</td>

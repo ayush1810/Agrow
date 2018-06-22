@@ -1,9 +1,9 @@
 import React from 'react';
 import {MdDelete,MdAttachMoney} from 'react-icons/lib/md'; 
 import {
-Button,
-Table,
-Modal, ModalBody, ModalFooter, ModalHeader
+Button,Table,
+Modal, ModalBody, ModalFooter, ModalHeader,
+Form, FormGroup, Label, Input
 } from 'reactstrap';
 
 const SellerRow = (props) => {
@@ -80,22 +80,20 @@ class SellerTable extends React.Component {
               </tbody>
           </Table>
           <Modal isOpen={this.state.sellerWalletModal}>
-          <form name='ModifySellerWalletForm' onSubmit={this.onSubmitSellerWallet}>
                   <ModalHeader>Update Wallet</ModalHeader>
+                  <Form name='ModifySellerWalletForm' onSubmit={this.onSubmitSellerWallet}>
                   <ModalBody>
-                      <p> Seller ID: {this.state.sID} </p> 
-                      <div className="row">
-                          <div className="form-group col-md-4">
-                              <label>Amount</label>
-                              <input type="number" name="balance" className="form-control" />
-                          </div>
-                      </div>
+                     <p> Seller ID: {this.state.sID} </p> 
+                      <FormGroup>
+                            <Label hidden for="WalletAmount">Amount : </Label>
+                            <Input type="number" step="0.01" name="balance" id="WalletAmount" placeholder="00.00" />
+                    </FormGroup>
                   </ModalBody>
                   <ModalFooter>
-                      <input type="submit" value="Update Wallet" color="primary" className="btn btn-primary"/>
+                      <Button color="primary">Update Wallet</Button>
                       <Button color="danger" onClick={this.toggleWalletModal}>Close</Button>
                   </ModalFooter>
-                  </form>
+                  </Form>
           </Modal>
           </div>
           );
