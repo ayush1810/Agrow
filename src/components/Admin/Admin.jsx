@@ -1,45 +1,16 @@
 import React from 'react'; 
+import classnames from 'classnames'; 
 import {
 Container, Row, Col, 
 Button,
-Form, Table, FormGroup,
-Label, Input,
+Form, FormGroup, Label, Input,
 TabContent, TabPane, Nav, NavItem, NavLink, 
-Card, CardTitle, CardText,
 } from 'reactstrap';
-import classnames from 'classnames'; 
 
-import {MdDelete} from 'react-icons/lib/md'; 
-
-const CategoryRow = (props) => {
-  function onClickDelete(){
-    props.deleteCategory(props.item._id);
-  }
-    return(
-      <tr>
-          <td scope="row">{props.item.name}</td>
-          <td><Button onClick={onClickDelete}><MdDelete/></Button></td>
-      </tr>   
-    );
-}
-
-const CategoryTable = (props) => {
-  const itemRows = props.items.map(item => <CategoryRow key={item._id} item={item} deleteCategory={props.deleteCategory}/>);
-    return(
-        <Table className="m-0 p-0 text-white bg-info" responsive>
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Actions</th>
-
-                </tr>
-            </thead>
-            <tbody>
-                {itemRows}
-            </tbody>
-        </Table>
-        );
-}
+import CategoryTable from './Table_categories.jsx';
+import ProductTable from './Table_products.jsx';
+import SellerTable from './Table_sellers.jsx';
+import CustomerTable from './Table_customers.jsx'; 
 
 const AddCategory = (props) => {
 
@@ -62,41 +33,9 @@ const AddCategory = (props) => {
   );
 }
 
-const ProductRow = (props) => {
-  function onClickDelete(){
-    props.deleteProduct(props.item._id);
-  }
-    return(
-      <tr>
-          <td scope="row">{props.item.name}</td>
-          <td>{props.item.description}</td>
-          <td>{props.item.category.name}</td> 
-          <td><Button onClick={onClickDelete}><MdDelete/></Button></td>
-      </tr>   
-    );
-}
-
-const ProductTable = (props) => {
-  const productRows = props.items.map(item => <ProductRow key={item._id} item={item} deleteProduct={props.deleteProduct}/>);
-    return(
-        <Table className="m-0 p-0 text-white bg-danger" responsive>
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Description</th>
-                    <th>Category</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                {productRows}
-            </tbody>
-        </Table>
-        );
-}
-
 
 const AddProduct = (props) => {
+  
   function handleAddProduct(e){
     e.preventDefault(); 
     var form = document.forms.productAdd;
@@ -107,7 +46,9 @@ const AddProduct = (props) => {
     form.name.value = '';
     form.selectcategory.value = '';
   }
+
   const CategoryOptions = props.categories.map((category)=> <option key={category._id} value={category._id}>{category.name}</option> );
+  
   return(
     <Form inline name="productAdd" onSubmit={handleAddProduct}>
       <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
@@ -141,10 +82,20 @@ export default class AdminDB extends React.Component{
     this.loadProducts = this.loadProducts.bind(this);
     this.addProduct = this.addProduct.bind(this); 
     this.deleteProduct = this.deleteProduct.bind(this);
+    this.loadSellers = this.loadSellers.bind(this);
+    this.loadCustomers = this.loadCustomers.bind(this);
   }
 
   componentDidMount(){
     this.loadCategories();
+  }
+
+  loadSellers(){
+
+  }
+
+  loadCustomers(){
+
   }
 
   loadCategories(){
@@ -235,8 +186,25 @@ export default class AdminDB extends React.Component{
               Products
             </NavLink>
           </NavItem>
+          <NavItem>
+            <NavLink
+              className={classnames({ active: this.state.activeTab === '3' })}
+              onClick={() => { this.loadSellers(); this.onToggle('3'); }}
+            >
+              Sellers
+            </NavLink>
+          </NavItem>
+          <NavItem>
+            <NavLink
+              className={classnames({ active: this.state.activeTab === '4' })}
+              onClick={() => { this.loadCustomers(); this.onToggle('4'); }}
+            >
+              Customers
+            </NavLink>
+          </NavItem>
         </Nav>
         </Row>
+
         <TabContent activeTab={this.state.activeTab}>
           <TabPane tabId="1">
             <Row>
@@ -251,6 +219,20 @@ export default class AdminDB extends React.Component{
           <Col xs='12' md='6' >
             <ProductTable items={this.state.products} deleteProduct={this.deleteProduct} />
             <AddProduct AddProduct={this.addProduct} categories={this.state.categories}/>
+          </Col> 
+          </Row>
+          </TabPane>
+          <TabPane tabId="3">
+          <Row>
+          <Col xs='12' md='6' >
+            Sellers here!
+          </Col> 
+          </Row>
+          </TabPane>
+          <TabPane tabId="4">
+          <Row>
+          <Col xs='12' md='6'>
+          Customers Hereee.
           </Col> 
           </Row>
           </TabPane>
