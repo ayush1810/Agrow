@@ -95,21 +95,30 @@ const ProductTable = (props) => {
         );
 }
 
-const AddProduct = (props) => {
 
+const AddProduct = (props) => {
   function handleAddProduct(e){
     e.preventDefault(); 
     var form = document.forms.productAdd;
     props.AddProduct({
         name : form.name.value,
+        category: form.selectcategory.value
     });
     form.name.value = '';
+    form.selectcategory.value = '';
   }
+  const CategoryOptions = props.categories.map((category)=> <option key={category._id} value={category._id}>{category.name}</option> );
   return(
     <Form inline name="productAdd" onSubmit={handleAddProduct}>
       <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
           <Label hidden for="ProductName" className="m-0">Name</Label>
           <Input type="text" name="name" id="ProductName" placeholder="Product Name" />
+      </FormGroup>
+      <FormGroup>
+        <Label hidden for="ProductCategory">Category</Label>
+        <Input type="select" name="selectcategory" id="ProductCategory">
+          {CategoryOptions}
+        </Input>
       </FormGroup>
       <Button color="primary">Add Product</Button>
     </Form>
@@ -135,6 +144,7 @@ export default class AdminDB extends React.Component{
   }
 
   componentDidMount(){
+    this.loadCategories();
   }
 
   loadCategories(){
@@ -240,7 +250,7 @@ export default class AdminDB extends React.Component{
           <Row>
           <Col xs='12' md='6' >
             <ProductTable items={this.state.products} deleteProduct={this.deleteProduct} />
-            <AddProduct AddProduct={this.addProduct}/>
+            <AddProduct AddProduct={this.addProduct} categories={this.state.categories}/>
           </Col> 
           </Row>
           </TabPane>

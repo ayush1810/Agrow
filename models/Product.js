@@ -19,6 +19,7 @@ const ProductSchema = new mongoose.Schema({
 
 ProductSchema.pre('save', function (next) {
     var product = this;
+    console.log(product.category);
     if (!product.description){
         product.description = `Fresh ${product.name} from organic farms of South India.`; 
     }
