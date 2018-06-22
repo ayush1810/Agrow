@@ -7,8 +7,5 @@ const CategorySchema = new mongoose.Schema({
         trim: true,
         required: `Enter a valid category name`
     },
-    products: [{
-        type: String,
-    }]
 });
 module.exports = mongoose.model('Category',CategorySchema);

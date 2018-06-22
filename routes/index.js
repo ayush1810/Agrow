@@ -6,8 +6,10 @@ const router = express.Router();
 mongoose.set('debug', true);
 
 const Customer = require('../models/Customer.js');
-const Item = require('../models/Item');
-const Seller = require('../models/Seller');
+const Item = require('../models/Item.js');
+const Seller = require('../models/Seller.js');
+const Category = require('../models/Category.js');
+const Product = require('../models/Product');
 
 router.get('/',(req, res)=>{
     res.render('index.html');
@@ -24,6 +26,56 @@ router.get('/api/items',(req, res) => {
         }
     });
 });
+
+router.get('/api/categories',(req, res) => {
+    Category.find({}, function(err, items){
+        if(!err){
+            res.json({records : items});
+        }
+        else{
+            res.send("Error loading sellers");
+            console.error(err.message);
+        }
+    });
+});
+
+router.post('/addCategory', (req, res) =>{
+    const NewCategory = new Category(req.body);
+    Category.create(NewCategory, (err, cat)=> {
+        if (err){
+            res.send("Sorry that didn't work");
+            console.log("Error" + err.message);
+        }
+        else{
+            res.json(cat);
+        }
+    });
+});
+
+router.delete('/deleteCategory/:id',(req, res)=>{
+    let categoryId;
+    try {
+        categoryId = req.params.id;
+    } catch (error) {
+        res.status(422).json({ message: `Invalid category ID; format: ${error}` });
+        return;
+    }
+
+    Category.findById(categoryId, function (err,record){
+        if (err) {
+            console.log("Unable to find in database"+err);
+        }
+        else if (!record) {
+            console.log("Unable to get category");
+        }
+        else{
+            Category.deleteOne({_id: categoryId}).then(()=>{
+                console.log("Category removed");
+                res.json({status: 'OK'});
+            });
+        }
+    }); 
+});       
 
 router.get('/api/seller/:id',(req, res)=>{
     const uid = req.params.id; 
