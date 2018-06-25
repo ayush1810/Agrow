@@ -6,6 +6,9 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import Chat from "@material-ui/icons/Chat";
 import VerifiedUser from "@material-ui/icons/VerifiedUser";
 import Fingerprint from "@material-ui/icons/Fingerprint";
+import {
+Favorite
+} from '@material-ui/icons'; 
 // core components
 import GridContainer from "components/Grid/GridContainer.jsx";
 import GridItem from "components/Grid/GridItem.jsx";
@@ -20,9 +23,9 @@ class ProductSection extends React.Component {
       <div className={classes.section}>
         <GridContainer justify="center">
           <GridItem xs={12} sm={12} md={8}>
-            <h2 className={classes.title}>Trending Products</h2>
+            <h2 className={classes.title}>Features</h2>
             <h5 className={classes.description}>
-              Find fresh crops from verified users. Bid the highest amount to take it home.
+              Built with MERN stack , Material UI v1.0 and some {<Favorite/>}
             </h5>
           </GridItem>
         </GridContainer>
