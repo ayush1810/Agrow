@@ -10,8 +10,15 @@ import ListItem from "@material-ui/core/ListItem";
 import Tooltip from "@material-ui/core/Tooltip";
 
 // @material-ui/icons
-import { Apps, CloudDownload } from "@material-ui/icons";
-
+import {
+CloudDownload,
+Person,
+Public
+} from "@material-ui/icons";
+import {
+FaFacebookOfficial,
+FaInstagram
+} from 'react-icons/lib/fa';
 // core components
 import CustomDropdown from "components/CustomDropdown/CustomDropdown.jsx";
 import Button from "components/CustomButtons/Button.jsx";
@@ -25,52 +32,38 @@ function HeaderLinks({ ...props }) {
       <ListItem className={classes.listItem}>
         <CustomDropdown
           noLiPadding
-          buttonText="Components"
+          buttonText="Login"
           buttonProps={{
             className: classes.navLink,
             color: "transparent"
           }}
-          buttonIcon={Apps}
+          buttonIcon={Person}
           dropdownList={[
             <Link to="/" className={classes.dropdownLink}>
-              All components
+              Customer
             </Link>,
-            <a
-              href="https://creativetimofficial.github.io/material-kit-react/#/documentation"
-              target="_blank"
-              className={classes.dropdownLink}
-            >
-              Documentation
-            </a>
+            <Link to="/" className={classes.dropdownLink}>
+              Seller
+             </Link>
+            // <a
+            //   href="https://creativetimofficial.github.io/material-kit-react/#/documentation"
+            //   target="_blank"
+            //   className={classes.dropdownLink}
+            // >
+            //   Seller
+            // </a>
           ]}
         />
       </ListItem>
       <ListItem className={classes.listItem}>
         <Button
-          href="https://www.creative-tim.com/product/material-kit-react"
+          href="https://github.com/ayush1810/agrow"
           color="transparent"
           target="_blank"
           className={classes.navLink}
         >
-          <CloudDownload className={classes.icons} /> Download
+          <Public className={classes.icons} /> Github
         </Button>
-      </ListItem>
-      <ListItem className={classes.listItem}>
-        <Tooltip
-          id="instagram-twitter"
-          title="Follow us on twitter"
-          placement={window.innerWidth > 959 ? "top" : "left"}
-          classes={{ tooltip: classes.tooltip }}
-        >
-          <Button
-            href="https://twitter.com/CreativeTim"
-            target="_blank"
-            color="transparent"
-            className={classes.navLink}
-          >
-            <i className={classes.socialIcons + " fab fa-twitter"} />
-          </Button>
-        </Tooltip>
       </ListItem>
       <ListItem className={classes.listItem}>
         <Tooltip
@@ -81,11 +74,11 @@ function HeaderLinks({ ...props }) {
         >
           <Button
             color="transparent"
-            href="https://www.facebook.com/CreativeTim"
+            href="https://www.facebook.com/ayushagrawal1810"
             target="_blank"
             className={classes.navLink}
           >
-            <i className={classes.socialIcons + " fab fa-facebook"} />
+          <FaFacebookOfficial className={classes.socialIcons}/>
           </Button>
         </Tooltip>
       </ListItem>
@@ -98,11 +91,11 @@ function HeaderLinks({ ...props }) {
         >
           <Button
             color="transparent"
-            href="https://www.instagram.com/CreativeTimOfficial"
+            href="https://www.instagram.com/agrawal_ayushh"
             target="_blank"
             className={classes.navLink}
           >
-            <i className={classes.socialIcons + " fab fa-instagram"} />
+            <FaInstagram className={classes.socialIcons} />
           </Button>
         </Tooltip>
       </ListItem>
