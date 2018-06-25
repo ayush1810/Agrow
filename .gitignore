@@ -9,6 +9,8 @@
 
 # Dependency directories #
 public/bootstrap
+public/*.jpg
+src/Oldcomponents
 *.map
 *.env
 node_modules/

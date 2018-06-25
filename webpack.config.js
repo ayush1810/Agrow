@@ -4,7 +4,7 @@ const webpack = require('webpack');
 module.exports = {
   mode : 'development',
   entry: {
-    app:  './src/app.jsx',
+    app:  './src/index.jsx',
   },
   output: {
     path: path.resolve(__dirname, 'public'),
@@ -20,10 +20,14 @@ module.exports = {
             }
         }
     }
-},
-  plugins: [
-  
-  ],
+  },
+  resolve: {
+    alias: {
+      assets: path.resolve(__dirname, 'src/assets/'),
+      components: path.resolve(__dirname, 'src/components/'),
+      views: path.resolve(__dirname, 'src/views/')
+    }
+  },
   module: {
     rules: [
     {
@@ -33,6 +37,16 @@ module.exports = {
             presets: ['react','es2015','stage-3']
         }
     },
+    {
+      test: /\.css$/,
+      use: [
+        'style-loader', 'css-loader','sass-loader'
+      ]
+    },
+    {
+      test: /\.(png|svg|jpg|gif)$/,
+      use: ['file-loader']
+    }
     ]
   },
   devtool : 'source-map',

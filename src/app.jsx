@@ -20,7 +20,7 @@ import SignupModel from './components/User/UserAdd.jsx';
 import LoginModel from './components/User/UserLogin.jsx';
 import AdminDB from './components/Admin/Admin.jsx';
 import UsersInfo from './components/User/UserDashboard.jsx';
-import HomePage from './Home.jsx';
+import HomePage from './components/Home.jsx';
 
 const contentNode = document.getElementById('contents');
 
@@ -54,7 +54,7 @@ class NavHead extends React.Component {
         <Collapse isOpen={this.state.isActive} navbar>
             <Nav className="ml-auto" navbar>
                 <NavItem>
-                    <LoginModel loginUser={this.props.doLogin}/>
+                    <LoginModel loginSeller={this.props.onLoginSeller}/>
                 </NavItem>
                 <NavItem className="ml-2">
                     <SignupModel/>
@@ -107,11 +107,11 @@ class Main extends React.Component{
     }
     this.authenticate = this.authenticate.bind(this);
     this.signout = this.signout.bind(this);
-    this.loginUser = this.loginUser.bind(this);
+    this.loginSeller = this.loginSeller.bind(this);
   }
     
-  loginUser(usercreds){
-    fetch('/login',{
+  loginSeller(usercreds){
+    fetch('/api/sellers/login',{
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body : JSON.stringify(usercreds),
@@ -137,7 +137,7 @@ render(){
     return(
       <Router>
         <div>
-          <NavHead loggedIn={this.state.isAuthenticated} signOut={this.signout} doLogin={this.loginUser}  />
+          <NavHead loggedIn={this.state.isAuthenticated} signOut={this.signout} onLoginSeller={this.loginSeller}  />
       <Route exact path='/home' component={HomePage} />
       <Route path='/dashboard' render={(props)=>
         this.state.isAuthenticated ? (<UsersInfo {...props} signout={this.signout} user={this.state.user} />)
