@@ -254,6 +254,17 @@ router.post('/adduser',(req, res)=>{
     });
 } );
 
+router.get('/api/customers', (req, res)=>{
+    Customer.find({},(err, customers)=>{
+        if(!err){
+            res.json({records : customers});
+        }
+        else{
+            res.send("Error loading customers");
+            console.error(err.message);
+        }
+    });
+});
 router.post('/addcustomer',(req, res)=>{
     const NewCustomer = new Customer(req.body); 
     Customer.create(NewCustomer, (err, usr)=> {

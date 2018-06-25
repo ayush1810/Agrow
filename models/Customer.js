@@ -31,7 +31,7 @@ const CustomerSchema = new mongoose.Schema({
     }],
     wallet: {
       type: Number,
-      default: 0.00 
+      default: 100.00 
     }
 });
 

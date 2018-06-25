@@ -78,7 +78,7 @@ export default class SignupModel extends React.Component {
             body : JSON.stringify(newSeller),
         }).then(response => response.json()).then(updatedSeller => {
             this.toggle();
-            alert("Signup successful. You can now login!");
+            alert("Signup successful. Login to start trading!");
         }).catch(err =>{
             console.log(err.message);
         });

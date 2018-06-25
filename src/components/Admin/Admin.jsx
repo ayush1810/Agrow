@@ -73,7 +73,8 @@ export default class AdminDB extends React.Component{
       activeTab: '1',
       categories: [],
       products: [],
-      sellers: []
+      sellers: [],
+      customers: []
     };
 
     this.onToggle = this.onToggle.bind(this);
@@ -103,7 +104,13 @@ export default class AdminDB extends React.Component{
   }
 
   loadCustomers(){
-
+    fetch('/api/customers',{
+      method: 'GET',
+    }).then(response => response.json()).then(data => {
+      this.setState({customers: data.records });
+    }).catch(err =>{
+      console.log(err.message);
+    });
   }
 
   modifySellerWallet(sId,newSeller)
@@ -254,7 +261,7 @@ export default class AdminDB extends React.Component{
           <TabPane tabId="4">
           <Row>
           <Col xs='12' md='6'>
-            Customer table here
+            <CustomerTable customers={this.state.customers}/>
           </Col> 
           </Row>
           </TabPane>
