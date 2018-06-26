@@ -49,5 +49,17 @@ module.exports = {
     }
     ]
   },
-  devtool : 'source-map',
+  // devServer: {
+  //   contentBase: 'public',
+  //   historyApiFallback: true,
+  //   host: 'localhost',
+  //   port: 8000,
+  //   proxy: {
+  //     '/api': {
+  //       target: 'http://localhost:3000',
+  //       pathRewrite: {'^/api' : ''}
+  //     }
+  //   }
+  // }
+  // devtool : 'source-map',
 };

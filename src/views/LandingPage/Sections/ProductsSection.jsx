@@ -6,7 +6,10 @@ import withStyles from "@material-ui/core/styles/withStyles";
 
 // @material-ui/icons
 import {
-AttachMoney
+AttachMoney,
+Camera,
+Favorite,
+Palette
 } from '@material-ui/icons';
 // core components
 import GridContainer from "components/Grid/GridContainer.jsx";

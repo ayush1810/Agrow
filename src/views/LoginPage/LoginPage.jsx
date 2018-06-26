@@ -35,14 +35,14 @@ const LoginSuccessNotification = (props) => {
   return(
     <div>
     <SnackbarContent
-          message={
-              <span>
-                <b>Login Successful</b>. You'll be redirected to the dashboard.
-              </span>
-          }
-          close
-          color="success"
-          icon={Check}
+      message={
+        <span>
+          <b>Login Successful</b>. You'll be redirected to the dashboard.
+        </span>
+      }
+      close
+      color="success"
+      icon={Check}
     />
     </div>
   );
@@ -53,9 +53,11 @@ class LoginPage extends React.Component {
     super(props);
     // we use this to make the card to appear after the page has been rendered
     this.state = {
-      cardAnimaton: "cardHidden"
+      cardAnimaton: "cardHidden",
+      openSignupNotify: false
     };
     this.handleLoginSubmit = this.handleLoginSubmit.bind(this); 
+    this.handleSignUpNotifiyClose = this.handleSignUpNotifiyClose.bind(this);
   }
   componentDidMount() {
     // we add a hidden class to the card and after 700 ms we delete it and the transition appears
@@ -80,6 +82,11 @@ class LoginPage extends React.Component {
     console.log(form.first.value+ form.email.value+form.pass.value);
   }
 
+  handleSignUpNotifiyClose(e){
+    this.setState({
+      openSignupNotify : false
+    });
+  }
   render() {
     const { classes, ...rest } = this.props;
     return (
@@ -124,24 +131,8 @@ class LoginPage extends React.Component {
                         </Button>
                       </div>
                     </CardHeader>
-                    <p className={classes.divider}>Or Signup</p>
                     <form className={classes.form} name="loginForm"> 
                     <CardBody>
-                        <CustomInput
-                          labelText="Full Name"
-                          id="first"
-                          formControlProps={{
-                            fullWidth: true
-                          }}
-                          inputProps={{
-                            type: "text",
-                            endAdornment: (
-                              <InputAdornment position="end">
-                                <People className={classes.inputIconsColor} />
-                              </InputAdornment>
-                            )
-                          }}
-                        />
                         <CustomInput
                           labelText="Email"
                           id="email"
@@ -178,7 +169,7 @@ class LoginPage extends React.Component {
                     </CardBody>
                     <CardFooter className={classes.cardFooter}>
                       <Button default color="success" size="lg" onClick={this.handleLoginSubmit}>
-                        SIGNUP
+                        LOGIN
                       </Button>
                     </CardFooter>
                     </form>
