@@ -9,7 +9,10 @@
 
 # Dependency directories #
 public/bootstrap
-public/*.jpg
+*.jpg
+*.jpeg
+*.png
+*.gif
 src/Oldcomponents
 *.map
 *.env

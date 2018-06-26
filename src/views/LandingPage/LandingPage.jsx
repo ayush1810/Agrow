@@ -3,7 +3,7 @@ import React from "react";
 import classNames from "classnames";
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
-
+import { Link } from "react-router-dom";
 // @material-ui/icons
 
 // core components
@@ -18,9 +18,9 @@ import Parallax from "components/Parallax/Parallax.jsx";
 import landingPageStyle from "assets/jss/material-kit-react/views/landingPage.jsx";
 
 // Sections for this page
-import ProductSection from "./Sections/ProductSection.jsx";
-import TeamSection from "./Sections/TeamSection.jsx";
-import WorkSection from "./Sections/WorkSection.jsx";
+import FeaturesSection from "./Sections/FeaturesSection.jsx";
+import ProductsSection from "./Sections/ProductsSection.jsx";
+// import WorkSection from "./Sections/WorkSection.jsx";
 
 const dashboardRoutes = [];
 
@@ -51,31 +51,20 @@ class LandingPage extends React.Component {
                   Easy payments through leading cryptocurrencies. 
                 </h4>
                 <br />
-                <Button
-                  color="danger"
-                  size="lg"
-                  href="#"
-                  rel="noopener noreferrer"
-                >
-                  <i className="fas fa-play" />LOGIN
-                </Button>
-                <Button
-                  color="success"
-                  size="lg"
-                  href="#"
-                  rel="noopener noreferrer"
-                >
-                  SIGNUP
-                </Button>
+                <Link to={"/login"} className={classes.link}>
+                  <Button color="google" size="lg">
+                    Login
+                  </Button>
+                </Link>
               </GridItem>
             </GridContainer>
           </div>
         </Parallax>
         <div className={classNames(classes.main, classes.mainRaised)}>
           <div className={classes.container}>
-            <ProductSection />
-            <TeamSection />
-            <WorkSection />
+            <FeaturesSection/>
+            <ProductsSection />
+            {/* <WorkSection /> */}
           </div>
         </div>
         <Footer />

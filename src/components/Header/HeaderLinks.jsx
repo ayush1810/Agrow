@@ -62,7 +62,7 @@ function HeaderLinks({ ...props }) {
           target="_blank"
           className={classes.navLink}
         >
-          <Public className={classes.icons} /> Github
+          <Public className={classes.icons} /> How It Works
         </Button>
       </ListItem>
       <ListItem className={classes.listItem}>

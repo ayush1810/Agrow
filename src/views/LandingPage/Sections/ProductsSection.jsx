@@ -18,10 +18,6 @@ import CardFooter from "components/Card/CardFooter.jsx";
 
 import teamStyle from "assets/jss/material-kit-react/views/landingPageSections/teamStyle.jsx";
 
-import team1 from "assets/img/faces/avatar.jpg";
-import team2 from "assets/img/faces/christian.jpg";
-import team3 from "assets/img/faces/kendall.jpg";
-
 const ProductCard = (props) => {
   const classes = props.classes; 
   return (
@@ -45,7 +41,7 @@ const ProductCard = (props) => {
         <CardFooter className={classes.justifyCenter}>
           <Button
             round
-            color="facebook"
+            color="primary"
           >
             <AttachMoney className={classes.icons}/> BID
           </Button>
@@ -65,16 +61,20 @@ const ProductGrid = (props) => {
     );
 }
 
-class TeamSection extends React.Component {
+class ProductsSection extends React.Component {
   constructor(props){
     super(props);
     this.state = {
       items : []
     };
     this.loadProducts = this.loadProducts.bind(this); 
+    this.onProductClick = this.onProductClick.bind(this);
   }
 
   componentDidMount(){
+  }
+
+  onProductClick(){
     this.loadProducts();
   }
 
@@ -96,6 +96,13 @@ class TeamSection extends React.Component {
     return (
       <div className={classes.section}>
         <h2 className={classes.title}>Trending Products</h2>
+        <Button
+          round
+          color="google"
+          onClick = {this.onProductClick}
+        >
+          View Products
+        </Button>
         <div>
           <GridContainer>
             <ProductGrid products={this.state.items} classes={classes} imageClasses={imageClasses} /> 
@@ -106,4 +113,4 @@ class TeamSection extends React.Component {
   }
 }
 
-export default withStyles(teamStyle)(TeamSection);
+export default withStyles(teamStyle)(ProductsSection);

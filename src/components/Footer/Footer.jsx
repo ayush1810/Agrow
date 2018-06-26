@@ -28,34 +28,25 @@ function Footer({ ...props }) {
           <List className={classes.list}>
             <ListItem className={classes.inlineBlock}>
               <a
-                href="https://www.creative-tim.com/"
+                href="#"
                 className={classes.block}
                 target="_blank"
               >
-                Creative Tim
+                About Us
               </a>
             </ListItem>
             <ListItem className={classes.inlineBlock}>
               <a
-                href="https://www.creative-tim.com/presentation"
+                href="#"
                 className={classes.block}
                 target="_blank"
               >
-                About us
+                How It Works
               </a>
             </ListItem>
             <ListItem className={classes.inlineBlock}>
               <a
-                href="http://blog.creative-tim.com/"
-                className={classes.block}
-                target="_blank"
-              >
-                Blog
-              </a>
-            </ListItem>
-            <ListItem className={classes.inlineBlock}>
-              <a
-                href="https://www.creative-tim.com/license"
+                href="#"
                 className={classes.block}
                 target="_blank"
               >
@@ -68,13 +59,12 @@ function Footer({ ...props }) {
           &copy; {1900 + new Date().getYear()} , made with{" "}
           <Favorite className={classes.icon} /> by{" "}
           <a
-            href="https://www.creative-tim.com"
+            href="https://www.github.com/ayush1810"
             className={aClasses}
             target="_blank"
           >
-            Creative Tim
-          </a>{" "}
-          for a better web.
+            Ayush Agrawal
+          </a>
         </div>
       </div>
     </footer>
