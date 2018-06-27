@@ -3,13 +3,12 @@ import imagesStyle from "assets/jss/material-kit-react/imagesStyles.jsx";
 
 const teamStyle = {
   section: {
-    padding: "20px 0",
+    padding: "0px 0",
     textAlign: "center"
   },
   title: {
-    ...title,
     marginBottom: "1rem",
-    marginTop: "30px",
+    marginTop: "20px",
     minHeight: "32px",
     textDecoration: "none"
   },

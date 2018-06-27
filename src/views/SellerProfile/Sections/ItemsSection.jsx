@@ -71,7 +71,7 @@ class ItemsSection extends React.Component {
         <h2 className={classes.title}>Your Items</h2>
         <div>
           <GridContainer>
-          <GridItem xs={12} sm={12} md={8} className={classes.navWrapper}>
+          <GridItem xs={12} className={classes.navWrapper}>
             <Paper className={classes.root}>
                 <Table className={classes.table}>
                     <TableHead>
