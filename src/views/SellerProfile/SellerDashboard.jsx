@@ -22,6 +22,31 @@ import ProfileSection from "./Sections/ProfileSection.jsx";
 import profilePageStyle from "assets/jss/material-kit-react/views/profilePage.jsx";
 
 class SellerDashboard extends React.Component {
+
+  constructor(props)
+  {
+    super(props); 
+    this.state = {
+      userID: null
+    };
+  }
+
+  componentDidMount(){
+    console.log("Fetching user data");
+    fetch('/profile',
+    {
+      method: 'GET'
+    })
+    .then(response => response.json()).then(user => 
+    {
+      this.setState({  userID: user._id });
+      console.log("From state "+ this.state.userID);
+    })
+    .catch(err => 
+    {
+      alert("errOR " + err.message); 
+    });
+  }
   render() {
     const { classes, ...rest } = this.props;
     const imageClasses = classNames(
@@ -49,6 +74,7 @@ class SellerDashboard extends React.Component {
             <div className={classes.container}>
               <GridContainer justify="center">
                 <GridItem xs={12} sm={12} md={6} >
+                  Seller ID: {this.state.userID}
                   <ItemsSection/>      
                 </GridItem>
                 <GridItem xs={12} sm={12} md={6} >

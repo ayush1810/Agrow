@@ -48,7 +48,7 @@ const LoginSuccessNotification = (props) => {
   );
 } 
 
-class LoginPage extends React.Component {
+class SignupPage extends React.Component {
   constructor(props) {
     super(props);
     // we use this to make the card to appear after the page has been rendered
@@ -56,11 +56,12 @@ class LoginPage extends React.Component {
       cardAnimaton: "cardHidden",
       openSignupNotify: false
     };
-    this.handleLoginSubmit = this.handleLoginSubmit.bind(this); 
+    this.handleRegisterSubmit = this.handleRegisterSubmit.bind(this); 
     this.handleSignUpNotifiyClose = this.handleSignUpNotifiyClose.bind(this);
+    this.registerUser = this.registerUser.bind(this); 
+
   }
   componentDidMount() {
-    // we add a hidden class to the card and after 700 ms we delete it and the transition appears
     setTimeout(
       function() {
         this.setState({ cardAnimaton: "" });
@@ -69,17 +70,42 @@ class LoginPage extends React.Component {
     );
   }
 
-  handleLoginSubmit(e){
+  handleRegisterSubmit(e){
     e.preventDefault();
     var form = document.forms.loginForm;
-    // this.props.createItem({
-    //     name : form.name.value,
-    //     quantity : form.quantity.value,
-    //     rate : form.rate.value,
-    //     dateEnd: form.date.value,
-    //     seller: this.props.sellerId ,
-    // });
-    console.log(form.first.value+ form.email.value+form.pass.value);
+    this.registerUser({
+      name: form.name.value,
+      email: form.email.value,
+      password: form.password.value,
+      state: form.state.value,
+      city: form.city.value
+    });
+    console.log("Handled");
+  }
+
+  registerUser(usercreds){
+    fetch('/addseller',
+    {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body : JSON.stringify(usercreds),
+    })
+    .then(response => response.json())
+    .then(result => 
+    {
+        if(result.status == 'OK'){
+          console.log("Ready to rock");
+          this.props.history.push({
+            pathname:'/profile',
+           });
+        }
+        else{
+          console.log("OOPS, that didn't work!");
+        }
+    })
+    .catch(err =>{
+      alert(err.message);
+    });
   }
 
   handleSignUpNotifiyClose(e){
@@ -94,7 +120,7 @@ class LoginPage extends React.Component {
         <Header
           absolute
           color="transparent"
-          brand="Material Kit React"
+          brand="AGROW"
           rightLinks={<HeaderLinks />}
           {...rest}
         />
@@ -133,6 +159,21 @@ class LoginPage extends React.Component {
                     </CardHeader>
                     <form className={classes.form} name="loginForm"> 
                     <CardBody>
+                      <CustomInput
+                        labelText="Full Name"
+                        id="name"
+                        formControlProps={{
+                          fullWidth: true
+                        }}
+                        inputProps={{
+                          type: "text",
+                          endAdornment: (
+                            <InputAdornment position="end">
+                              <People className={classes.inputIconsColor} />
+                            </InputAdornment>
+                          )
+                        }}
+                      />
                         <CustomInput
                           labelText="Email"
                           id="email"
@@ -150,7 +191,7 @@ class LoginPage extends React.Component {
                         />
                         <CustomInput
                           labelText="Password"
-                          id="pass"
+                          id="password"
                           formControlProps={{
                             fullWidth: true
                           }}
@@ -165,11 +206,40 @@ class LoginPage extends React.Component {
                             )
                           }}
                         />
-                    
+                      <CustomInput
+                        labelText="State / U.T."
+                        id="state"
+                        formControlProps={{
+                          fullWidth: true
+                        }}
+                        inputProps={{
+                          type: "text",
+                          endAdornment: (
+                            <InputAdornment position="end">
+                              <People className={classes.inputIconsColor} />
+                            </InputAdornment>
+                          )
+                        }}
+                      />
+                      <CustomInput
+                        labelText="City"
+                        id="city"
+                        formControlProps={{
+                          fullWidth: true
+                        }}
+                        inputProps={{
+                          type: "text",
+                          endAdornment: (
+                            <InputAdornment position="end">
+                              <People className={classes.inputIconsColor} />
+                            </InputAdornment>
+                          )
+                        }}
+                      />
                     </CardBody>
                     <CardFooter className={classes.cardFooter}>
-                      <Button default color="success" size="lg" onClick={this.handleLoginSubmit}>
-                        LOGIN
+                      <Button default color="success" size="lg" onClick={this.handleRegisterSubmit}>
+                        SIGNUP
                       </Button>
                     </CardFooter>
                     </form>
@@ -184,4 +254,4 @@ class LoginPage extends React.Component {
   }
 }
 
-export default withStyles(loginPageStyle)(LoginPage);
+export default withStyles(loginPageStyle)(SignupPage);

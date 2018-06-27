@@ -32,6 +32,7 @@ class ProfileSection extends React.Component {
   }
 
   loadProfile(){
+
     // fetch(`/api/seller/${uid}`,{
     //     method: 'GET',
     // }).then(response => response.json()).then(data => {

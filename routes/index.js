@@ -241,15 +241,17 @@ router.delete('/deleteItem/:id',(req, res)=>{
     });
 });
 
-router.post('/adduser',(req, res)=>{
+router.post('/addseller',(req, res)=>{
     const NewSeller = new Seller(req.body); 
     Seller.create(NewSeller, (err, usr)=> {
         if (err){
-            res.send("Sorry that didn't work");
             console.log("Error" + err.message);
+            res.send("Sorry that didn't work");
         }
         else{
-            res.json(NewSeller);
+            req.session.userID = usr._id;
+            console.log("Sess "+req.session.userID);
+            res.json({status: 'OK'});
         }
     });
 } );
@@ -287,6 +289,7 @@ router.post('/api/sellers/login', function(req, res, next) {
         err.status = 401;
         return next(err);
         }  else {
+        req.session.userID = user._id; 
         res.json(user);
         }
     });
@@ -297,6 +300,20 @@ router.post('/api/sellers/login', function(req, res, next) {
     }
 });
 
+router.get('/profile', function (req, res, next){
+    console.log("Fulls es "+req.session);
+    console.log("Pro sess "+ req.session.userID);
+    Seller.findById(req.session.userID).exec((err, user)=>{
+        if(err){
+            console.log("Cound find user"); 
+            return next(err);
+        }
+        else{
+            console.log("User" + user);
+            res.json(user);
+        }
+    });
+});
 router.get('/logout', function(req, res, next) {
     if (req.session) {
       // delete session object

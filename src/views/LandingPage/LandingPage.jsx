@@ -51,9 +51,9 @@ class LandingPage extends React.Component {
                   Easy payments through leading cryptocurrencies. 
                 </h4>
                 <br />
-                <Link to={"/login"} className={classes.link}>
+                <Link to={"/register"} className={classes.link}>
                   <Button color="google" size="lg">
-                    Login
+                    SIGNUP
                   </Button>
                 </Link>
                 <Link to={"/profile"} className={classes.link}>

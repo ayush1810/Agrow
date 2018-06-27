@@ -4,14 +4,14 @@ const bcrypt = require('bcrypt');
 const Item = require('./Item.js');
 
 const SellerSchema = new mongoose.Schema({
-    role:{
-      type: String,
-      default: 'seller'
-    },
     name:{
       type: String,
       trim: true,
       required: `Enter a valid Seller name`
+    },
+    profile:{
+      type: String,
+      default: 'https://images.pexels.com/photos/614810/pexels-photo-614810.jpeg?auto=compress&cs=tinysrgb&h=171&w=200'
     },
     email: {
       type: String,
