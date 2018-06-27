@@ -17,7 +17,7 @@ import HeaderLinks from "components/Header/HeaderLinks.jsx";
 import Parallax from "components/Parallax/Parallax.jsx";
 
 import profile from "assets/img/faces/christian.jpg";
-
+import ItemsSection from "./Sections/ItemsSection.jsx";
 import profilePageStyle from "assets/jss/material-kit-react/views/profilePage.jsx";
 
 class SellerDashboard extends React.Component {
@@ -78,7 +78,7 @@ class SellerDashboard extends React.Component {
               </div>
               <GridContainer justify="center">
                 <GridItem xs={12} sm={12} md={8} className={classes.navWrapper}>
-                  
+                  <ItemsSection/>      
                 </GridItem>
               </GridContainer>
             </div>

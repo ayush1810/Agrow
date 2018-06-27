@@ -22,5 +22,9 @@ const ItemSchema = new mongoose.Schema({
         type: Date, 
         default : Date.now() + 7*24*60*60*1000
     },
+    status: {
+        type: String,
+        default: 'Ongoing Bidding'
+    }
 });
 module.exports = mongoose.model('Item',ItemSchema);
