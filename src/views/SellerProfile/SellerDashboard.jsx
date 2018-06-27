@@ -33,7 +33,7 @@ class SellerDashboard extends React.Component {
       <div>
         <Header
           color="transparent"
-          brand="Material Kit React"
+          brand="AGROW"
           rightLinks={<HeaderLinks />}
           fixed
           changeColorOnScroll={{
