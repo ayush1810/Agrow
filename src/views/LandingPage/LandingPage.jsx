@@ -56,6 +56,11 @@ class LandingPage extends React.Component {
                     Login
                   </Button>
                 </Link>
+                <Link to={"/profile"} className={classes.link}>
+                  <Button color="facebook" size="lg">
+                    Profile
+                  </Button>
+                </Link>
               </GridItem>
             </GridContainer>
           </div>

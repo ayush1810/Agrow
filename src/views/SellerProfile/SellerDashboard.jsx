@@ -4,9 +4,9 @@ import classNames from "classnames";
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
 // @material-ui/icons
-import Camera from "@material-ui/icons/Camera";
-import Palette from "@material-ui/icons/Palette";
-import Favorite from "@material-ui/icons/Favorite";
+import {
+Camera
+} from "@material-ui/icons";
 // core components
 import Header from "components/Header/Header.jsx";
 import Footer from "components/Footer/Footer.jsx";
@@ -42,7 +42,7 @@ class SellerDashboard extends React.Component {
           }}
           {...rest}
         />
-        <Parallax small filter image={require("assets/img/profile-bg.jpg")} />
+        <Parallax small filter image={require("assets/img/profile-bg.jpeg")} />
         <div className={classNames(classes.main, classes.mainRaised)}>
           <div>
             <div className={classes.container}>

@@ -8,8 +8,8 @@ var indexRoutes = [
 //   { path: "/landing-page", name: "LandingPage", component: LandingPage },
 //   { path: "/profile-page", name: "ProfilePage", component: ProfilePage },
    { path: "/login", name: "LoginPage", component: LoginPage },
-   { path: "/", name: "Landing Page", component: LandingPage },
-   { path: "/profile", name:"SellerProfile", component: SellerDashboard}
+   { path: "/profile", name:"SellerProfile", component: SellerDashboard},
+   { path: "/", name: "Landing Page", component: LandingPage }
 ];
 
 export default indexRoutes;
