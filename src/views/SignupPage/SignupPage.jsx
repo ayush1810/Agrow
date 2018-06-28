@@ -80,13 +80,13 @@ class SignupPage extends React.Component {
       state: form.state.value,
       city: form.city.value
     });
-    console.log("Handled");
   }
 
   registerUser(usercreds){
     fetch('/addseller',
     {
       method: 'POST',
+      credentials: 'include',
       headers: {'Content-Type': 'application/json'},
       body : JSON.stringify(usercreds),
     })
@@ -94,7 +94,6 @@ class SignupPage extends React.Component {
     .then(result => 
     {
         if(result.status == 'OK'){
-          console.log("Ready to rock");
           this.props.history.push({
             pathname:'/profile',
            });

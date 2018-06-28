@@ -51,7 +51,10 @@ class ItemsSection extends React.Component {
   }
 
   componentDidMount(){
-      this.loadData(this.state.pID); 
+    setTimeout(this.setState ({
+      pID : this.props.user
+    }),3000);
+    setTimeout(this.loadData(this.state.pID),5000); 
   }
 
   loadData(uid){

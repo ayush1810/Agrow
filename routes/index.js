@@ -250,7 +250,6 @@ router.post('/addseller',(req, res)=>{
         }
         else{
             req.session.userID = usr._id;
-            console.log("Sess "+req.session.userID);
             res.json({status: 'OK'});
         }
     });
@@ -284,13 +283,13 @@ router.post('/api/sellers/login', function(req, res, next) {
     if (req.body.email && req.body.password) {  
     Seller.authenticate(req.body.email, req.body.password,function (error, user) {
         if (error || !user) {
-            console.log("this "+error);
+            console.log("Seller Login Error: "+error);
         var err = new Error('Wrong email or password.');
         err.status = 401;
         return next(err);
         }  else {
         req.session.userID = user._id; 
-        res.json(user);
+        res.json({status: 'OK'});
         }
     });
     } else {
@@ -301,8 +300,6 @@ router.post('/api/sellers/login', function(req, res, next) {
 });
 
 router.get('/profile', function (req, res, next){
-    console.log("Fulls es "+req.session);
-    console.log("Pro sess "+ req.session.userID);
     Seller.findById(req.session.userID).exec((err, user)=>{
         if(err){
             console.log("Cound find user"); 

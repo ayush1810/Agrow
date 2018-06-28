@@ -62,7 +62,7 @@ class ProfileSection extends React.Component {
                 <h4 className={classes.cardTitle}>
                   Gigi Hadid
                   <br />
-                  <small className={classes.smallTitle}>Model</small>
+                  <small className={classes.smallTitle}>{this.props.user}</small>
                 </h4>
                 <CardBody>
                   <p className={classes.description}>

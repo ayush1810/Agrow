@@ -32,15 +32,14 @@ class SellerDashboard extends React.Component {
   }
 
   componentDidMount(){
-    console.log("Fetching user data");
     fetch('/profile',
     {
-      method: 'GET'
+      method: 'GET',
+      credentials: 'include'
     })
     .then(response => response.json()).then(user => 
     {
       this.setState({  userID: user._id });
-      console.log("From state "+ this.state.userID);
     })
     .catch(err => 
     {
@@ -74,11 +73,10 @@ class SellerDashboard extends React.Component {
             <div className={classes.container}>
               <GridContainer justify="center">
                 <GridItem xs={12} sm={12} md={6} >
-                  Seller ID: {this.state.userID}
-                  <ItemsSection/>      
+                  <ItemsSection user={this.state.userID}/>      
                 </GridItem>
                 <GridItem xs={12} sm={12} md={6} >
-                <ProfileSection/> 
+                <ProfileSection user={this.state.userID}/> 
                 </GridItem>
               </GridContainer>
             </div>

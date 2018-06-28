@@ -1,6 +1,7 @@
 import { defaultFont } from "assets/jss/material-kit-react.jsx";
 
 import tooltip from "assets/jss/material-kit-react/tooltipsStyle.jsx";
+import modalStyle from "assets/jss/material-kit-react/modalStyle.jsx";
 
 const headerLinksStyle = theme => ({
   list: {
@@ -35,6 +36,22 @@ const headerLinksStyle = theme => ({
   },
   listItemText: {
     padding: "0 !important"
+  },
+  loginButton:{
+    textTransform: "none !important",
+    fontSize: "14px",
+    fontWeight: "400",
+  },
+  ...modalStyle,
+  label: {
+    color: "rgba(0, 0, 0, 0.26)",
+    cursor: "pointer",
+    display: "inline-flex",
+    fontSize: "14px",
+    transition: "0.3s ease all",
+    lineHeight: "1.428571429",
+    fontWeight: "400",
+    paddingLeft: "0"
   },
   navLink: {
     color: "inherit",
@@ -74,6 +91,9 @@ const headerLinksStyle = theme => ({
     margin: "0px",
     display: "inline-flex",
     top: "4px"
+  },
+  inputIconsColor: {
+    color: "#495057"
   },
   registerNavLink: {
     top: "3px",

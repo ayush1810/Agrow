@@ -2,16 +2,26 @@
 import React from "react";
 // react components for routing our app without refresh
 import { Link } from "react-router-dom";
-
+import history from 'src/history.js'; 
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
+import Dialog from "@material-ui/core/Dialog";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogActions from "@material-ui/core/DialogActions";
+import IconButton from "@material-ui/core/IconButton";
+import InputAdornment from "@material-ui/core/InputAdornment";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
+import Slide from "@material-ui/core/Slide";
 import Tooltip from "@material-ui/core/Tooltip";
 
 // @material-ui/icons
 import {
+Close,
 CloudDownload,
+Email,
+LockOutline,
 Person,
 Public
 } from "@material-ui/icons";
@@ -19,15 +29,69 @@ import {
 FaFacebookOfficial,
 FaInstagram
 } from 'react-icons/lib/fa';
-// core components
+
+import CustomInput from "components/CustomInput/CustomInput.jsx";
 import CustomDropdown from "components/CustomDropdown/CustomDropdown.jsx";
 import Button from "components/CustomButtons/Button.jsx";
 
 import headerLinksStyle from "assets/jss/material-kit-react/components/headerLinksStyle.jsx";
 
-function HeaderLinks({ ...props }) {
-  const { classes } = props;
-  return (
+function Transition(props) {
+  return <Slide direction="down" {...props} />;
+}
+
+class HeaderLinks extends React.Component {
+  constructor(props){
+    super(props);
+    this.state={
+      loginModal: false 
+    };
+    this.handleSellerLogin = this.handleSellerLogin.bind(this);
+  }
+
+  handleSellerLogin(e){
+    e.preventDefault(); 
+    let form = document.forms.sellerLoginForm;
+    fetch('/api/sellers/login',
+    {
+      method: 'POST',
+      credentials: 'include',
+      headers: {'Content-Type': 'application/json'},
+      body : JSON.stringify({
+        email : form.semail.value,
+        password: form.spassword.value
+      })
+    })
+    .then(response => response.json())
+    .then(result => 
+    {
+        if(result.status == 'OK'){
+          history.push({
+            pathname:'/profile',
+           });
+        }
+        else{
+          console.log("OOPS, that didn't work!");
+        }
+    })
+    .catch(err =>{
+      alert(err.message);
+    });
+  }
+  handleClickOpen(modal) {
+    var x = [];
+    x[modal] = true;
+    this.setState(x);
+  }
+  handleClose(modal) {
+    var x = [];
+    x[modal] = false;
+    this.setState(x);
+  }
+
+  render(){
+    const { classes } =this.props;
+    return (
     <List className={classes.list}>
       <ListItem className={classes.listItem}>
         <CustomDropdown
@@ -39,22 +103,105 @@ function HeaderLinks({ ...props }) {
           }}
           buttonIcon={Person}
           dropdownList={[
-            <Link to="/" className={classes.dropdownLink}>
-              Customer
-            </Link>,
-            <Link to="/" className={classes.dropdownLink}>
-              Seller
-             </Link>
-            // <a
-            //   href="https://creativetimofficial.github.io/material-kit-react/#/documentation"
-            //   target="_blank"
-            //   className={classes.dropdownLink}
-            // >
-            //   Seller
-            // </a>
+            <Button
+            color="transparent"
+            block
+            onClick={() => this.handleClickOpen("loginCModal")}
+            className = {classes.loginButton}
+            >
+            Customer
+          </Button>,
+            <Button
+            color="transparent"
+            block
+            onClick={() => this.handleClickOpen("loginModal")}
+            className = {classes.loginButton}
+            >
+            Seller
+          </Button>
           ]}
         />
       </ListItem>
+      <Dialog
+        classes={{
+          root: classes.center,
+          paper: classes.modal
+        }}
+        open={this.state.loginModal}
+        TransitionComponent={Transition}
+        keepMounted
+        onClose={() => this.handleClose("loginModal")}
+        aria-labelledby="classic-modal-slide-title"
+        aria-describedby="classic-modal-slide-description"
+      >
+        <DialogTitle
+          id="classic-modal-slide-title"
+          disableTypography
+          className={classes.modalHeader}
+        >
+          <IconButton
+            className={classes.modalCloseButton}
+            key="close"
+            aria-label="Close"
+            color="inherit"
+            onClick={() => this.handleClose("loginModal")}
+          >
+            <Close className={classes.modalClose} />
+          </IconButton>
+          <h4 className={classes.modalTitle}>Seller Login</h4>
+        </DialogTitle>
+        <DialogContent
+          id="classic-modal-slide-description"
+          className={classes.modalBody}
+        >
+          <form className={classes.form} name="sellerLoginForm">  
+            <CustomInput
+              labelText="Email"
+              id="semail"
+              formControlProps={{
+                fullWidth: true
+              }}
+              inputProps={{
+                type: "email",
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <Email className={classes.inputIconsColor} />
+                  </InputAdornment>
+                )
+              }}
+            />
+            <CustomInput
+              labelText="Password"
+              id="spassword"
+              formControlProps={{
+                fullWidth: true
+              }}
+              inputProps={{
+                type: "password",
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <LockOutline
+                      className={classes.inputIconsColor}
+                    />
+                  </InputAdornment>
+                )
+              }}
+            />
+            </form> 
+        </DialogContent>
+        <DialogActions className={classes.modalFooter}>
+          <Button color="success" onClick={(e)=>this.handleSellerLogin(e)}>
+            Login
+          </Button>
+          <Button
+            onClick={() => this.handleClose("loginModal")}
+            color="danger"
+            
+          >
+            Close
+          </Button>
+        </DialogActions>
+      </Dialog>
       <ListItem className={classes.listItem}>
         <Button
           href="https://github.com/ayush1810/agrow"
@@ -100,7 +247,8 @@ function HeaderLinks({ ...props }) {
         </Tooltip>
       </ListItem>
     </List>
-  );
+    );
+  }
 }
 
 export default withStyles(headerLinksStyle)(HeaderLinks);
