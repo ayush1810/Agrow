@@ -24,26 +24,13 @@ import profileStyle from "assets/jss/material-kit-react/views/sellerProfileSecti
 class ProfileSection extends React.Component {
   constructor(props){
     super(props);
-    this.state = {
-    };
   }
 
   componentDidMount(){
   }
 
-  loadProfile(){
-
-    // fetch(`/api/seller/${uid}`,{
-    //     method: 'GET',
-    // }).then(response => response.json()).then(data => {
-    //     this.setState({items: data.records });
-    // }).catch(err =>{
-    //     console.log(err.message);
-    // });
-    }
-
   render() {
-    const { classes } = this.props;
+    const { classes, user } = this.props;
     const imageClasses = classNames(
         classes.imgRaised,
         classes.imgRoundedCircle,
@@ -57,19 +44,16 @@ class ProfileSection extends React.Component {
           <GridItem xs={12}>
               <Card style={{width: "20rem"}}>
                 <GridItem xs={12} sm={12} md={6} className={classes.itemGrid}>
-                  <img src={team1} alt="..." className={imageClasses} />
+                  <img src={user.profile} alt="..." className={imageClasses} />
                 </GridItem>
                 <h4 className={classes.cardTitle}>
-                  Gigi Hadid
+                  {user.name}
                   <br />
-                  <small className={classes.smallTitle}>{this.props.user}</small>
+                  <small className={classes.smallTitle}>{user.email}</small>
                 </h4>
                 <CardBody>
                   <p className={classes.description}>
-                    You can write here details about one of your team members.
-                    You can give more details about what they do. Feel free to
-                    add some <a href="#pablo">links</a> for people to be able to
-                    follow them outside the site.
+                    {user ? user.city : "Loading User Data"}
                   </p>
                 </CardBody>
                 <CardFooter className={classes.justifyCenter}>

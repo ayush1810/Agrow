@@ -45,27 +45,24 @@ class ItemsSection extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      items : [],
-      pID: null     
+      items : []  
     };
   }
 
   componentDidMount(){
-    setTimeout(this.setState ({
-      pID : this.props.user
-    }),3000);
-    setTimeout(this.loadData(this.state.pID),5000); 
+    this.loadData();
   }
 
-  loadData(uid){
-    fetch(`/api/seller/${uid}`,{
-        method: 'GET',
-    }).then(response => response.json()).then(data => {
-        this.setState({items: data.records });
-    }).catch(err =>{
-        console.log(err.message);
-    });
-    }
+  loadData(){
+      fetch(`/api/seller/items`,{
+          method: 'GET',
+          credentials: 'include'
+      }).then(response => response.json()).then(data => {
+          this.setState({items: data.records });
+      }).catch(err =>{
+          console.log("Itemsection Error: "+err.message);
+      });
+  }
 
   render() {
     const { classes } = this.props;
@@ -88,20 +85,28 @@ class ItemsSection extends React.Component {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {this.state.items.map(item => {
-                        return (
-                            <TableRow className={classes.row} key={item._id}>
-                            <CustomTableCell component="th" scope="row">
-                                {item.name}
-                            </CustomTableCell>
-                            <CustomTableCell>{item.dateCreated.split('T')[0]}</CustomTableCell>
-                            <CustomTableCell>{item.dateEnd.split('T')[0]}</CustomTableCell>
-                            <CustomTableCell numeric>{item.quantity}</CustomTableCell>
-                            <CustomTableCell numeric>{item.rate}</CustomTableCell>
-                            <CustomTableCell>{item.status}</CustomTableCell>
-                            </TableRow>
-                        );
-                        })}
+                        {
+                          this.state.items.length ? (
+                          this.state.items.map(item => {
+                            return (
+                              <TableRow className={classes.row} key={item._id}>
+                              <CustomTableCell component="th" scope="row">
+                                  {item.name}
+                              </CustomTableCell>
+                              <CustomTableCell>{item.dateCreated.split('T')[0]}</CustomTableCell>
+                              <CustomTableCell>{item.dateEnd.split('T')[0]}</CustomTableCell>
+                              <CustomTableCell numeric>{item.quantity}</CustomTableCell>
+                              <CustomTableCell numeric>{item.rate}</CustomTableCell>
+                              <CustomTableCell>{item.status}</CustomTableCell>
+                              </TableRow>
+                            );
+                        })
+                      ) : (
+                        <TableRow className={classes.row}>
+                        0 Items Found 
+                        </TableRow>
+                      )
+                      }
                     </TableBody>
                 </Table>  
             </Paper>

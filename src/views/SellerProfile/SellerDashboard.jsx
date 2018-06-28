@@ -16,7 +16,6 @@ import GridItem from "components/Grid/GridItem.jsx";
 import HeaderLinks from "components/Header/HeaderLinks.jsx";
 import Parallax from "components/Parallax/Parallax.jsx";
 
-import profile from "assets/img/faces/christian.jpg";
 import ItemsSection from "./Sections/ItemsSection.jsx";
 import ProfileSection from "./Sections/ProfileSection.jsx"; 
 import profilePageStyle from "assets/jss/material-kit-react/views/profilePage.jsx";
@@ -27,7 +26,7 @@ class SellerDashboard extends React.Component {
   {
     super(props); 
     this.state = {
-      userID: null
+      user: {}
     };
   }
 
@@ -39,11 +38,14 @@ class SellerDashboard extends React.Component {
     })
     .then(response => response.json()).then(user => 
     {
-      this.setState({  userID: user._id });
+      this.setState({ user:user });
     })
     .catch(err => 
     {
-      alert("errOR " + err.message); 
+      alert("Seller Dashboard Error: " + err.message);
+      this.props.history.push({
+        pathname:'/',
+       });
     });
   }
   render() {
@@ -62,21 +64,21 @@ class SellerDashboard extends React.Component {
           rightLinks={<HeaderLinks />}
           fixed
           changeColorOnScroll={{
-            height: 200,
+            height: 50,
             color: "white"
           }}
           {...rest}
         />
-        <Parallax small filter image={require("assets/img/profile-bg.jpeg")} />
+        <Parallax filter image={require("assets/img/profile-bg.jpeg")} className={classes.reparallax} />
         <div className={classNames(classes.main, classes.mainRaised)}>
           <div>
             <div className={classes.container}>
               <GridContainer justify="center">
                 <GridItem xs={12} sm={12} md={6} >
-                  <ItemsSection user={this.state.userID}/>      
+                <ItemsSection/>
                 </GridItem>
                 <GridItem xs={12} sm={12} md={6} >
-                <ProfileSection user={this.state.userID}/> 
+                <ProfileSection user={this.state.user}/>
                 </GridItem>
               </GridContainer>
             </div>

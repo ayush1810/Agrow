@@ -127,17 +127,30 @@ router.delete('/deleteProduct/:id',(req, res)=>{
     }); 
 });
 
-router.get('/api/seller/:id',(req, res)=>{
-    const uid = req.params.id; 
-    Item.find({seller: uid}, function(err, items) {
-             if(!err){
-                 res.json({records: items});
-             }
-             else{
-                 res.send("Error loading data!");
-                 console.error(err.message);
-             }
-         });
+router.get('/api/seller/items',(req, res)=>{
+    if (req.session)
+    {
+        const sellerID = req.session.userID; 
+        if (!sellerID){
+            console.log("User not found!");
+            res.send().status(400);
+        }
+        else{
+            Item.find({seller: sellerID}, function(err, items) {
+                if(!err){
+                    res.json({records: items});
+                }
+                else{
+                    res.send("Error loading data!");
+                    console.error(err.message);
+                }
+            });   
+        }
+    }
+    else{
+        console.log("You need to log in");
+        res.json({status: 'NOPE'});
+    }
 });
 
 router.get('/api/sellers',(req, res) => {
@@ -311,6 +324,7 @@ router.get('/profile', function (req, res, next){
         }
     });
 });
+
 router.get('/logout', function(req, res, next) {
     if (req.session) {
       // delete session object
