@@ -2,11 +2,14 @@ import React from "react";
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
 import InputAdornment from "@material-ui/core/InputAdornment";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Radio from "@material-ui/core/Radio";
 import SnackbarContent from "components/Snackbar/SnackbarContent.jsx";
 // @material-ui/icons
 import {
 Check,
 Email,
+FiberManualRecord,
 LockOutline,
 People
 } from "@material-ui/icons";
@@ -54,10 +57,12 @@ class SignupPage extends React.Component {
     // we use this to make the card to appear after the page has been rendered
     this.state = {
       cardAnimaton: "cardHidden",
-      openSignupNotify: false
+      openSignupNotify: false,
+      selectedEnabled: "customer"
     };
     this.handleRegisterSubmit = this.handleRegisterSubmit.bind(this); 
     this.handleSignUpNotifiyClose = this.handleSignUpNotifiyClose.bind(this);
+    this.handleChangeEnabled = this.handleChangeEnabled.bind(this); 
     this.registerUser = this.registerUser.bind(this); 
 
   }
@@ -68,6 +73,10 @@ class SignupPage extends React.Component {
       }.bind(this),
       700
     );
+  }
+
+  handleChangeEnabled(event) {
+    this.setState({ selectedEnabled: event.target.value });
   }
 
   handleRegisterSubmit(e){
@@ -158,6 +167,66 @@ class SignupPage extends React.Component {
                     </CardHeader>
                     <form className={classes.form} name="loginForm"> 
                     <CardBody>
+                    <div
+                  className={
+                    classes.checkboxAndRadio +
+                    " " +
+                    classes.checkboxAndRadioHorizontal
+                  }
+                >
+                  <FormControlLabel
+                    control={
+                      <Radio
+                        checked={this.state.selectedEnabled === "customer"}
+                        onChange={this.handleChangeEnabled}
+                        value="customer"
+                        name="radio button enabled"
+                        aria-label="Customer"
+                        icon={
+                          <FiberManualRecord
+                            className={classes.radioUnchecked}
+                          />
+                        }
+                        checkedIcon={
+                          <FiberManualRecord className={classes.radioChecked} />
+                        }
+                        classes={{
+                          checked: classes.radio
+                        }}
+                      />
+                    }
+                    classes={{
+                      label: classes.label
+                    }}
+                    label="Customer"
+                  />
+                  <FormControlLabel
+                    control={
+                      <Radio
+                        checked={this.state.selectedEnabled === "seller"}
+                        onChange={this.handleChangeEnabled}
+                        value="seller"
+                        name="radio button enabled"
+                        aria-label="Seller"
+                        icon={
+                          <FiberManualRecord
+                            className={classes.radioUnchecked}
+                          />
+                        }
+                        checkedIcon={
+                          <FiberManualRecord className={classes.radioChecked} />
+                        }
+                        classes={{
+                          checked: classes.radio
+                        }}
+                      />
+                    }
+                    classes={{
+                      label: classes.label
+                    }}
+                    label="Seller"
+                  />
+                </div>
                       <CustomInput
                         labelText="Full Name"
                         id="name"

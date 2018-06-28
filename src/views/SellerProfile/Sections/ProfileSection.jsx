@@ -13,12 +13,10 @@ import {
 } from '@material-ui/icons';
 
 import Button from "components/CustomButtons/Button.jsx";
-import GridContainer from "components/Grid/GridContainer.jsx";
 import GridItem from "components/Grid/GridItem.jsx";
 import Card from "components/Card/Card.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 import CardFooter from "components/Card/CardFooter.jsx";
-import team1 from "assets/img/faces/avatar.jpg";
 import profileStyle from "assets/jss/material-kit-react/views/sellerProfileSections/profileStyle.jsx"; 
 
 class ProfileSection extends React.Component {
@@ -40,8 +38,6 @@ class ProfileSection extends React.Component {
       <div className={classes.section}>
         <h2 className={classes.title}>Your Profile</h2>
         <div>
-          <GridContainer className={classes.justifyCenter}> 
-          <GridItem xs={12}>
               <Card style={{width: "20rem"}}>
                 <GridItem xs={12} sm={12} md={6} className={classes.itemGrid}>
                   <img src={user.profile} alt="..." className={imageClasses} />
@@ -52,9 +48,11 @@ class ProfileSection extends React.Component {
                   <small className={classes.smallTitle}>{user.email}</small>
                 </h4>
                 <CardBody>
-                  <p className={classes.description}>
-                    {user ? user.city : "Loading User Data"}
-                  </p>
+                  <h4 className={classes.description}>
+                    City:{` `} <small> {user.city}, {user.state} </small>
+                    <br/>
+                    Wallet:{` `}<small>{user.wallet}</small>
+                  </h4>
                 </CardBody>
                 <CardFooter className={classes.justifyCenter}>
                   <Button
@@ -64,8 +62,6 @@ class ProfileSection extends React.Component {
                   </Button>
                 </CardFooter>
               </Card>
-            </GridItem>
-          </GridContainer>
         </div>
       </div>
     );

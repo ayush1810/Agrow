@@ -13,7 +13,7 @@ import Footer from "components/Footer/Footer.jsx";
 import Button from "components/CustomButtons/Button.jsx";
 import GridContainer from "components/Grid/GridContainer.jsx";
 import GridItem from "components/Grid/GridItem.jsx";
-import HeaderLinks from "components/Header/HeaderLinks.jsx";
+import UserHeaderLinks from "components/Header/UserHeaderLinks.jsx";
 import Parallax from "components/Parallax/Parallax.jsx";
 
 import ItemsSection from "./Sections/ItemsSection.jsx";
@@ -61,7 +61,7 @@ class SellerDashboard extends React.Component {
         <Header
           color="transparent"
           brand="AGROW"
-          rightLinks={<HeaderLinks />}
+          rightLinks={<UserHeaderLinks />}
           fixed
           changeColorOnScroll={{
             height: 50,
@@ -74,10 +74,10 @@ class SellerDashboard extends React.Component {
           <div>
             <div className={classes.container}>
               <GridContainer justify="center">
-                <GridItem xs={12} sm={12} md={6} >
+                <GridItem xs={12} sm={12} md={8} >
                 <ItemsSection/>
                 </GridItem>
-                <GridItem xs={12} sm={12} md={6} >
+                <GridItem xs={12} sm={12} md={4} > 
                 <ProfileSection user={this.state.user}/>
                 </GridItem>
               </GridContainer>
