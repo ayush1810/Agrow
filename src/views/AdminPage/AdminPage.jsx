@@ -6,13 +6,12 @@ import Radio from "@material-ui/core/Radio";
 import SnackbarContent from "components/Snackbar/SnackbarContent.jsx";
 
 import {
-Check,
+Category,
 Dashboard,
-Email,
-FiberManualRecord,
-LockOutline,
 People,
-Schedule
+Person,
+Schedule,
+ViewList
 } from "@material-ui/icons";
 import {
 FaFacebookOfficial,
@@ -26,6 +25,9 @@ import CustomInput from "components/CustomInput/CustomInput.jsx";
 import NavPills from "components/NavPills/NavPills.jsx";
 import CategorySection from "./Sections/CategorySection.jsx";
 import ProductSection from "./Sections/ProductSection.jsx"; 
+import SellerSection from "./Sections/SellerSection.jsx"; 
+import ItemSection from "./Sections/ItemSection.jsx"; 
+import CustomerSection from "./Sections/CustomerSection.jsx"; 
 
 import adminPageStyle from "assets/jss/material-kit-react/views/adminPage.jsx";
 
@@ -64,8 +66,23 @@ class AdminPage extends React.Component{
                     },
                     {
                       tabButton: "Products",
-                      tabIcon: Schedule,
+                      tabIcon: Dashboard,
                       tabContent: (<ProductSection/>)
+                    },
+                    {
+                        tabButton: "Sellers",
+                        tabIcon: Person,
+                        tabContent: (<SellerSection/>)
+                    },
+                    {
+                        tabButton: "Items",
+                        tabIcon: ViewList,
+                        tabContent: (<ItemSection/>)
+                    },
+                    {
+                        tabButton: "Customers",
+                        tabIcon: People,
+                        tabContent: (<CustomerSection/>)
                     }
                   ]}
                 />

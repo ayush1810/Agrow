@@ -1,6 +1,6 @@
 import React from "react";
 
-class CategorySection extends React.Component{
+class ProductSection extends React.Component{
     constructor(props){
         super(props);
     }
@@ -10,11 +10,11 @@ class CategorySection extends React.Component{
             <h4>
                 <span>
                     <p>
-                        This is the product section. 
+                        This is the PRODUCT section. 
                     </p>
                 </span>                
             </h4> 
         );
     }
 }
-export default CategorySection; 
+export default ProductSection; 
