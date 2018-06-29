@@ -8,10 +8,17 @@ const ItemSchema = new mongoose.Schema({
         trim: true,
         required: `Enter a valid item name`
     },
-    quantity: Number,
-    rate: Number,
+    quantity:{
+        type: Number,
+        required: true
+    },
+    rate:{
+        type: Number,
+        required: true
+    },
     seller: {
         type: mongoose.Schema.Types.ObjectId,
+        required: true,
         ref : 'Seller'
     },
     dateCreated: {

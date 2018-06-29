@@ -187,10 +187,10 @@ router.post('/api/seller/:id', (req, res)=>{
 
 router.post('/addItem',(req, res)=>{
     if (req.session){
+        req.body.seller = req.session.userID;  
         const NewItem = new Item(req.body);
         const iid = NewItem._id;
         const sellerId = req.session.userID;
-        console.log("Item ID: "+ iid +"\n Seller ID: "+sellerId);
         NewItem.save()
         .then(()=>{
             Seller.findOne({_id:sellerId}, (err, record)=>{
