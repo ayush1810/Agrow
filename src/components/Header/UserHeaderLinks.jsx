@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import history from 'src/history.js'; 
 import withStyles from "@material-ui/core/styles/withStyles";
@@ -20,7 +21,7 @@ class UserHeaderLinks extends React.Component{
         super(props);
     }
     render(){
-        const { classes } =this.props;
+        const { classes, profileimg } =this.props;
         return(
             <List className={classes.list}>
                 <ListItem className={classes.listItem}>
@@ -43,7 +44,7 @@ class UserHeaderLinks extends React.Component{
                     dropdownHeader="AGROW"
                     buttonText={
                     <img
-                        src={profileImage}
+                        src={profileimg}
                         className={classes.img}
                         alt="profile"
                     />
@@ -80,4 +81,11 @@ class UserHeaderLinks extends React.Component{
         );
     }
 }
+UserHeaderLinks.defaultProp = {
+    profileimg: {profileImage}
+};
+UserHeaderLinks.propTypes = {
+    classes: PropTypes.object.isRequired,
+    profileimg: PropTypes.string
+};
 export default withStyles(userHeaderLinksStyle)(UserHeaderLinks);

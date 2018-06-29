@@ -61,6 +61,11 @@ class LandingPage extends React.Component {
                     Profile
                   </Button>
                 </Link>
+                <Link to={"/admin"} className={classes.link}>
+                  <Button color="rose" size="lg">
+                    ADMIN
+                  </Button>
+                </Link>
               </GridItem>
             </GridContainer>
           </div>

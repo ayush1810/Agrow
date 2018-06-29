@@ -45,6 +45,9 @@ class SellerDashboard extends React.Component {
       alert("Seller Dashboard Error: " + err.message);
       this.props.history.push({
         pathname:'/',
+        state: {
+          from: this.props.pathname
+        }
        });
     });
   }
@@ -61,7 +64,7 @@ class SellerDashboard extends React.Component {
         <Header
           color="transparent"
           brand="AGROW"
-          rightLinks={<UserHeaderLinks />}
+          rightLinks={<UserHeaderLinks profileimg={this.state.user.profile} />}
           fixed
           changeColorOnScroll={{
             height: 50,

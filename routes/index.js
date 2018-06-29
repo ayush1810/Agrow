@@ -186,29 +186,35 @@ router.post('/api/seller/:id', (req, res)=>{
 });
 
 router.post('/addItem',(req, res)=>{
-    const NewItem = new Item(req.body);
-    const iid = NewItem._id;
-    const sid = req.body.seller; 
-    NewItem.save()
-    .then(()=>{
-        Seller.findOne({_id:sid}, (err, record)=>{
-            if(record){
-                record.items.push(iid);
-                record.save(err=>{
-                    if(err){
-                    console.log("Unable to attach the item to the seller");
-                    }
-                    else
-                    res.json(NewItem);
-                });
-            }
-            else{
-                console.log("Sorry, couldn't find the seller!");
-                res.send("Ooops!");
-            }
-        });
-    })
-    .catch(()=>{res.send("Unable to add item");});
+    if (req.session){
+        const NewItem = new Item(req.body);
+        const iid = NewItem._id;
+        const sellerId = req.session.userID;
+        console.log("Item ID: "+ iid +"\n Seller ID: "+sellerId);
+        NewItem.save()
+        .then(()=>{
+            Seller.findOne({_id:sellerId}, (err, record)=>{
+                if(record){
+                    record.items.push(iid);
+                    record.save(err=>{
+                        if(err){
+                        console.log("Unable to attach the item to the seller");
+                        }
+                        else
+                        res.json(NewItem);
+                    });
+                }
+                else{
+                    console.log("Sorry, couldn't find the seller!");
+                    res.send("Ooops!");
+                }
+            });
+        })
+        .catch(()=>{res.send("Unable to add item");});
+    }
+    else {
+        console.log("Session expried, please login");
+    }
 } );
 
 router.delete('/deleteItem/:id',(req, res)=>{
@@ -319,7 +325,6 @@ router.get('/profile', function (req, res, next){
             return next(err);
         }
         else{
-            console.log("User" + user);
             res.json(user);
         }
     });

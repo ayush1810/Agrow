@@ -10,7 +10,8 @@ TableHead,
 TableRow
 } from '@material-ui/core';
 import {
-} from '@material-ui/icons';
+FaBitcoin
+} from 'react-icons/lib/fa';
 
 import Button from "components/CustomButtons/Button.jsx";
 import GridItem from "components/Grid/GridItem.jsx";
@@ -49,9 +50,9 @@ class ProfileSection extends React.Component {
                 </h4>
                 <CardBody>
                   <h4 className={classes.description}>
-                    City:{` `} <small> {user.city}, {user.state} </small>
+                    <small>City:</small>{` `}{user.city}, {user.state} 
                     <br/>
-                    Wallet:{` `}<small>{user.wallet}</small>
+                    <small>Wallet:{` `}</small><FaBitcoin/>{user.wallet}
                   </h4>
                 </CardBody>
                 <CardFooter className={classes.justifyCenter}>

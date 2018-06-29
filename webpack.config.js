@@ -57,6 +57,7 @@ module.exports = {
     }
     ]
   },
+  devtool : 'source-map',
   // devServer: {
   //   contentBase: 'public',
   //   historyApiFallback: true,
@@ -69,5 +70,4 @@ module.exports = {
   //     }
   //   }
   // }
-  // devtool : 'source-map',
 };
