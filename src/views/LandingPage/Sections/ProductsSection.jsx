@@ -83,7 +83,7 @@ class ProductsSection extends React.Component {
 
   loadProducts(){
     fetch('/api/items',{method: 'GET'}).then(response => response.json()).then(data => {
-      this.setState({items: data.items});
+      this.setState({items: data.records});
     }).catch(err =>{
         console.log(err.message);
     });

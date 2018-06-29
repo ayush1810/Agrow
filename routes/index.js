@@ -18,7 +18,7 @@ router.get('/',(req, res)=>{
 router.get('/api/items',(req, res) => {
     Item.find({}).populate('seller').exec(function (err, items){
         if(!err){
-            res.json({items : items});
+            res.json({records : items});
         }
         else{
             res.send("Error loading sellers");
