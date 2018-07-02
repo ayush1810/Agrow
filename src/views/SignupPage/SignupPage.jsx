@@ -141,7 +141,7 @@ class SignupPage extends React.Component {
     {
         if(result.status == 'OK'){
           this.props.history.push({
-            pathname:'/profile',
+            pathname:'/home',
            });
         }
         else{

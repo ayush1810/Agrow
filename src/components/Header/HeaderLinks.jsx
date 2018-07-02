@@ -44,23 +44,38 @@ class HeaderLinks extends React.Component {
   constructor(props){
     super(props);
     this.state={
-      loginModal: false 
+      loginModal: false,
+      role: ""
     };
-    this.handleSellerLogin = this.handleSellerLogin.bind(this);
+    this.handleLogin = this.handleLogin.bind(this);
+    this.handleClickOpenC = this.handleClickOpenC.bind(this); 
+    this.handleClickOpenS = this.handleClickOpenS.bind(this); 
   }
 
-  handleSellerLogin(e){
+  handleLogin(e){
     e.preventDefault(); 
-    let form = document.forms.sellerLoginForm;
+    let form = document.forms.LoginForm;
+    if (this.state.role == 'seller'){
+      this.loginSeller({
+        email : form.semail.value,
+        password: form.spassword.value
+      });
+    }
+    else if (this.state.role == 'customer'){
+      this.loginCustomer({
+        email : form.semail.value,
+        password: form.spassword.value
+      });
+    }
+  }
+
+  loginSeller(usercreds){
     fetch('/api/sellers/login',
     {
       method: 'POST',
       credentials: 'include',
       headers: {'Content-Type': 'application/json'},
-      body : JSON.stringify({
-        email : form.semail.value,
-        password: form.spassword.value
-      })
+      body : JSON.stringify(usercreds)
     })
     .then(response => response.json())
     .then(result => 
@@ -71,17 +86,51 @@ class HeaderLinks extends React.Component {
            });
         }
         else{
-          console.log("OOPS, that didn't work!");
+          console.log("Seller Login Error!");
         }
     })
     .catch(err =>{
       alert(err.message);
     });
   }
-  handleClickOpen(modal) {
-    var x = [];
-    x[modal] = true;
-    this.setState(x);
+
+  loginCustomer(usercreds){
+    fetch('/api/customers/login',
+    {
+      method: 'POST',
+      credentials: 'include',
+      headers: {'Content-Type': 'application/json'},
+      body : JSON.stringify(usercreds)
+    })
+    .then(response => response.json())
+    .then(result => 
+    {
+        if(result.status == 'OK'){
+          history.push({
+            pathname:'/home',
+           });
+        }
+        else{
+          console.log("Customer Login Error: that didn't work!");
+        }
+    })
+    .catch(err =>{
+      alert(err.message);
+    });
+  }
+
+  handleClickOpenC() {
+    this.setState({
+      loginModal: true,
+      role: 'customer'
+    });
+  }
+
+  handleClickOpenS() {
+    this.setState({
+      loginModal: true,
+      role: 'seller'
+    });
   }
   handleClose(modal) {
     var x = [];
@@ -106,7 +155,7 @@ class HeaderLinks extends React.Component {
             <Button
             color="transparent"
             block
-            onClick={() => this.handleClickOpen("loginCModal")}
+            onClick={() => this.handleClickOpenC()}
             className = {classes.loginButton}
             >
             Customer
@@ -114,7 +163,7 @@ class HeaderLinks extends React.Component {
             <Button
             color="transparent"
             block
-            onClick={() => this.handleClickOpen("loginModal")}
+            onClick={() => this.handleClickOpenS()}
             className = {classes.loginButton}
             >
             Seller
@@ -148,13 +197,13 @@ class HeaderLinks extends React.Component {
           >
             <Close className={classes.modalClose} />
           </IconButton>
-          <h4 className={classes.modalTitle}>Seller Login</h4>
+          <h4 className={classes.modalTitle}>Login</h4>
         </DialogTitle>
         <DialogContent
           id="classic-modal-slide-description"
           className={classes.modalBody}
         >
-          <form className={classes.form} name="sellerLoginForm">  
+          <form className={classes.form} name="LoginForm">  
             <CustomInput
               labelText="Email"
               id="semail"
@@ -190,7 +239,7 @@ class HeaderLinks extends React.Component {
             </form> 
         </DialogContent>
         <DialogActions className={classes.modalFooter}>
-          <Button color="success" onClick={(e)=>this.handleSellerLogin(e)}>
+          <Button color="success" onClick={(e)=>this.handleLogin(e)}>
             Login
           </Button>
           <Button

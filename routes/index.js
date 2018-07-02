@@ -286,20 +286,6 @@ router.post('/addseller',(req, res)=>{
     });
 } );
 
-router.post('/addcustomer',(req, res)=>{
-    const NewCustomer = new Customer(req.body); 
-    Customer.create(NewCustomer, (err, usr)=> {
-        if (err){
-            console.log("Error " + err.message);
-            res.send("Sorry that didn't work");
-        }
-        else{
-            req.session.userID = usr._id;
-            res.json({status: 'OK'});
-        }
-    });
-} );
-
 router.post('/api/sellers/login', function(req, res, next) {
     if (req.body.email && req.body.password) {  
     Seller.authenticate(req.body.email, req.body.password,function (error, user) {
@@ -310,6 +296,40 @@ router.post('/api/sellers/login', function(req, res, next) {
         return next(err);
         }  else {
         req.session.userID = user._id; 
+        res.json({status: 'OK'});
+        }
+    });
+    } else {
+    var err = new Error('Email and password are required.');
+    err.status = 401;
+    return next(err);
+    }
+});
+
+router.post('/addcustomer',(req, res)=>{
+    const NewCustomer = new Customer(req.body); 
+    Customer.create(NewCustomer, (err, usr)=> {
+        if (err){
+            console.log("Error " + err.message);
+            res.send("Sorry that didn't work");
+        }
+        else{
+            req.session.customerID = usr._id;
+            res.json({status: 'OK'});
+        }
+    });
+} );
+
+router.post('/api/customers/login', function(req, res, next) {
+    if (req.body.email && req.body.password) {  
+    Customer.authenticate(req.body.email, req.body.password,function (error, user) {
+        if (error || !user) {
+            console.log("Customer Login Error: "+error);
+        var err = new Error('Wrong email or password.');
+        err.status = 401;
+        return next(err);
+        }  else {
+        req.session.customerID = user._id; 
         res.json({status: 'OK'});
         }
     });
