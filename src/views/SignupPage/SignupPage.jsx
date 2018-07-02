@@ -145,7 +145,7 @@ class SignupPage extends React.Component {
            });
         }
         else{
-          console.log("OOPS, that didn't work!");
+          console.log("ERROR in Customer Creation");
         }
     })
     .catch(err =>{

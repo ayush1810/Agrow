@@ -56,7 +56,7 @@ class LandingPage extends React.Component {
                     SIGNUP
                   </Button>
                 </Link>
-                <Link to={"/profile"} className={classes.link}>
+                <Link to={"/home"} className={classes.link}>
                   <Button color="facebook" size="lg">
                     Profile
                   </Button>
