@@ -63,7 +63,8 @@ class SignupPage extends React.Component {
     this.handleRegisterSubmit = this.handleRegisterSubmit.bind(this); 
     this.handleSignUpNotifiyClose = this.handleSignUpNotifiyClose.bind(this);
     this.handleChangeEnabled = this.handleChangeEnabled.bind(this); 
-    this.registerUser = this.registerUser.bind(this); 
+    this.registerSeller = this.registerSeller.bind(this); 
+    this.registerCustomer = this.registerCustomer.bind(this); 
 
   }
   componentDidMount() {
@@ -82,17 +83,53 @@ class SignupPage extends React.Component {
   handleRegisterSubmit(e){
     e.preventDefault();
     var form = document.forms.loginForm;
-    this.registerUser({
-      name: form.name.value,
-      email: form.email.value,
-      password: form.password.value,
-      state: form.state.value,
-      city: form.city.value
+    if (this.state.selectedEnabled == 'seller'){
+      this.registerSeller({
+        name: form.name.value,
+        email: form.email.value,
+        password: form.password.value,
+        state: form.state.value,
+        city: form.city.value
+      });
+    }
+    else { 
+      this.registerCustomer({
+        name: form.name.value,
+        email: form.email.value,
+        password: form.password.value,
+        state: form.state.value,
+        city: form.city.value
+      });
+    }
+  }
+
+  registerSeller(usercreds){
+    fetch('/addseller',
+    {
+      method: 'POST',
+      credentials: 'include',
+      headers: {'Content-Type': 'application/json'},
+      body : JSON.stringify(usercreds),
+    })
+    .then(response => response.json())
+    .then(result => 
+    {
+        if(result.status == 'OK'){
+          this.props.history.push({
+            pathname:'/profile',
+           });
+        }
+        else{
+          console.log("OOPS, that didn't work!");
+        }
+    })
+    .catch(err =>{
+      alert(err.message);
     });
   }
 
-  registerUser(usercreds){
-    fetch('/addseller',
+  registerCustomer(usercreds){
+    fetch('/addcustomer',
     {
       method: 'POST',
       credentials: 'include',

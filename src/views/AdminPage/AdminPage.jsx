@@ -23,7 +23,9 @@ import GridItem from "components/Grid/GridItem.jsx";
 import Button from "components/CustomButtons/Button.jsx";
 import CustomInput from "components/CustomInput/CustomInput.jsx";
 import NavPills from "components/NavPills/NavPills.jsx";
-import CategorySection from "./Sections/CategorySection.jsx";
+
+// import CategorySection from "./Sections/CategorySection.jsx";
+import CustomPaginationActionsTable from "./Sections/CategorySection.jsx"; 
 import ProductSection from "./Sections/ProductSection.jsx"; 
 import SellerSection from "./Sections/SellerSection.jsx"; 
 import ItemSection from "./Sections/ItemSection.jsx"; 
@@ -62,7 +64,7 @@ class AdminPage extends React.Component{
                     {
                       tabButton: "Category",
                       tabIcon: Dashboard,
-                      tabContent: (<CategorySection/>)
+                      tabContent: (<CustomPaginationActionsTable/>)
                     },
                     {
                       tabButton: "Products",

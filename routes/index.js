@@ -260,6 +260,18 @@ router.delete('/deleteItem/:id',(req, res)=>{
     });
 });
 
+router.get('/api/customers', (req, res)=>{
+    Customer.find({},(err, customers)=>{
+        if(!err){
+            res.json({records : customers});
+        }
+        else{
+            res.send("Error loading customers");
+            console.error(err.message);
+        }
+    });
+});
+
 router.post('/addseller',(req, res)=>{
     const NewSeller = new Seller(req.body); 
     Seller.create(NewSeller, (err, usr)=> {
@@ -274,26 +286,16 @@ router.post('/addseller',(req, res)=>{
     });
 } );
 
-router.get('/api/customers', (req, res)=>{
-    Customer.find({},(err, customers)=>{
-        if(!err){
-            res.json({records : customers});
-        }
-        else{
-            res.send("Error loading customers");
-            console.error(err.message);
-        }
-    });
-});
 router.post('/addcustomer',(req, res)=>{
     const NewCustomer = new Customer(req.body); 
     Customer.create(NewCustomer, (err, usr)=> {
         if (err){
-            res.send("Sorry that didn't work");
             console.log("Error " + err.message);
+            res.send("Sorry that didn't work");
         }
         else{
-            res.json(NewCustomer);
+            req.session.userID = usr._id;
+            res.json({status: 'OK'});
         }
     });
 } );

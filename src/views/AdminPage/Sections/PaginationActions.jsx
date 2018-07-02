@@ -9,11 +9,13 @@ import {
     LastPageIcon,
 } from '@material-ui/icons';
 
-const actionsStyles = theme => ({
+const actionsStyles = (theme) => ({
     root: {
       flexShrink: 0,
-      color: theme.palette.text.secondary,
-      marginLeft: theme.spacing.unit * 2.5,
+      // color: theme.palette.text.secondary,
+      // marginLeft: theme.spacing.unit * 2.5,
+      colour: "#bb3939",
+      marginLeft: "10px"
     },
 });
 
@@ -25,7 +27,6 @@ class PaginationActions extends React.Component {
         this.handleLastPageButtonClick = this.handleLastPageButtonClick.bind(this);
         this.handleNextButtonClick = this.handleNextButtonClick.bind(this); 
     }
-
     handleFirstPageButtonClick(event) {
       this.props.onChangePage(event, 0);
     }
@@ -80,7 +81,7 @@ class PaginationActions extends React.Component {
           </IconButton>
         </div>
       );
-    }
+     }
   }
   
   PaginationActions.propTypes = {
@@ -92,5 +93,4 @@ class PaginationActions extends React.Component {
     theme: PropTypes.object.isRequired,
   };
 
-export default withStyles(actionsStyles, { withTheme: true })(
-    PaginationActions);
+export default withStyles(actionsStyles,{withTheme: true})(PaginationActions);
