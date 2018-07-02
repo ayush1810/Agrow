@@ -14,7 +14,6 @@ import userHeaderLinksStyle from "assets/jss/material-kit-react/components/userH
 
 import Button from "components/CustomButtons/Button.jsx";
 import CustomDropdown from "components/CustomDropdown/CustomDropdown.jsx";
-import profileImage from "assets/img/faces/avatar.jpg";
 
 class UserHeaderLinks extends React.Component{
     constructor(props){
@@ -44,7 +43,10 @@ class UserHeaderLinks extends React.Component{
                     dropdownHeader="AGROW"
                     buttonText={
                     <img
-                        src={profileimg}
+                        src=
+                        {
+                            profileimg ? profileimg : "https://images.pexels.com/photos/555790/pexels-photo-555790.png?auto=compress&cs=tinysrgb&dpr=2&h=21&w=20"
+                        }
                         className={classes.img}
                         alt="profile"
                     />
@@ -81,9 +83,7 @@ class UserHeaderLinks extends React.Component{
         );
     }
 }
-UserHeaderLinks.defaultProp = {
-    profileimg: {profileImage}
-};
+
 UserHeaderLinks.propTypes = {
     classes: PropTypes.object.isRequired,
     profileimg: PropTypes.string

@@ -19,20 +19,13 @@ import Card from "components/Card/Card.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 import CardFooter from "components/Card/CardFooter.jsx";
 
-import { cardTitle, title } from "assets/jss/material-kit-react.jsx";
+import { cardTitle } from "assets/jss/material-kit-react.jsx";
 import imagesStyle from "assets/jss/material-kit-react/imagesStyles.jsx";
 
 const productStyle = {
   section: {
-    padding: "20px 0",
+    padding: "0px 30px",
     textAlign: "center"
-  },
-  title: {
-    ...title,
-    marginBottom: "1rem",
-    marginTop: "30px",
-    minHeight: "32px",
-    textDecoration: "none"
   },
   ...imagesStyle,
   itemGrid: {
@@ -68,9 +61,9 @@ const productStyle = {
 const ProductCard = (props) => {
     const classes = props.classes; 
     return (
-      <GridItem xs={12} sm={12} md={4}>
-        <Card plain>
-          <GridItem xs={12} sm={12} md={6} className={classes.itemGrid}>
+      <GridItem xs={6} sm={4} md={3}>
+        <Card>
+          <GridItem xs={12} className={classes.itemGrid}>
             <img src="https://images.pexels.com/photos/42164/pexels-photo-42164.jpeg?auto=compress&cs=tinysrgb&h=130&w=200" alt="..." className={props.imageClasses} />
           </GridItem>
           <h4 className={classes.cardTitle}>
@@ -138,7 +131,6 @@ class ProductSection extends React.Component {
       );
       return (
         <div className={classes.section}>
-          <h2 className={classes.title}>Trending Products</h2>
           <div>
             <GridContainer>
               <ProductGrid products={this.state.items} classes={classes} imageClasses={imageClasses} /> 
