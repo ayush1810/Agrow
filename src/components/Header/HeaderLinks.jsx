@@ -102,19 +102,17 @@ class HeaderLinks extends React.Component {
       headers: {'Content-Type': 'application/json'},
       body : JSON.stringify(usercreds)
     })
-    .then(response => response.json())
-    .then(result => 
-    {
-        if(result.status == 'OK'){
+    .then(response => response.json()).then(newUser =>{
+        if(newUser._id){
           history.push({
             pathname:'/home',
+            state: {user: newUser}
            });
         }
         else{
           console.log("Customer Login Error: that didn't work!");
         }
-    })
-    .catch(err =>{
+    }).catch(err =>{
       alert(err.message);
     });
   }

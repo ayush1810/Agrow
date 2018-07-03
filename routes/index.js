@@ -330,7 +330,7 @@ router.post('/api/customers/login', function(req, res, next) {
         return next(err);
         }  else {
         req.session.customerID = user._id; 
-        res.json({status: 'OK'});
+        res.json(user);
         }
     });
     } else {

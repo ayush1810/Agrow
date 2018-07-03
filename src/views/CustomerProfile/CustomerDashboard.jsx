@@ -3,7 +3,7 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import classNames from 'classnames';
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
-
+// import history from './history.js'; 
 import {
 Email
 } from "@material-ui/icons";
@@ -42,6 +42,7 @@ class CustomerDashboard extends React.Component{
     }
     render(){
         const { classes, ...rest } = this.props;
+        const {user} = this.props.history.location.state; 
         return(
             <div>
                 <Header
@@ -62,7 +63,9 @@ class CustomerDashboard extends React.Component{
                                 <ProductFilterWrapped/>
                             </GridItem> 
                             <GridItem xs={12}>
-                                <ProductSection/>
+                                <ProductSection 
+                                user={user ? user : null}
+                                />
                             </GridItem>
                         </GridContainer> 
                     </div>

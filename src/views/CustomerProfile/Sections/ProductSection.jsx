@@ -59,6 +59,11 @@ const productStyle = {
 };
 
 const ProductCard = (props) => {
+
+  function onClickBid(item){
+   props.AddBid(item); 
+  }
+
     const classes = props.classes; 
     return (
       <GridItem xs={6} sm={4} md={3}>
@@ -82,6 +87,7 @@ const ProductCard = (props) => {
             <Button
               round
               color="primary"
+              onClick={() => onClickBid(props.item)}
             >
               <AttachMoney className={classes.icons}/> BID
             </Button>
@@ -95,7 +101,7 @@ const ProductCard = (props) => {
     return (
       props.products.map((item) =>{
           return(
-              <ProductCard key={item._id} item={item} classes={props.classes} imageClasses={props.imageClasses}/>
+              <ProductCard key={item._id} item={item} classes={props.classes} imageClasses={props.imageClasses} AddBid={props.addBid}/>
           );
       }) 
       );
@@ -105,12 +111,17 @@ class ProductSection extends React.Component {
     constructor(props){
       super(props);
       this.state = {
-        items : []
+        items : [],
+        user: null
       };
       this.loadProducts = this.loadProducts.bind(this); 
+      this.handleBid = this.handleBid.bind(this);
     }
   
     componentDidMount(){
+        this.setState({
+          user: this.props.user
+        }); 
         this.loadProducts();
     }
    
@@ -122,8 +133,13 @@ class ProductSection extends React.Component {
       });
     }
   
+    handleBid(item){
+      let balance = this.state.user.wallet; 
+      alert("Total is "+ item.quantity*item.rate+"\n"+balance); 
+    }
     render() {
       const { classes } = this.props;
+      const {user} = this.state;
       const imageClasses = classNames(
         classes.imgRaised,
         classes.imgRounded,
@@ -133,7 +149,7 @@ class ProductSection extends React.Component {
         <div className={classes.section}>
           <div>
             <GridContainer>
-              <ProductGrid products={this.state.items} classes={classes} imageClasses={imageClasses} /> 
+              <ProductGrid products={this.state.items} classes={classes} imageClasses={imageClasses} addBid={this.handleBid} /> 
             </GridContainer>
           </div>
         </div>
