@@ -177,7 +177,7 @@ router.post('/api/seller/:id', (req, res)=>{
 
     Seller.findByIdAndUpdate(sellerId,{wallet: balance }, function (err,record){
         if (err) {
-            console.log("Unable to find item "+err);
+            console.log("Unable to update wallet "+err);
         }
         else{
             res.json({status : 'Ok'});
@@ -185,6 +185,25 @@ router.post('/api/seller/:id', (req, res)=>{
     });
 });
 
+router.post('/customer/wallet',(req,res) =>{
+    let customerID = req.body.customer; 
+    let newBalance = req.body.amount; 
+    if (!customerID || !newBalance){
+        console.log("Please try again");
+        res.status(422).json({msg :"Unable to get Seller ID or balance" });
+    }
+    else{
+        Customer.findByIdAndUpdate(customerID,{wallet: newBalance}, function(err, record){
+            if (err){
+                console.log("Unable to update wallet "+err);
+                res.json({status: 0});
+            }
+            else{
+                res.json({status:1});
+            }
+        });
+    }
+});
 router.post('/addItem',(req, res)=>{
     if (req.session){
         req.body.seller = req.session.userID;  

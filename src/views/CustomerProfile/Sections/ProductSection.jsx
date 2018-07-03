@@ -111,17 +111,13 @@ class ProductSection extends React.Component {
     constructor(props){
       super(props);
       this.state = {
-        items : [],
-        user: null
+        items : []
       };
       this.loadProducts = this.loadProducts.bind(this); 
       this.handleBid = this.handleBid.bind(this);
     }
   
     componentDidMount(){
-        this.setState({
-          user: this.props.user
-        }); 
         this.loadProducts();
     }
    
@@ -134,12 +130,18 @@ class ProductSection extends React.Component {
     }
   
     handleBid(item){
-      let balance = this.state.user.wallet; 
-      alert("Total is "+ item.quantity*item.rate+"\n"+balance); 
+      let balance = this.props.wallet; 
+      let total = item.quantity*item.rate; 
+      if (balance < total){
+        alert("Insufficient Balance! \n Total :  " + total + "  Wallet: "+balance);
+      }
+      else{ 
+        alert("Congratulations! Your bid has been accepted");
+        this.props.modifyWallet(balance - total ); 
+      }
     }
     render() {
       const { classes } = this.props;
-      const {user} = this.state;
       const imageClasses = classNames(
         classes.imgRaised,
         classes.imgRounded,

@@ -39,10 +39,36 @@ const ProductFilterWrapped = withStyles(customerHomePageStyle)(ProductFilter);
 class CustomerDashboard extends React.Component{
     constructor(props){
         super(props);
+        this.state= {
+            user: {}
+        }
+        this.modifyWallet = this.modifyWallet.bind(this); 
+    }
+
+    componentDidMount(){
+        this.setState({
+            user: this.props.history.location.state.user,
+        });
+
+    }
+    modifyWallet(balance){
+        fetch(`/customer/wallet`,{
+            method:'POST',
+            headers: {'Content-Type': 'application/json'},
+            body : JSON.stringify({
+                customer: this.state.user._id,
+                amount : balance
+            }),
+          }).then(response => response.json()).then(response => {
+            console.log(response);
+          })
+          .catch(err => {
+            console.log(err.message);
+          });        
     }
     render(){
         const { classes, ...rest } = this.props;
-        const {user} = this.props.history.location.state; 
+        const {user} = this.state; 
         return(
             <div>
                 <Header
@@ -63,9 +89,10 @@ class CustomerDashboard extends React.Component{
                                 <ProductFilterWrapped/>
                             </GridItem> 
                             <GridItem xs={12}>
-                                <ProductSection 
-                                user={user ? user : null}
-                                />
+                                <ProductSection
+                                    wallet={user.wallet}
+                                    modifyWallet = {this.modifyWallet}
+                                /> 
                             </GridItem>
                         </GridContainer> 
                     </div>
