@@ -43,24 +43,41 @@ class CustomerDashboard extends React.Component{
             user: {}
         }
         this.modifyWallet = this.modifyWallet.bind(this); 
+        this.handleNewBid = this.handleNewBid.bind(this); 
     }
 
     componentDidMount(){
         this.setState({
             user: this.props.history.location.state.user,
+        }, ()=>{
+            alert("Wallet Balance:  "+ this.state.user.wallet)
         });
-
     }
+    handleNewBid(total){
+        let balance = this.state.user.wallet; 
+        if (balance < total){
+            alert("Insufficient Balance!\nTotal :   " + total + "\nWallet   :   "+balance);
+          }
+          else{ 
+            this.modifyWallet(balance - total);
+          }
+    }
+
     modifyWallet(balance){
         fetch(`/customer/wallet`,{
             method:'POST',
+            credentials: 'include',
             headers: {'Content-Type': 'application/json'},
             body : JSON.stringify({
                 customer: this.state.user._id,
                 amount : balance
             }),
           }).then(response => response.json()).then(response => {
-            console.log(response);
+            this.setState({
+                user : response
+            },()=>{
+                alert("Congratulations! Your bid has been accepted!\nUpdated Wallet: "+ this.state.user.wallet);
+            });
           })
           .catch(err => {
             console.log(err.message);
@@ -90,8 +107,7 @@ class CustomerDashboard extends React.Component{
                             </GridItem> 
                             <GridItem xs={12}>
                                 <ProductSection
-                                    wallet={user.wallet}
-                                    modifyWallet = {this.modifyWallet}
+                                    handleNewBid = {this.handleNewBid}
                                 /> 
                             </GridItem>
                         </GridContainer> 

@@ -130,16 +130,10 @@ class ProductSection extends React.Component {
     }
   
     handleBid(item){
-      let balance = this.props.wallet; 
       let total = item.quantity*item.rate; 
-      if (balance < total){
-        alert("Insufficient Balance! \n Total :  " + total + "  Wallet: "+balance);
-      }
-      else{ 
-        alert("Congratulations! Your bid has been accepted");
-        this.props.modifyWallet(balance - total ); 
-      }
+      this.props.handleNewBid(total); 
     }
+    
     render() {
       const { classes } = this.props;
       const imageClasses = classNames(

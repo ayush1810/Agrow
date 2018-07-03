@@ -193,13 +193,13 @@ router.post('/customer/wallet',(req,res) =>{
         res.status(422).json({msg :"Unable to get Seller ID or balance" });
     }
     else{
-        Customer.findByIdAndUpdate(customerID,{wallet: newBalance}, function(err, record){
-            if (err){
+        Customer.findByIdAndUpdate(customerID,{wallet: newBalance},{new:true}, function(err, record){
+            if (err){   
                 console.log("Unable to update wallet "+err);
                 res.json({status: 0});
             }
             else{
-                res.json({status:1});
+                res.json(record);
             }
         });
     }
