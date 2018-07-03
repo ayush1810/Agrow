@@ -46,10 +46,10 @@ class CustomerDashboard extends React.Component{
         });
     }
 
-    handleNewBid(item){
+    handleNewBid(item, bidvalue){
         let {user} = this.state; 
         let balance = user.wallet; 
-        let total = item.rate * item.quantity; 
+        let total = bidvalue * item.quantity; 
         if (balance < total){
             alert("Insufficient Balance!\nTotal :   " + total + "   Wallet   :   "+balance);
           }
