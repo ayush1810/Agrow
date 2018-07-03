@@ -18,29 +18,12 @@ import UserHeaderLinks from "components/Header/UserHeaderLinks.jsx";
 import customerHomePageStyle from "assets/jss/material-kit-react/views/customerHomePage.jsx"
 import ProductSection from "./Sections/ProductSection.jsx"; 
 
-const ProductFilter = props => {
-    const {classes} = props;
-    return(
-        <div className={classes.filter}>
-        <Button color="primary" round>
-          Fruits
-        </Button>
-        <Button color="primary" round>
-            Vegetables
-        </Button>
-        <Button color="primary" round>
-            Grains
-        </Button>
-        </div>
-    );
-}
-const ProductFilterWrapped = withStyles(customerHomePageStyle)(ProductFilter); 
-
 class CustomerDashboard extends React.Component{
     constructor(props){
         super(props);
         this.state= {
-            user: {}
+            user: {},
+            categories: []
         }
         this.modifyWallet = this.modifyWallet.bind(this); 
         this.handleNewBid = this.handleNewBid.bind(this); 
@@ -50,15 +33,40 @@ class CustomerDashboard extends React.Component{
         this.setState({
             user: this.props.history.location.state.user,
         }, ()=>{
-            alert("Wallet Balance:  "+ this.state.user.wallet)
+            fetch(`/api/categories`,{
+                method: 'GET'
+            }).then(response => response.json()).then((data)=>{
+               this.setState({
+                categories: data.records
+               });
+            }).catch((err)=>{
+                console.log("Loading Categories "+ err);
+            });
+            alert("Wallet Balance:  "+ this.state.user.wallet);
         });
     }
-    handleNewBid(total){
-        let balance = this.state.user.wallet; 
+
+    handleNewBid(item){
+        let {user} = this.state; 
+        let balance = user.wallet; 
+        let total = item.rate * item.quantity; 
         if (balance < total){
-            alert("Insufficient Balance!\nTotal :   " + total + "\nWallet   :   "+balance);
+            alert("Insufficient Balance!\nTotal :   " + total + "   Wallet   :   "+balance);
           }
           else{ 
+            fetch('/addbid', {
+                method: 'POST',
+                credentials:'include',
+                headers:  {'Content-Type': 'application/json'},
+                body : JSON.stringify({
+                    item: item._id,
+                    bidder: user._id,
+                    value: total
+                }),
+                }).then(response => response.json()).then(data =>{
+                }).catch(err => {
+                    console.log("Adding Bid Error: "+ err);
+                });
             this.modifyWallet(balance - total);
           }
     }
@@ -85,7 +93,7 @@ class CustomerDashboard extends React.Component{
     }
     render(){
         const { classes, ...rest } = this.props;
-        const {user} = this.state; 
+        const {user, categories} = this.state; 
         return(
             <div>
                 <Header
@@ -103,7 +111,16 @@ class CustomerDashboard extends React.Component{
                     <div className={classNames(classes.main, classes.mainRaised)}>
                         <GridContainer justify="center">
                             <GridItem xs={12}>
-                                <ProductFilterWrapped/>
+                                <div className={classes.filter}>
+                                    {categories.map((item, index)=>{
+                                        return(
+                                            <Button key={index} color="primary" round>
+                                                {item.name}
+                                            </Button>
+                                        );  
+                                    })
+                                    }
+                                </div> 
                             </GridItem> 
                             <GridItem xs={12}>
                                 <ProductSection

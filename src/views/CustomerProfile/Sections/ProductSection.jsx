@@ -130,10 +130,9 @@ class ProductSection extends React.Component {
     }
   
     handleBid(item){
-      let total = item.quantity*item.rate; 
-      this.props.handleNewBid(total); 
+      this.props.handleNewBid(item); 
     }
-    
+
     render() {
       const { classes } = this.props;
       const imageClasses = classNames(

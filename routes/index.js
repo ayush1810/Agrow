@@ -5,6 +5,7 @@ const express = require('express'),
 const router = express.Router();
 mongoose.set('debug', true);
 
+const Bid = require('../models/Bid.js');
 const Customer = require('../models/Customer.js');
 const Item = require('../models/Item.js');
 const Seller = require('../models/Seller.js');
@@ -21,8 +22,49 @@ router.get('/api/items',(req, res) => {
             res.json({records : items});
         }
         else{
-            res.send("Error loading sellers");
+            res.send("Error loading items");
             console.error(err.message);
+        }
+    });
+});
+
+router.get('/api/bids',(req, res) => {
+    Bid.find({}).populate('item', 'bidder').exec(function (err, items){
+        if(!err){
+            res.json({records : items});
+        }
+        else{
+            console.error(err.message);
+            res.send("Error loading bids");
+        }
+    });
+});
+
+router.post('/addbid', (req, res)=>{
+    const NewBid = new Bid(req.body);
+    const customer = req.body.bidder; 
+    Bid.create(NewBid, (err, newbid)=> {
+        if (err){
+            console.log("Add Bid Error" + err.message);
+            res.send("Sorry that didn't work");
+        }
+        else{
+            Customer.findOne({_id:customer}, (err, record)=>{
+                if(record){
+                    record.bids.push(NewBid._id);
+                    record.save(err=>{
+                        if(err){
+                        console.log("Unable to add a new bid");
+                        }
+                        else
+                        res.json(NewBid);
+                    });
+                }
+                else{
+                    console.log("Sorry, couldn't find the customer!");
+                    res.status(422).json({status:0});
+                }
+            });
         }
     });
 });
@@ -373,7 +415,6 @@ router.get('/profile', function (req, res, next){
 
 router.get('/logout', function(req, res, next) {
     if (req.session) {
-      // delete session object
       req.session.destroy(function(err) {
         if(err) {
           return next(err);

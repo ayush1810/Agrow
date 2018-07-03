@@ -18,7 +18,20 @@ import CustomDropdown from "components/CustomDropdown/CustomDropdown.jsx";
 class UserHeaderLinks extends React.Component{
     constructor(props){
         super(props);
+        this.logOut = this.logOut.bind(this); 
     }
+
+    logOut(){
+        fetch("/logout", {
+            method: 'GET',
+            credentials: 'include'
+        }).then(response =>{
+            history.push({
+                pathname: '/'
+            });
+        });
+    }
+    
     render(){
         const { classes, profileimg } =this.props;
         return(
@@ -73,6 +86,7 @@ class UserHeaderLinks extends React.Component{
                         <Button
                             color="transparent"
                             block
+                            onClick={()=> this.logOut() }
                         >
                             Sign Out
                         </Button>                                            
