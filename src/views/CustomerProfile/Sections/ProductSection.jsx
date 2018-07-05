@@ -3,7 +3,7 @@ import React from "react";
 import classNames from "classnames";
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
-
+import history from 'src/history.js';
 // @material-ui/icons
 import {
 AttachMoney,
@@ -79,7 +79,15 @@ const ProductCard = (props) => {
             <img src="https://images.pexels.com/photos/42164/pexels-photo-42164.jpeg?auto=compress&cs=tinysrgb&h=130&w=200" alt="..." className={props.imageClasses} />
           </GridItem>
           <h4 className={classes.cardTitle}>
-          {props.item.name}
+            <Button
+                simple
+                color="transparent"
+                onClick={() => history.push({
+                  pathname: `/products/${props.item._id}`
+                }) }
+            >
+              {props.item.name}
+            </Button>
             <br />
             <small className={classes.smallTitle}>{props.item.seller.name}</small>
           </h4>

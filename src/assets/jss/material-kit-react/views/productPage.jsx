@@ -1,6 +1,6 @@
 import { conatinerFluid } from "assets/jss/material-kit-react.jsx";
 
-const customerHomePageStyle = {
+const productPageStyle = {
     container: {
         ...conatinerFluid,
         zIndex: "2",
@@ -8,7 +8,7 @@ const customerHomePageStyle = {
         paddingTop: "10vh",
     },    
     main: {
-        background: "#F5EEE6",
+        background: "#FFFFFF",
         position: "relative",
         zIndex: "3",
       },
@@ -23,4 +23,4 @@ const customerHomePageStyle = {
       }
 }; 
 
-export default customerHomePageStyle;
+export default productPageStyle;
