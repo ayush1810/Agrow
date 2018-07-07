@@ -29,6 +29,10 @@ const ItemSchema = new mongoose.Schema({
         type: Date, 
         default : Date.now() + 7*24*60*60*1000
     },
+    image: {
+        type : String,
+        default: 'https://images.pexels.com/photos/60021/grapes-wine-fruit-vines-60021.jpeg'
+    },
     status: {
         type: String,
         default: 'Ongoing Bidding'

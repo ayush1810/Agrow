@@ -1,5 +1,5 @@
 import { conatinerFluid } from "assets/jss/material-kit-react.jsx";
-
+import imagesStyle from "assets/jss/material-kit-react/imagesStyles.jsx";
 const productPageStyle = {
     container: {
         ...conatinerFluid,
@@ -20,7 +20,8 @@ const productPageStyle = {
       },
       filter:{
         padding:"25px 50px",
-      }
+      },
+      ...imagesStyle
 }; 
 
 export default productPageStyle;

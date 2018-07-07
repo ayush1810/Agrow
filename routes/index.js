@@ -1,6 +1,4 @@
 const express = require('express'),
-    //   passport = require('passport'),
-    //   LocalStrategy = require('passport-local').Strategy;
      mongoose = require('mongoose');
 const router = express.Router();
 mongoose.set('debug', true);
@@ -28,10 +26,29 @@ router.get('/api/items',(req, res) => {
     });
 });
 
-router.get('/api/bids',(req, res) => {
-    Bid.find({}).populate('item', 'bidder').exec(function (err, items){
+router.get('/api/items/:id',(req, res) => {
+    Item.findById(req.params.id).populate('seller').exec(function (err, item){
         if(!err){
-            res.json({records : items});
+            res.json({records : item, customer: req.session.customer});
+        }
+        else{
+            res.send("Error loading the item");
+            console.error(err.message);
+        }
+    });
+});
+
+router.get('/api/bids/:id',(req, res) => {
+    let itemId;
+    try {
+        itemId = req.params.id;
+    } catch (error) {
+        res.status(422).json({ message: `Invalid item ID; format: ${error}` });
+        return;
+    }
+    Bid.find({item: itemId}).populate('item').populate('bidder').exec(function (err, bids){
+        if(!err){
+            res.json({records : bids});
         }
         else{
             console.error(err.message);
@@ -321,18 +338,6 @@ router.delete('/deleteItem/:id',(req, res)=>{
     });
 });
 
-router.get('/api/customers', (req, res)=>{
-    Customer.find({},(err, customers)=>{
-        if(!err){
-            res.json({records : customers});
-        }
-        else{
-            res.send("Error loading customers");
-            console.error(err.message);
-        }
-    });
-});
-
 router.post('/addseller',(req, res)=>{
     const NewSeller = new Seller(req.body); 
     Seller.create(NewSeller, (err, usr)=> {
@@ -367,6 +372,39 @@ router.post('/api/sellers/login', function(req, res, next) {
     }
 });
 
+router.get('/api/customers', (req, res)=>{
+    Customer.find({},(err, customers)=>{
+        if(!err){
+            res.json({records : customers});
+        }
+        else{
+            res.send("Error loading customers");
+            console.error(err.message);
+        }
+    });
+});
+
+// router.get('/api/customers/:id', (req, res)=>{
+//     let customerID; 
+//     try{
+//         customerID = req.params.id;
+//     }
+//     catch (error) {
+//         res.status(422).json({ message: `Invalid Customer ID; format: ${error}` });
+//         return;
+//     }
+
+//     Customer.find({},(err, customers)=>{
+//         if(!err){
+//             res.json({records : customers});
+//         }
+//         else{
+//             res.send("Error loading customers");
+//             console.error(err.message);
+//         }
+//     });
+// });
+
 router.post('/addcustomer',(req, res)=>{
     const NewCustomer = new Customer(req.body); 
     Customer.create(NewCustomer, (err, usr)=> {
@@ -390,6 +428,7 @@ router.post('/api/customers/login', function(req, res, next) {
         err.status = 401;
         return next(err);
         }  else {
+        req.session.customer = user; 
         req.session.customerID = user._id; 
         res.json(user);
         }
