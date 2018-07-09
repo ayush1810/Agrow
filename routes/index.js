@@ -3,12 +3,17 @@ const express = require('express'),
 const router = express.Router();
 mongoose.set('debug', true);
 
+const cron = require('node-cron');
+
 const bidController = require('../controllers/bidController.js');
 const categoryController = require('../controllers/categoryController.js');
 const customerController = require('../controllers/customerController.js');
 const itemController = require('../controllers/itemController.js');
+const orderController = require('../controllers/orderController.js');
 const productController = require('../controllers/productController.js');
 const sellerController = require('../controllers/sellerController.js');
+
+cron.schedule('0 * * * * *', orderController.handleNewOrders);
 
 router.get('/',(req, res)=>{
     res.render('index.html');

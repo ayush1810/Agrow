@@ -28,13 +28,13 @@ exports.getItem = (req,res) => {
 
 exports.addItem = (req, res) => {
     if (req.session){
-        req.body.seller = req.session.userID;  
+        let sellerID = mongoose.Types.ObjectId(req.session.userID); 
+        req.body.seller = sellerID;
         const NewItem = new Item(req.body);
         const iid = NewItem._id;
-        const sellerId = req.session.userID;
         NewItem.save()
         .then(()=>{
-            Seller.findOne({_id:sellerId}, (err, record)=>{
+            Seller.findOne({_id:sellerID}, (err, record)=>{
                 if(record){
                     record.items.push(iid);
                     record.save(err=>{
@@ -52,7 +52,7 @@ exports.addItem = (req, res) => {
             });
         })
         .catch(()=>{res.send("Unable to add item");});
-    }
+     }
     else {
         console.log("Session expired, please login");
     }

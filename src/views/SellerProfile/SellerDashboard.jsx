@@ -35,20 +35,17 @@ class SellerDashboard extends React.Component {
     {
       method: 'GET',
       credentials: 'include'
-    })
-    .then(response => response.json()).then(user => 
-    {
-      this.setState({ user:user });
-    })
-    .catch(err => 
-    {
-      alert("Seller Dashboard Error: " + err.message);
-      this.props.history.push({
-        pathname:'/',
-        state: {
-          from: this.props.pathname
-        }
-       });
+    }).then(response => response.json()).then(user => 
+      {this.setState({ user:user });
+    }).catch(err => 
+      {
+        alert("Seller Dashboard Error: " + err.message);
+        this.props.history.push({
+          pathname:'/',
+          state: {
+            from: this.props.pathname
+          }
+        });
     });
   }
   render() {

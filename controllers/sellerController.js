@@ -75,15 +75,34 @@ exports.handleLogin = (req, res, next) => {
 };
 
 exports.getDashboard = (req, res, next)=>{
-    Seller.findById(req.session.userID).exec((err, user)=>{
-        if(err){
-            console.log("Cound find user"); 
-            return next(err);
+    let sellerID; 
+    if (req.session){
+        try{
+            sellerID = mongoose.Types.ObjectId(req.session.userID);
+        } catch(error){
+            res.status(422).send("EROROROROROR");
+            return;
         }
-        else{
-            res.json(user);
-        }
-    });
+
+        Seller.findById(sellerID).exec((err, user)=>{
+            if(err){
+                console.log("Cound find user"); 
+                return next(err);
+            }
+            else{
+                if (user){
+                    res.json(user);
+                }
+                else {
+                    console.log("Unable to fetch sellerid");
+                    res.json(0);
+                }
+            }
+        });
+    }
+    else{
+        console.log("Need to login");
+    }
 }; 
 
 exports.modifyWallet = (req, res)=>{

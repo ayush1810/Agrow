@@ -38,4 +38,5 @@ const ItemSchema = new mongoose.Schema({
         default: 'Ongoing Bidding'
     }
 });
+
 module.exports = mongoose.model('Item',ItemSchema);

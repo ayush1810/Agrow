@@ -30,6 +30,7 @@ const AddItem = props => {
       dateEnd: form.endbid.value
     });
   }
+
   return (
     <form name="addItemForm" style={{paddingLeft:'10px'}}> 
       <CustomInput
@@ -122,6 +123,7 @@ class ItemsSection extends React.Component {
   componentDidMount(){
     this.loadData();
   }
+
   loadData(){
       fetch(`/api/seller/items`,{
           method: 'GET',
@@ -132,6 +134,7 @@ class ItemsSection extends React.Component {
           console.log("Itemsection Error: "+err.message);
       });
   }
+
   deleteItem(itemid){
     fetch(`/deleteItem/${itemid}`,{method: 'DELETE'})
     .then(response => {
@@ -139,6 +142,7 @@ class ItemsSection extends React.Component {
     });
     this.loadData();
   }
+
   addItem(newItem){
     fetch('/addItem',{
       method: 'POST',
@@ -152,6 +156,7 @@ class ItemsSection extends React.Component {
         console.log("AddItem Error: "+err.message);
     });    
   }
+
   render() {
     const { classes } = this.props;
     return (
