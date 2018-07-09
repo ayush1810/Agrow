@@ -41,15 +41,18 @@ class ProductPage extends React.Component {
         this.state = {
             item: {},
             customer: {},
-            status: 0
+            bids: [],
+            showBidBox: null
         };
         this.handleAddBid = this.handleAddBid.bind(this);
         this.modifyWallet = this.modifyWallet.bind(this); 
-        this.disableBid = this.disableBid.bind(this); 
         this.bidsection = this.bidsection.bind(this); 
+        this.checkPastBid = this.checkPastBid.bind(this); 
     } 
     componentWillMount(){
         this.loadData();
+        this.loadBids();
+        this.checkPastBid();
     }
 
     loadData(){
@@ -65,6 +68,40 @@ class ProductPage extends React.Component {
             alert("Product Page Error: "+err);
         });
     } 
+
+    loadBids(){
+        fetch(`/api/bids/${this.props.match.params.id}`,{
+            method: 'GET',
+        }).then(response => response.json()).then(data => {
+            if (data.records){
+                this.setState({bids: data.records }, ()=>{
+                    console.log("Loaded bids "+ JSON.stringify(this.state.bids));
+                });
+            }
+        }).catch(err =>{
+            console.log(err.message);
+        }); 
+    }
+
+    checkPastBid(){
+        fetch(`/pastbids/${this.props.match.params.id}`, {
+            method: 'GET',
+            credentials: 'include'
+        }).then(response => response.json()).then(data => {
+            if (data.status){
+                this.setState({
+                    showBidBox : 0
+                });
+            }
+            else { 
+                this.setState({
+                    showBidBox: 1
+                });
+            }
+        }).catch(err => {
+            alert("Check Bid Error: "+err);
+        });
+    }
 
     handleAddBid(e){
         e.preventDefault();
@@ -87,6 +124,8 @@ class ProductPage extends React.Component {
                         value: total
                     }),
                     }).then(response => response.json()).then(() =>{
+                        this.loadBids();
+                        this.checkPastBid();
                         this.modifyWallet(customer.wallet - total);
                     }).catch(err => {
                         console.log("Adding Bid Error: "+ err);
@@ -123,22 +162,16 @@ class ProductPage extends React.Component {
 
     bidsection(id){
         switch(id){
-            case 0: return "Bid Accepted. Wait for the deadline";
-            case 1: return <Bidform handleAddBid={()=>this.handleAddBid()} />;
+            case 0: return <b>Thank you for bidding on this item!</b>;
+            case 1: return <Bidform handleAddBid={this.handleAddBid} />;
             default : return null; 
         }
     }
 
-    disableBid(){
-        this.setState({
-            status: 0
-        }); 
-    }
     render(){
         const {classes} = this.props; 
         const {item} = this.state; 
         const {...seller} = item.seller;
-        const itemID = this.props.match.params.id;
         return(
             <div className={classes.container}>
                 <div className={classNames(classes.main, classes.mainRaised)}>
@@ -163,16 +196,15 @@ class ProductPage extends React.Component {
                                 {item.rate}
                             </h4>  
                             <h4>
-                                Status:
                                 {
-                                    this.bidsection(this.state.status)
+                                    this.bidsection(this.state.showBidBox)
                                 }
                             </h4>
                         </GridItem>
                     </GridContainer>
                     <GridContainer> 
                         <GridItem xs={12}>
-                            <BidTable id={itemID} disableBid={()=> this.disableBid()}/>
+                            <BidTable data={this.state.bids}/>
                         </GridItem> 
                     </GridContainer>
                     <Footer/>

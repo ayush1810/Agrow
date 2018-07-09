@@ -21,6 +21,7 @@ router.delete('/deleteItem/:id',itemController.deleteItem);
 
 router.get('/api/bids/:id',bidController.getItemBids);
 router.post('/addbid', bidController.addBid);
+router.get('/pastbids/:item', bidController.checkBid);
 
 router.get('/api/categories', categoryController.getCategories);
 router.post('/addCategory', categoryController.addCategory);
