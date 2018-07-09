@@ -41,6 +41,12 @@ class BidTable extends React.Component{
         this.loadData();
     }
 
+    componentDidUpdate(prevProps){
+        if (this.props.id !== prevProps.id){
+            this.loadData();
+        }
+    }
+    
     loadData(){
         fetch(`/api/bids/${this.props.id}`,{
             method: 'GET',

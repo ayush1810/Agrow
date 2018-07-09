@@ -10,17 +10,10 @@ AttachMoney,
 Close
 } from '@material-ui/icons';
 
-import IconButton from "@material-ui/core/IconButton";
-import Dialog from "@material-ui/core/Dialog";
-import DialogTitle from "@material-ui/core/DialogTitle";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogActions from "@material-ui/core/DialogActions";
-
 import Button from "components/CustomButtons/Button.jsx";
 import Card from "components/Card/Card.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 import CardFooter from "components/Card/CardFooter.jsx";
-import CustomInput from "components/CustomInput/CustomInput.jsx";
 import GridContainer from "components/Grid/GridContainer.jsx";
 import GridItem from "components/Grid/GridItem.jsx";
 
@@ -66,11 +59,6 @@ const productStyle = {
 };
 
 const ProductCard = (props) => {
-
-  function onClickBid(item){
-   props.AddBid(item); 
-  }
-
     const classes = props.classes; 
     return (
       <GridItem xs={6} sm={4} md={3}>
@@ -102,7 +90,9 @@ const ProductCard = (props) => {
             <Button
               round
               color="primary"
-              onClick={() => onClickBid(props.item)}
+              onClick={() => history.push({
+                pathname: `/products/${props.item._id}`
+              })}
             >
               <AttachMoney className={classes.icons}/> BID
             </Button>
@@ -116,7 +106,7 @@ const ProductCard = (props) => {
     return (
       props.products.map((item) =>{
           return(
-              <ProductCard key={item._id} item={item} classes={props.classes} imageClasses={props.imageClasses} AddBid={props.addBid}/>
+              <ProductCard key={item._id} item={item} classes={props.classes} imageClasses={props.imageClasses}/>
           );
       }) 
       );
@@ -126,14 +116,9 @@ class ProductSection extends React.Component {
     constructor(props){
       super(props);
       this.state = {
-        items : [],
-        selecteditem:{},
-        newBidModal: false
+        items : []
       };
       this.loadProducts = this.loadProducts.bind(this); 
-      this.handleBid = this.handleBid.bind(this);
-      this.handleModalClose = this.handleModalClose.bind(this);
-      this.handleNewBid = this.handleNewBid.bind(this);
     }
   
     componentDidMount(){
@@ -145,33 +130,6 @@ class ProductSection extends React.Component {
         this.setState({items: data.records});
       }).catch(err =>{
           console.log(err.message);
-      });
-    }
-    handleBid(item){
-      this.setState({
-        selecteditem: item,
-        newBidModal : true
-      });
-    }
-
-    handleNewBid(e){
-      e.preventDefault();
-      const {selecteditem} = this.state;
-      let form = document.forms.addBidForm; 
-      let bid = parseFloat(form.bidvalue.value);
-      if (bid > selecteditem.rate){
-        this.handleModalClose();
-        this.props.handleNewBid(selecteditem, bid);
-      }
-      else{
-        alert("Please add a higher bid"); 
-      }
-      form.bidvalue.value = ''; 
-    }
-
-    handleModalClose(){
-      this.setState({
-        newBidModal: false
       });
     }
 
@@ -186,69 +144,8 @@ class ProductSection extends React.Component {
         <div className={classes.section}>
           <div>
             <GridContainer>
-              <ProductGrid products={this.state.items} classes={classes} imageClasses={imageClasses} addBid={this.handleBid} /> 
+              <ProductGrid products={this.state.items} classes={classes} imageClasses={imageClasses}/> 
             </GridContainer>
-
-                  <Dialog
-                    classes={{
-                      root: classes.center,
-                      paper: classes.modal
-                    }}
-                    open={this.state.newBidModal}
-                    keepMounted
-                    onClose={() => this.handleModalClose()}
-                    aria-labelledby="new-bid-modal"
-                    aria-describedby="new-bid-description"
-                  >
-                    <form name="addBidForm" style={{paddingLeft:'10px'}}> 
-                    <DialogTitle
-                      id="new-bid-modal"
-                      disableTypography
-                      className={classes.modalHeader}
-                    >
-                      <IconButton
-                        className={classes.modalCloseButton}
-                        key="close"
-                        aria-label="Close"
-                        color="inherit"
-                        onClick={() => this.handleModalClose()}
-                      >
-                        <Close className={classes.modalClose} />
-                      </IconButton>
-                      <h4 className={classes.modalTitle}>New Bid</h4>
-                    </DialogTitle>
-                    <DialogContent
-                      id="new-bid-description"
-                      className={classes.modalBody}
-                    >
-                        <CustomInput
-                          id="bidvalue"
-                          inputProps={{
-                            placeholder: "Bid (per Kg)"
-                          }}
-                          formControlProps={{
-                            fullWidth: true
-                          }}
-                        />        
-            
-                    </DialogContent>
-                    <DialogActions className={classes.modalFooter}>
-                      <Button
-                        color="success"
-                        onClick={(e)=> this.handleNewBid(e)}
-                      >
-                        Add
-                      </Button>
-                      <Button
-                        onClick={() => this.handleModalClose()}
-                        color="danger"
-                      >
-                        Close
-                      </Button>
-                    </DialogActions>
-                    </form> 
-                  </Dialog>
-
           </div>
         </div>
       );

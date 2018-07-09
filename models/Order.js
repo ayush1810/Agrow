@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const Item = require("./Item.js");
 const Customer = require("./Customer.js");
 
-const BidSchema = new mongoose.Schema ({
+const OrderSchema = new mongoose.Schema ({
     item:{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Item'
@@ -11,15 +11,19 @@ const BidSchema = new mongoose.Schema ({
         type: Date,
         default: Date.now()
     },
-    bidder: {
+    customer: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Customer'
     },
     value: {
         type:Number,
         required:true
+    },
+    status: {
+        type:String,
+        default: 'In Progress'
     }
 });
 
-let Bid = mongoose.model('Bid', BidSchema); 
-module.exports = Bid;
+let Order = mongoose.model('Order', OrderSchema); 
+module.exports = Order;

@@ -14,16 +14,39 @@ import Footer from "components/Footer/Footer.jsx";
 import BidTable from './Sections/BidTable.jsx';
 import productPageStyle from 'assets/jss/material-kit-react/views/productPage.jsx'; 
 
+const Bidform = (props) => {
+    return(
+        <form name="addBidForm"> 
+        <CustomInput
+            id="bidval"
+            inputProps={{
+                type: 'number',
+                placeholder: "Rate per Kg"
+            }}
+            formControlProps={{
+                fullWidth: false
+            }}
+        />
+        <Button color="primary" size="sm" onClick={(e)=> props.handleAddBid(e)}>
+                    ADD BID
+        </Button> 
+    </form> 
+    );
+}
+
 class ProductPage extends React.Component {
 
     constructor(props){
         super(props); 
         this.state = {
             item: {},
-            customer: {}
+            customer: {},
+            status: 0
         };
         this.handleAddBid = this.handleAddBid.bind(this);
         this.modifyWallet = this.modifyWallet.bind(this); 
+        this.disableBid = this.disableBid.bind(this); 
+        this.bidsection = this.bidsection.bind(this); 
     } 
     componentWillMount(){
         this.loadData();
@@ -37,13 +60,11 @@ class ProductPage extends React.Component {
             this.setState({
                 item : data.records,
                 customer: data.customer
-            },()=>{
-                console.log(this.state.item.seller.name);
             });
         }).catch(err => {
             alert("Product Page Error: "+err);
         });
-    }
+    } 
 
     handleAddBid(e){
         e.preventDefault();
@@ -100,9 +121,23 @@ class ProductPage extends React.Component {
           });        
     }
 
+    bidsection(id){
+        switch(id){
+            case 0: return "Bid Accepted. Wait for the deadline";
+            case 1: return <Bidform handleAddBid={()=>this.handleAddBid()} />;
+            default : return null; 
+        }
+    }
+
+    disableBid(){
+        this.setState({
+            status: 0
+        }); 
+    }
     render(){
         const {classes} = this.props; 
         const {item} = this.state; 
+        const {...seller} = item.seller;
         const itemID = this.props.match.params.id;
         return(
             <div className={classes.container}>
@@ -119,7 +154,7 @@ class ProductPage extends React.Component {
                            Item #{item._id} <br/> 
                             <h3>{item.name}</h3>
                             <h4>Seller :
-                                 {/* {item.seller.name} */}
+                                 {seller.name}
                             </h4>  
                             <h4>Quantity :
                                  {item.quantity}
@@ -127,26 +162,17 @@ class ProductPage extends React.Component {
                             <h4> Rate (per Kg): 
                                 {item.rate}
                             </h4>  
-                            <form name="addBidForm"> 
-                                <CustomInput
-                                    id="bidval"
-                                    inputProps={{
-                                        type: 'number',
-                                        placeholder: "Rate per Kg"
-                                    }}
-                                    formControlProps={{
-                                        fullWidth: false
-                                    }}
-                                />
-                                <Button color="primary" size="sm" onClick={(e)=> this.handleAddBid(e)}>
-                                            ADD BID
-                                </Button> 
-                            </form> 
+                            <h4>
+                                Status:
+                                {
+                                    this.bidsection(this.state.status)
+                                }
+                            </h4>
                         </GridItem>
                     </GridContainer>
                     <GridContainer> 
                         <GridItem xs={12}>
-                            <BidTable id={itemID}/>
+                            <BidTable id={itemID} disableBid={()=> this.disableBid()}/>
                         </GridItem> 
                     </GridContainer>
                     <Footer/>

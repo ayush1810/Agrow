@@ -5,11 +5,9 @@ import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 // import history from './history.js'; 
 import {
-Email
 } from "@material-ui/icons";
 
 import Button from "components/CustomButtons/Button.jsx";
-import CustomDropdown from "components/CustomDropdown/CustomDropdown.jsx";
 import GridContainer from "components/Grid/GridContainer.jsx";
 import GridItem from "components/Grid/GridItem.jsx";
 import Header from "components/Header/Header.jsx";
@@ -25,8 +23,6 @@ class CustomerDashboard extends React.Component{
             user: {},
             categories: []
         }
-        this.modifyWallet = this.modifyWallet.bind(this); 
-        this.handleNewBid = this.handleNewBid.bind(this); 
     }
 
     componentDidMount(){
@@ -46,51 +42,6 @@ class CustomerDashboard extends React.Component{
         });
     }
 
-    handleNewBid(item, bidvalue){
-        let {user} = this.state; 
-        let balance = user.wallet; 
-        let total = bidvalue * item.quantity; 
-        if (balance < total){
-            alert("Insufficient Balance!\nTotal :   " + total + "   Wallet   :   "+balance);
-          }
-          else{ 
-            fetch('/addbid', {
-                method: 'POST',
-                credentials:'include',
-                headers:  {'Content-Type': 'application/json'},
-                body : JSON.stringify({
-                    item: item._id,
-                    bidder: user._id,
-                    value: total
-                }),
-                }).then(response => response.json()).then(data =>{
-                }).catch(err => {
-                    console.log("Adding Bid Error: "+ err);
-                });
-            this.modifyWallet(balance - total);
-          }
-    }
-
-    modifyWallet(balance){
-        fetch(`/customer/wallet`,{
-            method:'POST',
-            credentials: 'include',
-            headers: {'Content-Type': 'application/json'},
-            body : JSON.stringify({
-                customer: this.state.user._id,
-                amount : balance
-            }),
-          }).then(response => response.json()).then(response => {
-            this.setState({
-                user : response
-            },()=>{
-                alert("Congratulations! Your bid has been accepted!\nUpdated Wallet: "+ this.state.user.wallet);
-            });
-          })
-          .catch(err => {
-            console.log(err.message);
-          });        
-    }
     render(){
         const { classes, ...rest } = this.props;
         const {user, categories} = this.state; 
@@ -123,9 +74,7 @@ class CustomerDashboard extends React.Component{
                                 </div> 
                             </GridItem> 
                             <GridItem xs={12}>
-                                <ProductSection
-                                    handleNewBid = {this.handleNewBid}
-                                /> 
+                                <ProductSection/> 
                             </GridItem>
                         </GridContainer> 
                     </div>
