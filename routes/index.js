@@ -1,7 +1,7 @@
 const express = require('express'),
      mongoose = require('mongoose');
 const router = express.Router();
-mongoose.set('debug', true);
+// mongoose.set('debug', true);
 
 const cron = require('node-cron');
 
@@ -13,7 +13,7 @@ const orderController = require('../controllers/orderController.js');
 const productController = require('../controllers/productController.js');
 const sellerController = require('../controllers/sellerController.js');
 
-cron.schedule('0 * * * * *', orderController.handleNewOrders);
+cron.schedule('0 0 0 * * *', orderController.handleNewOrders);
 
 router.get('/',(req, res)=>{
     res.render('index.html');

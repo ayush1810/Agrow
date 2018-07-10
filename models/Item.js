@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-mongoose.Promise = global.Promise;
 const Seller = require('./Seller.js');
 
 const ItemSchema = new mongoose.Schema({

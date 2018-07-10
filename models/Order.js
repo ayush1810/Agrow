@@ -1,15 +1,20 @@
 const mongoose = require('mongoose');
 const Item = require("./Item.js");
 const Customer = require("./Customer.js");
+const Seller = require("./Seller.js");
 
 const OrderSchema = new mongoose.Schema ({
+    dateCreated:{
+        type: Date,
+        default: Date.now()
+    },
     item:{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Item'
     },
-    dateCreated:{
-        type: Date,
-        default: Date.now()
+    seller:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Seller'
     },
     customer: {
         type: mongoose.Schema.Types.ObjectId,
