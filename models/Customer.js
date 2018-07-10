@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 // mongoose.set('debug',true);
 const bcrypt = require('bcrypt');
 const Item = require('./Item.js');
+const Order = require('./Order.js');
 
 const CustomerSchema = new mongoose.Schema({
     role:{
@@ -28,6 +29,10 @@ const CustomerSchema = new mongoose.Schema({
     bids: [{
       type: mongoose.Schema.Types.ObjectId,
       ref : 'Item'
+    }],
+    orders: [{
+      type: mongoose.Schema.Types.ObjectId,
+      ref : 'Order'
     }],
     wallet: {
       type: Number,

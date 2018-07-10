@@ -48,6 +48,20 @@ exports.handleNewOrders = (req, res) => {
                                     console.log("Seller wallet updated to "+ seller.wallet);
                                 }
                             });
+                            Customer.findOne({_id:bid.bidder}, (err, record)=>{
+                                if(record){
+                                    record.orders.push(newOrder._id);
+                                    record.save(err=>{
+                                        if(err){
+                                        console.log("Unable to push order");
+                                        }
+                                        
+                                    });
+                                }
+                                else{
+                                    console.log("Sorry, couldn't find the customer!");
+                                }
+                            });
                             Bid.find({item: item._id, value : {$lt: bid.value}}, (err, bids)=>{
                                 if(err){
                                     console.log("Error fetching other bids"); 

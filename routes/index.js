@@ -1,8 +1,5 @@
 const express = require('express'),
-     mongoose = require('mongoose');
-const router = express.Router();
-// mongoose.set('debug', true);
-
+      router = express.Router();
 const cron = require('node-cron');
 
 const bidController = require('../controllers/bidController.js');
